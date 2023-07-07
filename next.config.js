@@ -5,7 +5,7 @@ const nextConfig = {
             'st.nettruyenmax.com',
             'sayhentai.me',
             'p.ntcdntempv26.com',
-            'animemoi.onrender.com',
+            'animemoi.somee.com',
         ],
     },
 };

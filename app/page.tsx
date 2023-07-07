@@ -23,8 +23,10 @@ type Mangas = {
     ];
 };
 
+export const Domain = 'http://animemoi.somee.com/api/';
+
 export default async function Home() {
-    var request = await fetch('https://animemoi.onrender.com/api/NetTruyen');
+    var request = await fetch(`${Domain}NetTruyen`);
     var data: Mangas = await request.json();
 
     return (
