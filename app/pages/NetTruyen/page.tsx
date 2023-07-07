@@ -5,7 +5,9 @@ import { Mangas } from '../../types/App';
 export const Domain = 'http://animemoi.somee.com/api/';
 
 export default async function Page() {
-    var request = await fetch(`${Domain}NetTruyen`);
+    var request = await fetch(`${Domain}NetTruyen`, {
+        next: { revalidate: 60 },
+    });
     var data: Mangas = await request.json();
 
     return (
