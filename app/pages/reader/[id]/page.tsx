@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { Domain } from '@/app/pages/NetTruyen/page';
+
+import { Domain } from '@/app/page';
 
 export default async function Page({ params }: { params: { id: string } }) {
     var request = await fetch(

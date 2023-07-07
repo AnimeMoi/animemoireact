@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Mangas } from '../../types/App';
 
-export const Domain = 'http://animemoi.somee.com/api/';
+import { Mangas } from '../../types/App';
+import { Domain } from '@/app/page';
 
 export default async function Page() {
     var request = await fetch(`${Domain}NetTruyen`, {

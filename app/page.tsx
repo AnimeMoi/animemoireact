@@ -3,6 +3,8 @@ import NetTruyen from './images/Nettruyen.jpg';
 import SayHentai from './images/SayHentai.png';
 import Image from 'next/image';
 
+export const Domain = 'http://animemoi.somee.com/api/';
+
 export default async function Home() {
     return (
         <div className="grid grid-cols-3 gap-4">
