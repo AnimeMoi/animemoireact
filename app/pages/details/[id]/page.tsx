@@ -1,13 +1,6 @@
 import Link from 'next/link';
-import { Domain } from '@/app/page';
-
-type Chapters = [
-    {
-        title: string;
-        url: string;
-        view: string;
-    }
-];
+import { Domain } from '@/app/pages/NetTruyen/page';
+import { Chapters } from '@/app/types/App';
 
 export default async function Page({ params }: { params: { id: string } }) {
     var request = await fetch(`${Domain}NetTruyen/Chapter?url=${params.id}`);
@@ -18,7 +11,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             {data.map((chapter) => (
                 <Link
                     key={chapter.title}
-                    href={`/reader/${encodeURIComponent(chapter.url)}`}
+                    href={`/pages/reader/${encodeURIComponent(chapter.url)}`}
                 >
                     <h1>{chapter.title}</h1>
                 </Link>

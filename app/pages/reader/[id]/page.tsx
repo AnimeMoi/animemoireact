@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Domain } from '@/app/page';
+import { Domain } from '@/app/pages/NetTruyen/page';
 
 export default async function Page({ params }: { params: { id: string } }) {
     var request = await fetch(
@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             {data.map((chapter) => (
                 <Image
                     key={chapter}
-                    src={`${Domain}NetTruyen/GetImage?url=https:${chapter}`}
+                    src={`${Domain}NetTruyen/GetImage?url=${chapter}`}
                     alt={''}
                     width={'1000'}
                     height={'1000'}
