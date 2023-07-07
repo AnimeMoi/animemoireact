@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Domain } from '@/app/page';
 
 type Chapters = [
     {
@@ -9,9 +10,7 @@ type Chapters = [
 ];
 
 export default async function Page({ params }: { params: { id: string } }) {
-    var request = await fetch(
-        `https://animemoi.onrender.com/api/NetTruyen/Chapter?url=${params.id}`
-    );
+    var request = await fetch(`${Domain}NetTruyen/Chapter?url=${params.id}`);
     var data: Chapters = await request.json();
 
     return (
