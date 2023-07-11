@@ -14,7 +14,7 @@ export default async function Page({params}: { params: { id: [string, string] } 
             {data.map((chapter) => (
                 <Link
                     key={chapter.title}
-                    href={`/pages/reader/${encodeURIComponent(chapter.url)}`}
+                    href={`/pages/reader/${encodeURIComponent(chapter.url)}/${params.id[1]}`}
                 >
                     <h1>{chapter.title}</h1>
                 </Link>
