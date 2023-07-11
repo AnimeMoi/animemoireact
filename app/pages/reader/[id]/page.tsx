@@ -1,12 +1,13 @@
 import Image from 'next/image';
 
-import { Domain } from '@/app/page';
+
+import {Domain} from "@/app/domain";
 
 export default async function Page({ params }: { params: { id: string } }) {
-    var request = await fetch(
+    const request = await fetch(
         `${Domain}NetTruyen/ChapterDetail?url=${params.id}`
     );
-    var data: [] = await request.json();
+    const data: [] = await request.json();
 
     return (
         <div>

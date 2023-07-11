@@ -1,14 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Mangas } from '../../types/App';
-import { Domain } from '@/app/page';
+import {Mangas} from '../../types/App';
+import {Domain} from "@/app/domain";
 
 export default async function Page() {
-    var request = await fetch(`${Domain}NetTruyen`, {
-        next: { revalidate: 60 },
-    });
-    var data: Mangas = await request.json();
+    const request = await fetch(`${Domain}NetTruyen`, {cache: 'no-store'});
+    const data: Mangas = await request.json();
 
     return (
         <div className="grid grid-cols-5 gap-4">

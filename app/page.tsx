@@ -1,9 +1,9 @@
 import Link from 'next/link';
+// @ts-ignore
 import NetTruyen from './images/Nettruyen.jpg';
+// @ts-ignore
 import SayHentai from './images/SayHentai.png';
 import Image from 'next/image';
-
-export const Domain = 'http://animemoi.somee.com/api/';
 
 export default async function Home() {
     return (

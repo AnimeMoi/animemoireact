@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
-import { Chapters } from '@/app/types/App';
-import { Domain } from '@/app/page';
+import {Chapters} from '@/app/types/App';
 
-export default async function Page({ params }: { params: { id: string } }) {
-    var request = await fetch(`${Domain}NetTruyen/Chapter?url=${params.id}`);
-    var data: Chapters = await request.json();
+import {Domain} from "@/app/domain";
+
+export default async function Page({params}: { params: { id: string } }) {
+    const request = await fetch(`${Domain}NetTruyen/Chapter?url=${params.id}`);
+    const data: Chapters = await request.json();
 
     return (
         <div>
