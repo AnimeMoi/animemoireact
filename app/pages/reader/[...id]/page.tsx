@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 import {Domain} from "@/app/domain";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({params}: { params: { id: [string, string] } }) {
     const request = await fetch(
-        `${Domain}NetTruyen/ChapterDetail?url=${params.id}`
+        `${Domain}${params.id[1]}/ChapterDetail?url=${params.id[0]}`
     );
     const data: [] = await request.json();
 
@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             {data.map((chapter) => (
                 <Image
                     key={chapter}
-                    src={`${Domain}NetTruyen/GetImage?url=${chapter}`}
+                    src={`${Domain}${params.id[1]}/GetImage?url=${chapter}`}
                     alt={''}
                     width={'1000'}
                     height={'1000'}
