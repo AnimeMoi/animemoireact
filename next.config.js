@@ -2,10 +2,11 @@
 const nextConfig = {
     images: {
         domains: [
+            'animemoi.somee.com',
+            'animemoi.up.railway.app',
             'st.nettruyenmax.com',
             'sayhentai.me',
             'p.ntcdntempv26.com',
-            'animemoi.somee.com',
             't.hentaivn.site',
         ],
     },

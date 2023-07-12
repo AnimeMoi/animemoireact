@@ -7,15 +7,20 @@ export default async function Page(params: any) {
     const data: Chapters = await request.json();
 
     return (
-        <div>
-            {data.map((chapter) => (
-                <Link
-                    key={chapter.title}
-                    href={`/pages/reader/${params.params.host}?id=${encodeURIComponent(chapter.url)}`}
-                >
-                    <h1>{chapter.title}</h1>
-                </Link>
-            ))}
-        </div>
+        <>
+            <button>
+                <Link href={`/pages/home/${params.params.host}`}>Back</Link>
+            </button>
+            <div>
+                {data.map((chapter) => (
+                    <Link
+                        key={chapter.title}
+                        href={`/pages/reader/${params.params.host}?id=${encodeURIComponent(chapter.url)}`}
+                    >
+                        <h1>{chapter.title}</h1>
+                    </Link>
+                ))}
+            </div>
+        </>
     );
 }
