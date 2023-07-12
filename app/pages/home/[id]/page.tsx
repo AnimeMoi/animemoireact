@@ -11,7 +11,11 @@ interface PageProps {
 }
 
 export default async function Page({params}: PageProps) {
-    const request = await fetch(`${Domain}${params.id}`, {cache: 'no-store'});
+    const request = await fetch(`${Domain}${params.id}`, {
+        next: {
+            revalidate: 60
+        }
+    });
     const data: Mangas = await request.json();
 
     return (
