@@ -6,12 +6,12 @@ import {Domain} from "@/app/domain";
 
 interface PageProps {
     params: {
-        id: string
+        host: string
     }
 }
 
 export default async function Page({params}: PageProps) {
-    const request = await fetch(`${Domain}${params.id}`, {
+    const request = await fetch(`${Domain}${params.host}`, {
         next: {
             revalidate: 60
         }
@@ -21,7 +21,7 @@ export default async function Page({params}: PageProps) {
     return (
         <div className="grid grid-cols-5 gap-4">
             {data.mangas.map((manga) => (
-                <Link key={manga.id} href={`/pages/details/${manga.url}/${params.id}`}>
+                <Link key={manga.id} href={`/pages/details/${params.host}?id=${manga.url}`}>
                     <h1>{manga.title[0].title}</h1>
                     <Image
                         src={manga.cover}
