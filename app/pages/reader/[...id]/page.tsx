@@ -5,7 +5,7 @@ import {Domain} from "@/app/domain";
 
 export default async function Page({params}: { params: { id: [string, string] } }) {
     const response = await fetch(
-        `${Domain}${params.id[1]}/ChapterDetail?url=${params.id[0]}`
+        `${Domain}${decodeURIComponent(params.id[1])}/ChapterDetail?url=${params.id[0]}`
     );
     let data;
     if (response.ok) {
