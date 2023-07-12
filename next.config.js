@@ -6,6 +6,7 @@ const nextConfig = {
             'sayhentai.me',
             'p.ntcdntempv26.com',
             'animemoi.somee.com',
+            't.hentaivn.site',
         ],
     },
 };
