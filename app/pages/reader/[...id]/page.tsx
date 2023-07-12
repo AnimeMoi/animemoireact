@@ -11,7 +11,7 @@ export default async function Page({params}: { params: { id: [string, string] } 
     if (response.ok) {
         data = await response.json();
     } else {
-        console.error('Yêu cầu gặp lỗi:', response.status, response.statusText);
+        console.error(`Yêu cầu gặp lỗi tới ${Domain}${params.id[1]}/ChapterDetail?url=${params.id[0]}:`, response.status, response.statusText);
     }
 
     return (
