@@ -4,14 +4,19 @@ import Image from 'next/image';
 import {Domain} from "@/app/domain";
 
 export default async function Page({params}: { params: { id: [string, string] } }) {
-    const request = await fetch(
+    const response = await fetch(
         `${Domain}${params.id[1]}/ChapterDetail?url=${params.id[0]}`
     );
-    const data: [] = await request.json();
+    let data;
+    if (response.ok) {
+        data = await response.json();
+    } else {
+        console.error('Yêu cầu gặp lỗi:', response.status, response.statusText);
+    }
 
     return (
         <div>
-            {data.map((chapter) => (
+            {data.map((chapter: any) => (
                 <Image
                     key={chapter}
                     src={`${Domain}${params.id[1]}/GetImage?url=${chapter}`}
