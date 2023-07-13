@@ -1,9 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 // @ts-ignore
 import NetTruyen from './images/Nettruyen.jpg';
-// @ts-ignore
 import SayHentai from './images/SayHentai.png';
-import Image from 'next/image';
+import HentaiVN from './images/HentaiVN.png';
 
 export default async function Home() {
     return (
@@ -16,6 +16,11 @@ export default async function Home() {
             <div className="item" id="SayHentai">
                 <Link href={'/pages/home/SayHentai'}>
                     <Image src={SayHentai} alt={'SayHentai'}></Image>
+                </Link>
+            </div>
+            <div className="item" id="HentaiVN">
+                <Link href={'/pages/home/HentaiVN'}>
+                    <Image src={HentaiVN} alt={'HentaiVN'}></Image>
                 </Link>
             </div>
         </div>
