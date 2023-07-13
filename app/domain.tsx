@@ -1,1 +1,1 @@
-export const Domain = 'https://animemoi.up.railway.app/api/';
+export const Domain = 'https://animemoiapi.onrender.com/api/';
