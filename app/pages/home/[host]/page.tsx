@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {Mangas} from '../../../types/App';
+import {Mangas} from '@/app/types/App';
 import {Domain} from "@/app/domain";
 
 interface PageProps {
@@ -27,7 +27,6 @@ export default async function Page({params}: PageProps) {
                         src={manga.cover}
                         alt={''}
                         width={250}
-                        height={200}
                         loading="lazy"
                     ></Image>
                 </Link>
