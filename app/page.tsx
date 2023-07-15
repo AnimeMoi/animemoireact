@@ -5,7 +5,7 @@ import NetTruyen from './images/Nettruyen.jpg';
 import SayHentai from './images/SayHentai.png';
 import HentaiVN from './images/HentaiVN.png';
 
-export default async function Home() {
+export default function Home() {
     return (
         <div className="grid grid-cols-3 gap-4">
             <div className="item" id="NetTruyen">
