@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,6 +16,18 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
     },
+    colors: {
+      'lightGray': '#f4f4f4',
+      'richBlack': '#02040a',
+      'success': '#00C851',
+      black: colors.black,
+      white: colors.white,
+      red: colors.red,
+      transparent: colors.transparent
+    },
+    fontFamily:{
+      'primary': ['Quicksand']
+    }
   },
   plugins: [],
 }
