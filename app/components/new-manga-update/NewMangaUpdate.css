@@ -1,8 +1,18 @@
-.manga:hover {
-    transform: translateY(-10px);
+.manga {
+    position: relative;
+}
+  
+.manga-info-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    z-index: 1;
+    transition: transform 1s ease, opacity 0.4s ease;
 }
 
-.manga:hover,
-.manga:not(:hover) {
-    transition: transform 0.3s ease;
+.manga:hover .manga-info-overlay {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
 }
