@@ -1,15 +1,15 @@
 import {Meta, StoryObj} from "@storybook/react";
-import MangaInfo from "./MangaInfo";
+import MangaInfoOverplay from "./MangaInfoOverplay";
 // import MangaCover1 from "../../images/demo-manga-covers/Sono-Bisque-Doll-Wa-Koi-O-Suru.jpg";
 
-const meta: Meta<typeof MangaInfo> = {
-    title: 'Components/MangaInfo',
-    component: MangaInfo,
+const meta: Meta<typeof MangaInfoOverplay> = {
+    title: 'Components/MangaInfoOverplay',
+    component: MangaInfoOverplay,
     argTypes: {}
 };
 
 export default meta;
-type Story = StoryObj<typeof MangaInfo>;
+type Story = StoryObj<typeof MangaInfoOverplay>;
 
 export const Default: Story = {
     // args:{

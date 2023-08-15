@@ -1,10 +1,9 @@
 import React from "react";
 import "../../globals.css";
+import "../new-manga-update/NewMangaUpdate.css";
 import Image from "next/image";
-// import MangaCover from "../../images/demo-manga-covers/shingeki-no-kyojin.jpg";
-// import MangaCover1 from "../../images/demo-manga-covers/Sono-Bisque-Doll-Wa-Koi-O-Suru.jpg";
 
-interface MangaInfoProps {
+type MangaInfoProps = {
   coverImage: string;
   title: string;
   author: string;
@@ -13,24 +12,11 @@ interface MangaInfoProps {
   description: string;
 }
 
-const MangaInfoItem = ({ coverImage, title, author, status, views, description }: MangaInfoProps) => {
-  return (
-    <MangaInfo
-      coverImage={coverImage}
-      title={title}
-      author={author}
-      status={status}
-      views={views}
-      description={description}
-    />
-  )
-}
-
-const MangaInfo: React.FC<MangaInfoProps> = (props) => {
+const MangaInfoOverplay: React.FC<MangaInfoProps> = (props) => {
   const { coverImage, title, author, status, views, description } = props;
 
   return (
-    <div className="font-primary w-[340px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.55] backdrop-blur-[10px] rounded-[26px] border-[1.5px] border-white/20">
+    <div className="manga-info-overlay font-primary w-[320px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/75 backdrop-blur-[10px] rounded-[26px] border-[1.5px] border-white/20">
       <div className="w-full h-fit flex flex-row items-start gap-[20px]">
         <div className="w-[100px] h-[140px] rounded-[10px] outline outline-[1px] outline-white/20 outline-offset-[-1px] relative overflow-hidden">
           <Image src={coverImage} alt={title} fill objectFit="cover" />
@@ -50,4 +36,4 @@ const MangaInfo: React.FC<MangaInfoProps> = (props) => {
   );
 };
 
-export default MangaInfoItem;
+export default MangaInfoOverplay;
