@@ -1,45 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../globals.css";
 import "./NewMangaUpdate.css";
 import Image from "next/image";
-import MangaCover from "../../images/demo-manga-covers/shingeki-no-kyojin.jpg";
 import MangaInfoOverplay from "../manga-info-overplay/MangaInfoOverplay";
+import { Default } from "../manga-info-overplay/MangaInfoOverplay.stories";
 
 const NewMangaUpdate: React.FC = () => {
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseOver = () => {
-    setIsHovering(true);
-  };
-
-  const handleMouseOut = () => {
-    setIsHovering(false);
-  };
-
   const renderMangaDiv = () => {
     const mangaDiv = [];
     for (let i = 0; i < 10; i++) {
       mangaDiv.push(
-        <div className="manga w-fit h-fit flex flex-col gap-[20px] cursor-pointer" key={i} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-          <Image
-            src={MangaCover}
-            alt={""}
-            className="w-[180px] h-[260px] rounded-[20px] outline outline-2 outline-white/20 outline-offset-[-2px]"
-          />
-          <div className="w-[180px] h-fit flex flex-col items-center overflow-hidden gap-[4px] px-[8px]">
-            <p className="w-full text-base text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">Shingeki no Kyojin</p>
-            <p className="text-sm text-white opacity-75 font-medium">Chapter 139</p>
+        <div className="manga w-fit h-fit flex flex-col gap-[20px] cursor-pointer" key={i}>
+          <div className="w-[180px] h-[260px] relative overflow-hidden">
+            <Image src={"https://honeysanime.com/wp-content/uploads/2017/12/Boruto-Naruto-Next-Generations-500x750.jpg"} alt={""} fill objectFit="cover" className="rounded-[20px] outline outline-2 outline-white/20 outline-offset-[-2px]" />
           </div>
-          {isHovering && (
-            <MangaInfoOverplay
-              coverImage={MangaCover}
-              title={"Shingeki no Kyojin"}
-              author={"Isayama Hajime"}
-              status={"Hoàn thành"}
-              views={"10M"}
-              description={"Hơn 100 năm trước, giống người khổng lồ Titan đã tấn công và đẩy loài người tới bờ vực tuyệt chủng. Những con người sống sót tụ tập lại, xây bao quanh mình 1 tòa thành 3 lớp kiên cố và tự nhốt mình bên trong để trốn tránh những cuộc tấn công của người khổng lồ. Họ tìm mọi cách để tiêu diệt người khổng lồ nhưng không thành công. Và sau 1 thế kỉ hòa bình, giống khổng lồ đã xuất hiện trở lại, một lần nữa đe dọa sự tồn vong của con người... Eren và cô em gái Mikasa phải chứng kiến một cảnh tượng cực kinh khủng - mẹ của mình bị ăn thịt ngay trước mắt. Eren thề rằng cậu sẽ giết tất cả những tên khổng lồ mà cậu gặp..."}
-            />
-          )}
+          <div className="w-[180px] h-fit flex flex-col items-center overflow-hidden gap-[4px] px-[8px]">
+            <p className="w-full text-base text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">Uzumaki Boruto</p>
+            <p className="text-sm text-white opacity-75 font-medium">Chapter 80</p>
+          </div>
+          <MangaInfoOverplay {...Default.args} />
         </div>
       );
     }

@@ -39,9 +39,9 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage, onSignin, onSig
                 )}
                 <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20">
                     <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
-                    <input type="text" placeholder="Tìm truyện" className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white opacity-75 placeholder:font-medium" />
+                    <input type="text" placeholder="Tìm truyện" className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium" />
                 </div>
-                <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20">
+                <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20 cursor-pointer">
                     <List color="#f4f4f4" weight="bold" size={18} />
                     <span className="text-sm text-lightGray opacity-75 font-medium">Thể loại</span>
                 </div>
