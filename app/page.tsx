@@ -1,28 +1,44 @@
-import Link from 'next/link';
-import Image from 'next/image';
+"use client"
 // @ts-ignore
-import NetTruyen from './images/Nettruyen.jpg';
-import SayHentai from './images/SayHentai.png';
-import HentaiVN from './images/HentaiVN.png';
+import NewMangaUpdate from "@/app/components/new-manga-update/NewMangaUpdate";
+import NavBar from "@/app/components/nav-bar/NavBar";
+import {useState} from "react";
+import {GoogleAuthProvider, onAuthStateChanged, signInWithPopup} from "@firebase/auth";
+import auth from "@/app/components/auth/Firebase";
 
 export default function Home() {
+    let [isLogin, setIsLogin] = useState(false)
+
+    const provider = new GoogleAuthProvider()
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const uid = user.uid
+            setIsLogin(true)
+        } else {
+            setIsLogin(false)
+        }
+    })
+
+    function loginHandler() {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result)
+                const token = credential?.accessToken
+                // The signed-in user info.
+                const user = result.user
+                console.log(`Đăng nhập ${user.displayName} thành công!`)
+                setIsLogin(true)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }
+
     return (
-        <div className="grid grid-cols-3 gap-4">
-            <div className="item" id="NetTruyen">
-                <Link href={'/pages/home/NetTruyen'}>
-                    <Image src={NetTruyen} alt={'NetTruyen'}></Image>
-                </Link>
-            </div>
-            <div className="item" id="SayHentai">
-                <Link href={'/pages/home/SayHentai'}>
-                    <Image src={SayHentai} alt={'SayHentai'}></Image>
-                </Link>
-            </div>
-            <div className="item" id="HentaiVN">
-                <Link href={'/pages/home/HentaiVN'}>
-                    <Image src={HentaiVN} alt={'HentaiVN'}></Image>
-                </Link>
-            </div>
-        </div>
-    );
+        <>
+            <NavBar isLoggedIn={isLogin} isHomePage={true} onSignin={loginHandler} onSignup={loginHandler}></NavBar>
+            <NewMangaUpdate></NewMangaUpdate>
+        </>
+    )
 }
