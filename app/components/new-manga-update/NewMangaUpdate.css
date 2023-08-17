@@ -9,10 +9,10 @@
     transform: translate(-50%, -50%) scale(0.8);
     opacity: 0;
     z-index: 1;
-    transition: transform 1s ease, opacity 0.4s ease;
+    transition: transform 1.2s ease, opacity 0.4s ease;
 }
 
-.manga:hover .manga-info-overlay {
+.manga:hover .manga-info-overlay { 
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
 }

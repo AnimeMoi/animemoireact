@@ -1,6 +1,5 @@
 import {Meta, StoryObj} from "@storybook/react";
 import MangaInfoOverplay from "./MangaInfoOverplay";
-// import MangaCover1 from "../../images/demo-manga-covers/Sono-Bisque-Doll-Wa-Koi-O-Suru.jpg";
 
 const meta: Meta<typeof MangaInfoOverplay> = {
     title: 'Components/MangaInfoOverplay',
@@ -12,15 +11,13 @@ export default meta;
 type Story = StoryObj<typeof MangaInfoOverplay>;
 
 export const Default: Story = {
-    // args:{
-    //     coverImage: MangaCover1
-    // }
     args: {
-        coverImage: "https://i.imgur.com/d87wbwI.jpg",
-        title: "Sono Bisque Doll Wa Koi O Suru",
-        author: "Shinichi Fukuda",
+        // coverImage: require("../../images/demo-manga-covers/shingeki-no-kyojin.jpg"),
+        coverImage: "https://honeysanime.com/wp-content/uploads/2017/12/Boruto-Naruto-Next-Generations-500x750.jpg",
+        title: "Uzumaki Boruto",
+        author: "Ikemoto Mikio - Kishimoto Masashi - Kodachi Ukyou",
         status: "Đang tiến hành",
-        views: "9M",
-        description: "Wakana Gojou 15 tuổi là 1 học sinh cao trung từng bị tổn thương tâm lý trong quá khứ do sở thích kỳ lạ của mình. Chuyện đó đã khiến cậu trở nên nhút nhát, rụt rè. Cho tới ngày nọ Gojou tình cờ gặp Kitagawa – một Gyaru – người có tính cách trái ngược hoàn toàn với cậu ấy. 2 người họ hóa ra đều có những điểm chung và đã tạo thành một mối quan hệ hài hước."
+        views: 5661179,
+        description: "Boruto là phần tiếp nối của siêu phẩm Naruto huyền thoại. Trong phần này, truyện tập trung vào cậu bé Boruto, con trai của Naruto. Truyện mở đầu bằng cảnh làng lá hoang tàn và một nhân vật bí ẩn tuyên bố về cái chết của Naruto cùng sự chấm dứt của thời đại Ninja hoàng kim. Chuyện gì đã xảy ra? Số phận của các nhân vật như Naruto, Sasuke… ra sao? Và vì sao Boruto lại đeo băng đô với biểu tượng làng lá bị cắt ngang?"
     }
 };
