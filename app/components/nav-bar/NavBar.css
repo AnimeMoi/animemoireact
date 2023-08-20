@@ -1,4 +1,7 @@
-.active {
-    transition: transform 0.3s ease;
-    transform: scale(0.9);
+.scale-in {
+    transition: transform 0.4s ease;
+}
+
+.scale-in:hover {
+    transform: scale(1.1);
 }

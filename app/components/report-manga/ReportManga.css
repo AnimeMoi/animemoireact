@@ -1,4 +1,12 @@
-.active {
+/* .active {
     transition: transform 0.3s ease;
     transform: scale(0.9);
+} */
+
+.scale-up {
+    transition: transform 0.3s ease;
+}
+
+.scale-up:hover {
+    transform: scale(1.1);
 }

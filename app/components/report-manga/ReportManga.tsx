@@ -46,10 +46,10 @@ const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
                 </label>
             </div>
             <div className="w-full h-fit flex flex-row justify-end items-center gap-[15px]">
-                <div className={`flex px-[14px] py-[10px] rounded-full bg-success cursor-pointer ${isSendClicking ? 'active' : ''}`} onClick={handleSendClick}>
+                <div className="scale-up flex px-[14px] py-[10px] rounded-full bg-success cursor-pointer" onClick={handleSendClick}>
                     <span className="text-xs text-white font-semibold">Gửi đi</span>
                 </div>
-                <div className={`flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer ${isCloseClicking ? 'active' : ''}`} onClick={handleCloseClick}>
+                <div className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer" onClick={handleCloseClick}>
                     <span className="text-xs text-black font-semibold">Đóng</span>
                 </div>
             </div>

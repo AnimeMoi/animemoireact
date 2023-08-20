@@ -4,10 +4,7 @@ import NavBar from './NavBar';
 const meta: Meta<typeof NavBar> = {
     title: 'Components/NavBar',
     component: NavBar,
-    argTypes: {
-        onSignin: { action: 'onSignin' },
-        onSignup: { action: 'onSignup' }
-    },
+    argTypes: {}
 };
 
 export default meta;

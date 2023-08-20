@@ -28,7 +28,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onLogout }) => 
                     <p className="text-sm text-lightGray font-semibold">Admin</p>
                     <p className="text-xs text-white opacity-75 font-medium">admin123@gmail.com</p>
                 </div>
-                <div className={`flex px-[12px] py-[8px] rounded-full border-[1.5px] border-white/20 cursor-pointer ${isEditClicking ? 'active' : ''}`} onClick={handleEditClick}>
+                <div className="scale-up flex px-[12px] py-[8px] rounded-full border-[1.5px] border-white/20 cursor-pointer" onClick={handleEditClick}>
                     <span className="text-xs text-lightGray font-semibold">Sửa</span>
                 </div>
             </div>
@@ -51,7 +51,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onLogout }) => 
                 </div>
             </div>
             <div className="w-full h-fit flex justify-end">
-                <div className={`flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer ${isLogoutClicking ? 'active' : ''}`} onClick={handleLogoutClick}>
+                <div className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer" onClick={handleLogoutClick}>
                     <span className="text-xs text-black font-semibold">Đăng xuất</span>
                 </div>
             </div>
