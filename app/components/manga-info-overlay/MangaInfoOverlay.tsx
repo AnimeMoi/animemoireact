@@ -12,11 +12,11 @@ type MangaInfoProps = {
   description: string;
 }
 
-const MangaInfoOverplay: React.FC<MangaInfoProps> = (props) => {
+const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
   const { coverImage, title, author, status, views, description } = props;
 
   return (
-    <div className="manga-info-overlay font-primary w-[320px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/75 backdrop-blur-[10px] rounded-[24px] border-[1.5px] border-white/20">
+    <div className="font-primary w-[320px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/75 backdrop-blur-[10px] rounded-[24px] border-[1.5px] border-white/20">
       <div className="w-full h-fit flex flex-row items-start gap-[15px]">
         <div className="w-[100px] h-[140px] relative overflow-hidden">
           <Image src={coverImage} alt={title} fill objectFit="cover" className="rounded-[8px] outline outline-[1px] outline-white/20 outline-offset-[-1px]" />
@@ -36,4 +36,4 @@ const MangaInfoOverplay: React.FC<MangaInfoProps> = (props) => {
   );
 };
 
-export default MangaInfoOverplay;
+export default MangaInfoOverlay;

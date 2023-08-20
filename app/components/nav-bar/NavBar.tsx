@@ -4,30 +4,28 @@ import "./NavBar.css";
 import { House, MagnifyingGlass, List } from "@phosphor-icons/react";
 import Image from "next/image";
 import Avatar from "../../images/avatar.jpg";
+import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 
 type NavBarProps = {
     isLoggedIn: boolean;
     isHomePage: boolean;
-    onSignin: () => void;
-    onSignup: () => void;
 };
 
-const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage, onSignin, onSignup }) => {
-    const [isSigninClicking, setIsSigninClicking] = useState(false);
-    const [isSignupClicking, setIsSignupClicking] = useState(false);
-
-    const handleSigninClick = () => {
-        onSignin();
-        setIsSigninClicking(true);
-    };
+const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
+    const [showSignUpOverlay, setShowSignUpOverlay] = useState(false);
 
     const handleSignupClick = () => {
-        onSignup();
-        setIsSignupClicking(true);
+        setShowSignUpOverlay(true);
+    };
+
+    const handleOverlayClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            setShowSignUpOverlay(false);
+        }
     };
 
     return (
-        <div className="font-primary w-full h-[90px] flex flex-row justify-between items-center bg-richBlack/[.75] backdrop-blur-[10px] border-b-[1.5px] border-white/[.15] sticky top-0 z-[1]">
+        <div className="font-primary w-full h-[90px] flex flex-row justify-between items-center bg-richBlack/75 backdrop-blur-[10px] border-b-[1.5px] border-white/[.15] sticky top-0 z-[3]">
             <div className="text-[22px] text-lightGray font-semibold uppercase tracking-wider">AnimeMoi</div>
             <div className="w-fit h-fit flex flex-row gap-[15px]">
                 {isHomePage ? (
@@ -54,14 +52,20 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage, onSignin, onSig
                 />
             ) : (
                 <div className="w-fit h-fit flex flex-row gap-5 items-center">
-                    <span className={`text-sm text-lightGray font-semibold cursor-pointer ${isSigninClicking ? 'active' : ''}`} onClick={handleSigninClick}>Đăng nhập</span>
-                    <div className={`w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer ${isSignupClicking ? 'active' : ''}`} onClick={handleSignupClick}>
+                    <span className="scale-in text-sm text-lightGray font-semibold cursor-pointer">Đăng nhập</span>
+                    <div className="scale-in w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer" onClick={handleSignupClick}>
                         <span className="text-sm text-black font-semibold">Đăng ký</span>
                     </div>
                 </div>
             )}
+
+            {showSignUpOverlay && (
+                <div className="w-full h-full fixed top-0 left-0 bg-richBlack/75 flex justify-center items-center z-[1]" onClick={handleOverlayClick}>
+                    <SignUpOverlay />
+                </div>  
+            )}
         </div>
     );
 };
-  
+
 export default NavBar;

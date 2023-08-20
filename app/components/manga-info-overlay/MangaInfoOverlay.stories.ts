@@ -1,14 +1,14 @@
 import {Meta, StoryObj} from "@storybook/react";
-import MangaInfoOverplay from "./MangaInfoOverplay";
+import MangaInfoOverlay from "./MangaInfoOverlay";
 
-const meta: Meta<typeof MangaInfoOverplay> = {
-    title: 'Components/MangaInfoOverplay',
-    component: MangaInfoOverplay,
+const meta: Meta<typeof MangaInfoOverlay> = {
+    title: 'Components/MangaInfoOverlay',
+    component: MangaInfoOverlay,
     argTypes: {}
 };
 
 export default meta;
-type Story = StoryObj<typeof MangaInfoOverplay>;
+type Story = StoryObj<typeof MangaInfoOverlay>;
 
 export const Default: Story = {
     args: {
