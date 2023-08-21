@@ -1,3 +1,4 @@
+"use client"
 import React, {useState} from "react";
 import "../../globals.css";
 import "./NavBar.css";
@@ -6,15 +7,21 @@ import Image from "next/image";
 import Avatar from "../../images/avatar.jpg";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
+import auth from "@/app/components/auth/Firebase";
 
 type NavBarProps = {
-    isLoggedIn: boolean;
+    isLogin: boolean;
     isHomePage: boolean;
-    handleClickOnAvatar: () => void;
 };
 
-const NavBar: React.FC<NavBarProps> = ({isLoggedIn, isHomePage, handleClickOnAvatar}: NavBarProps) => {
+const NavBar: React.FC<NavBarProps> = ({isLogin, isHomePage}: NavBarProps) => {
     const [showOverlayType, setShowOverlayType] = useState<'signIn' | 'signUp' | null>(null);
+
+    function handleAuthStateChanged(user: any) {
+        if (user) {
+            setShowOverlayType(null);
+        }
+    }
 
     const handleOverlayToggle = (type: 'signIn' | 'signUp') => () => {
         setShowOverlayType(type);
@@ -29,8 +36,18 @@ const NavBar: React.FC<NavBarProps> = ({isLoggedIn, isHomePage, handleClickOnAva
         }
     };
 
-    const handleButtonClick = () => (): void => {
-    };
+    function logout() {
+        auth.signOut().then(() => {
+            console.log("Logout success")
+        }).catch((e) => {
+            console.error(e)
+        })
+    }
+
+    function handleButtonClick() {
+
+    }
+
 
     return (
         <div
@@ -38,7 +55,7 @@ const NavBar: React.FC<NavBarProps> = ({isLoggedIn, isHomePage, handleClickOnAva
             <div className="text-[22px] text-lightGray font-semibold uppercase tracking-wider">AnimeMoi</div>
             <div className="w-fit h-fit flex flex-row gap-[15px]">
                 {isHomePage ? (
-                    null
+                    <></>
                 ) : (
                     <div
                         className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-lightGray/20">
@@ -57,12 +74,12 @@ const NavBar: React.FC<NavBarProps> = ({isLoggedIn, isHomePage, handleClickOnAva
                     <span className="text-sm text-lightGray/75 font-medium">Thể loại</span>
                 </div>
             </div>
-            {isLoggedIn ? (
+            {isLogin ? (
                 <Image
                     src={Avatar}
                     alt={""}
                     className="w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px]"
-                    onClick={handleClickOnAvatar}
+                    onClick={logout}
                 />
             ) : (
                 <div className="w-fit h-fit flex flex-row gap-5 items-center">
@@ -76,19 +93,17 @@ const NavBar: React.FC<NavBarProps> = ({isLoggedIn, isHomePage, handleClickOnAva
             )}
 
             {showSignInOverlay && (
-                <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]"
-                     onClick={handleOverlayClick}>
+                <div
+                    className="w-full h-full fixed top-[230px] left-0 flex justify-center items-center bg-richBlack/75 z-[1]"
+                    onClick={handleOverlayClick}>
                     <SignInOverlay
-                        onEmailSignUp={handleButtonClick}
-                        onGoogleSignUp={handleButtonClick}
-                        onXSignUp={handleButtonClick}
-                        onFacebookSignUp={handleButtonClick}
+                        onAuthStateChanged={handleAuthStateChanged}
                     />
                 </div>
             )}
 
             {showSignUpOverlay && (
-                <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]"
+                <div className="w-full h-full top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]"
                      onClick={handleOverlayClick}>
                     <SignUpOverlay
                         onEmailSignUp={handleButtonClick}
