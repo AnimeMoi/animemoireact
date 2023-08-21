@@ -28,6 +28,8 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
         }
     };
 
+    const handleButtonClick = () => (): void => {};
+
     return (
         <div className="font-primary w-full h-[90px] flex flex-row justify-between items-center bg-richBlack/75 backdrop-blur-[10px] border-b-[1.5px] border-white/[.15] sticky top-0 z-[3]">
             <div className="text-[22px] text-lightGray font-semibold uppercase tracking-wider">AnimeMoi</div>
@@ -65,13 +67,23 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
 
             {showSignInOverlay && (
                 <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]" onClick={handleOverlayClick}>
-                    <SignInOverlay />
+                    <SignInOverlay
+                        onEmailSignUp={handleButtonClick}
+                        onGoogleSignUp={handleButtonClick}
+                        onXSignUp={handleButtonClick}
+                        onFacebookSignUp={handleButtonClick}
+                    />
                 </div>  
             )}
 
             {showSignUpOverlay && (
                 <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]" onClick={handleOverlayClick}>
-                    <SignUpOverlay />
+                    <SignUpOverlay
+                        onEmailSignUp={handleButtonClick}
+                        onGoogleSignUp={handleButtonClick}
+                        onXSignUp={handleButtonClick}
+                        onFacebookSignUp={handleButtonClick}
+                    />
                 </div>  
             )}
         </div>
