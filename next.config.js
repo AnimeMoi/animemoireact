@@ -9,6 +9,7 @@ const nextConfig = {
             'sayhentai.me',
             'p.ntcdntempv26.com',
             't.hentaivn.site',
+            'honeysanime.com'
         ],
     },
 };

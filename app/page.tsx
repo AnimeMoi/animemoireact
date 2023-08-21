@@ -35,9 +35,17 @@ export default function Home() {
             })
     }
 
+    function logout() {
+        auth.signOut().then(() => {
+            console.log("Logout success")
+        }).catch((e) => {
+            console.error(e)
+        })
+    }
+
     return (
         <>
-            <NavBar isLoggedIn={isLogin} isHomePage={true} onSignin={loginHandler} onSignup={loginHandler}></NavBar>
+            <NavBar isLoggedIn={isLogin} isHomePage={true} handleClickOnAvatar={logout}></NavBar>
             <NewMangaUpdate></NewMangaUpdate>
         </>
     )
