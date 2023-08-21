@@ -4,6 +4,7 @@ import "./NavBar.css";
 import { House, MagnifyingGlass, List } from "@phosphor-icons/react";
 import Image from "next/image";
 import Avatar from "../../images/avatar.jpg";
+import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 
 type NavBarProps = {
@@ -12,15 +13,18 @@ type NavBarProps = {
 };
 
 const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
-    const [showSignUpOverlay, setShowSignUpOverlay] = useState(false);
+    const [showOverlayType, setShowOverlayType] = useState<'signIn' | 'signUp' | null>(null);
 
-    const handleSignupClick = () => {
-        setShowSignUpOverlay(true);
+    const handleOverlayToggle = (type: 'signIn' | 'signUp') => () => {
+        setShowOverlayType(type);
     };
+
+    const showSignInOverlay = showOverlayType === 'signIn';
+    const showSignUpOverlay = showOverlayType === 'signUp';
 
     const handleOverlayClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
-            setShowSignUpOverlay(false);
+            setShowOverlayType(null);
         }
     };
 
@@ -41,7 +45,7 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
                 </div>
                 <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20 cursor-pointer">
                     <List color="#f4f4f4" weight="bold" size={18} />
-                    <span className="text-sm text-lightGray opacity-75 font-medium">Thể loại</span>
+                    <span className="text-sm text-lightGray/75 font-medium">Thể loại</span>
                 </div>
             </div>
             {isLoggedIn ? (
@@ -52,15 +56,21 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
                 />
             ) : (
                 <div className="w-fit h-fit flex flex-row gap-5 items-center">
-                    <span className="scale-in text-sm text-lightGray font-semibold cursor-pointer">Đăng nhập</span>
-                    <div className="scale-in w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer" onClick={handleSignupClick}>
+                    <span className="scale-in text-sm text-lightGray font-semibold cursor-pointer" onClick={handleOverlayToggle('signIn')}>Đăng nhập</span>
+                    <div className="scale-in w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer" onClick={handleOverlayToggle('signUp')}>
                         <span className="text-sm text-black font-semibold">Đăng ký</span>
                     </div>
                 </div>
             )}
 
+            {showSignInOverlay && (
+                <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]" onClick={handleOverlayClick}>
+                    <SignInOverlay />
+                </div>  
+            )}
+
             {showSignUpOverlay && (
-                <div className="w-full h-full fixed top-0 left-0 bg-richBlack/75 flex justify-center items-center z-[1]" onClick={handleOverlayClick}>
+                <div className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[1]" onClick={handleOverlayClick}>
                     <SignUpOverlay />
                 </div>  
             )}
