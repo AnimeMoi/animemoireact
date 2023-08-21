@@ -1,14 +1,14 @@
-import {Meta, StoryObj} from "@storybook/react";
+import {Meta, StoryObj} from "storybook/react";
 import SignInOverlay from "./SignInOverlay";
 
 const meta: Meta<typeof SignInOverlay> = {
     title: 'Components/SignInOverlay',
     component: SignInOverlay,
     argTypes: {
-        onEmailSignUp: { action: 'onEmailSignUp' },
-        onGoogleSignUp: { action: 'onGoogleSignUp' },
-        onXSignUp: { action: 'onXSignUp' },
-        onFacebookSignUp: { action: 'onFacebookSignUp' }
+        onEmailSignUp: {action: 'onEmailSignUp'},
+        onGoogleSignUp: {action: 'onGoogleSignUp'},
+        onXSignUp: {action: 'onXSignUp'},
+        onFacebookSignUp: {action: 'onFacebookSignUp'}
     },
 };
 

@@ -1,4 +1,4 @@
-import {Meta, StoryObj} from "@storybook/react";
+import {Meta, StoryObj} from "storybook/react";
 import MangaInfoOverplay from "./MangaInfoOverplay";
 
 const meta: Meta<typeof MangaInfoOverplay> = {

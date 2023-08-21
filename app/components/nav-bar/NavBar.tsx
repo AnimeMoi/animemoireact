@@ -7,7 +7,7 @@ import Image from "next/image";
 import Avatar from "../../images/avatar.jpg";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
-import auth from "@/app/components/auth/Firebase";
+import auth from "../auth/Firebase";
 
 type NavBarProps = {
     isLogin: boolean;

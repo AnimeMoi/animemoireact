@@ -1,6 +1,6 @@
-import {Domain} from "@/app/domain";
-import {Chapters} from "@/app/types/App";
 import Link from "next/link";
+import {Domain} from "../../../domain";
+import {Chapters} from "../../../types/App";
 
 export default async function Page(params: any) {
     const request = await fetch(`${Domain}${params.params.host}/Chapter?url=${params.searchParams.id}`);

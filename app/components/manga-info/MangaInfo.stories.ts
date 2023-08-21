@@ -1,4 +1,4 @@
-import {Meta, StoryObj} from "@storybook/react";
+import {Meta, StoryObj} from "storybook/react";
 import MangaInfo from "./MangaInfo";
 // import MangaCover1 from "../../images/demo-manga-covers/Sono-Bisque-Doll-Wa-Koi-O-Suru.jpg";
 

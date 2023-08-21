@@ -1,13 +1,13 @@
-import {Meta, StoryObj} from "@storybook/react";
+import {Meta} from "storybook/react";
 import NewMangaUpdate from "./NewMangaUpdate";
 
 const meta: Meta<typeof NewMangaUpdate> = {
     title: 'Components/NewMangaUpdate',
-    component: NewMangaUpdate,
+    component: await NewMangaUpdate,
     argTypes: {}
 };
 
 export default meta;
-type Story = StoryObj<typeof NewMangaUpdate>;
+type Story = typeof NewMangaUpdate;
 
 export const Default: Story = {};

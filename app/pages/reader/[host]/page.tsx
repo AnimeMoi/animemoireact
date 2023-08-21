@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import {Domain} from "@/app/domain";
 import Link from "next/link";
+import {Domain} from "../../../domain";
 
 export default async function Page(params: any) {
     const response = await fetch(

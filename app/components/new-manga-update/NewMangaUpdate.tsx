@@ -3,7 +3,7 @@ import "../../globals.css";
 import "./NewMangaUpdate.css";
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
-import {Domain} from "@/app/domain";
+import {Domain} from "../../domain";
 
 const NewMangaUpdate: React.FC = async () => {
     const request = await fetch(`${Domain}NetTruyen?page=1`);

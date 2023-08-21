@@ -5,8 +5,8 @@ import Image from "next/image";
 import GoogleLogo from "../../images/brand-logo/google-logo.png";
 import FacebookLogo from "../../images/brand-logo/facebook-logo.png";
 import XLogo from "../../images/brand-logo/x-logo.png";
-import auth from "@/app/components/auth/Firebase";
-import {GoogleAuthProvider, signInWithPopup} from "@firebase/auth";
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import auth from "../auth/Firebase";
 
 type SignInProps = {
     onAuthStateChanged: (user: any) => void;
