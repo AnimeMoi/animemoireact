@@ -1,5 +1,5 @@
 .move-up {
-    transition: transform 0.4s ease;
+    transition: transform 0.3s ease;
 }
 
 .move-up:hover {
@@ -7,7 +7,7 @@
 }
 
 .overlay-show {
-    animation: overlayScaleIn 0.4s ease forwards;
+    animation: overlayScaleIn 0.3s ease forwards;
 }
 
 @keyframes overlayScaleIn {
