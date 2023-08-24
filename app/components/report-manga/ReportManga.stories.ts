@@ -1,12 +1,12 @@
-import {Meta, StoryObj} from "storybook/react";
+import {Meta, StoryObj} from "@storybook/react";
 import ReportManga from "./ReportManga";
 
 const meta: Meta<typeof ReportManga> = {
     title: 'Components/ReportManga',
     component: ReportManga,
     argTypes: {
-        onSend: {action: 'onSend'},
-        onClose: {action: 'onClose'}
+        onSend: { action: 'onSend' },
+        onClose: { action: 'onClose' }
     },
 };
 
