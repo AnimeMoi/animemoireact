@@ -7,7 +7,7 @@
 }
 
 .overlay-show {
-    animation: overlayScaleIn 0.3s ease forwards;
+    animation: overlayScaleIn 0.4s ease forwards;
 }
 
 @keyframes overlayScaleIn {

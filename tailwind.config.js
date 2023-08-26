@@ -27,6 +27,16 @@ module.exports = {
     },
     fontFamily:{
       'primary': ['Quicksand']
+    },
+    screens: {
+      'phone': '390px',
+      // => @media (min-width: 390px) { ... }
+
+      'tablet': '1080px',
+      // => @media (min-width: 1080px) { ... }
+
+      'desktop': '1200px',
+      // => @media (min-width: 1200px) { ... }
     }
   },
   plugins: [],

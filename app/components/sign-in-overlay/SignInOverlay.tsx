@@ -5,44 +5,48 @@ import Image from "next/image";
 import GoogleLogo from "../../images/brand-logo/google-logo.png";
 import FacebookLogo from "../../images/brand-logo/facebook-logo.png";
 import XLogo from "../../images/brand-logo/x-logo.png";
+import auth from "../auth/Firebase";
+import {GoogleAuthProvider, signInWithPopup, TwitterAuthProvider} from "firebase/auth";
 
 type SignInProps = {
-  onEmailSignUp: () => void;
-  onGoogleSignUp: () => void;
-  onXSignUp: () => void;
-  onFacebookSignUp: () => void;
+  onEmailSignIn: () => void;
+  onAuthStateChanged: (user: any) => void;
 };
 
 const SignInOverlay: React.FC<SignInProps> = ({
-  onEmailSignUp,
-  onGoogleSignUp,
-  onXSignUp,
-  onFacebookSignUp,
-}) => {
+  onEmailSignIn,
+  onAuthStateChanged,
+}: SignInProps) => {
   const [isEmailClicking, setIsEmailClicking] = useState(false);
-  const [isGoogleClicking, setIsGoogleClicking] = useState(false);
-  const [isXClicking, setIsXClicking] = useState(false);
-  const [isFacebookClicking, setIsFacebookClicking] = useState(false);
 
   const handleEmailClick = () => {
-    onEmailSignUp();
+    onEmailSignIn();
     setIsEmailClicking(true);
   };
 
+  const GoogleProvider = new GoogleAuthProvider();
   const handleGoogleClick = () => {
-    onGoogleSignUp();
-    setIsGoogleClicking(true);
+    signInWithPopup(auth, GoogleProvider)
+      .then((result) => {
+        onAuthStateChanged(result.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
+  const XProvider = new TwitterAuthProvider();
   const handleXClick = () => {
-    onXSignUp();
-    setIsXClicking(true);
+    signInWithPopup(auth, XProvider)
+      .then((result) => {
+        onAuthStateChanged(result.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  const handleFacebookClick = () => {
-    onFacebookSignUp();
-    setIsFacebookClicking(true);
-  };
+  const handleFacebookClick = () => {};
 
   return (
     <div className="font-primary w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/50 backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">

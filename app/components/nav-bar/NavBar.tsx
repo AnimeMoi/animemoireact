@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import "../../globals.css";
 import "./NavBar.css";
 import { House, MagnifyingGlass, List } from "@phosphor-icons/react";
@@ -6,23 +7,50 @@ import Image from "next/image";
 import Avatar from "../../images/avatar.jpg";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
+import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
+import Firebase from "../auth/Firebase";
 
 type NavBarProps = {
-  isLoggedIn: boolean;
   isHomePage: boolean;
 };
 
-const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
+function CheckAuth() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    Firebase.onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+    });
+  }, [isLoggedIn]);
+
+  return isLoggedIn;
+}
+
+const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   const [showOverlayType, setShowOverlayType] = useState<
-    "signIn" | "signUp" | null
+    "signIn" | "signUp" | "accountSetting" | null
   >(null);
 
-  const handleOverlayToggle = (type: "signIn" | "signUp") => () => {
-    setShowOverlayType(type);
-  };
+  const isLoggedIn = CheckAuth();
+
+  function handleAuthStateChanged(user: any) {
+    if (user) {
+      setShowOverlayType(null);
+    }
+  }
+
+  const handleOverlayToggle =
+    (type: "signIn" | "signUp" | "accountSetting") => () => {
+      setShowOverlayType(type);
+    };
 
   const showSignInOverlay = showOverlayType === "signIn";
   const showSignUpOverlay = showOverlayType === "signUp";
+  const showAccountSettingOverlay = showOverlayType === "accountSetting";
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -34,7 +62,7 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
 
   return (
     <div className="font-primary w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15] sticky top-0 z-[100]">
-      <div className="text-[22px] text-lightGray font-semibold uppercase tracking-wider">
+      <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
         AnimeMoi
       </div>
       <div className="w-fit h-fit flex flex-row gap-[15px]">
@@ -62,7 +90,8 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
         <Image
           src={Avatar}
           alt={""}
-          className="w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px]"
+          className="scale-in w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px] cursor-pointer"
+          onClick={handleOverlayToggle("accountSetting")}
         />
       ) : (
         <div className="w-fit h-fit flex flex-row gap-5 items-center">
@@ -83,28 +112,41 @@ const NavBar: React.FC<NavBarProps> = ({ isLoggedIn, isHomePage }) => {
 
       {showSignInOverlay && (
         <div
-          className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[200]"
+          className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
           onClick={handleOverlayClick}
         >
           <SignInOverlay
-            onEmailSignUp={handleButtonClick}
-            onGoogleSignUp={handleButtonClick}
-            onXSignUp={handleButtonClick}
-            onFacebookSignUp={handleButtonClick}
+            onAuthStateChanged={handleAuthStateChanged}
+            onEmailSignIn={handleButtonClick}
           />
         </div>
       )}
 
       {showSignUpOverlay && (
         <div
-          className="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-richBlack/75 z-[200]"
+          className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
           onClick={handleOverlayClick}
         >
           <SignUpOverlay
+            onAuthStateChanged={handleAuthStateChanged}
             onEmailSignUp={handleButtonClick}
-            onGoogleSignUp={handleButtonClick}
-            onXSignUp={handleButtonClick}
-            onFacebookSignUp={handleButtonClick}
+          />
+        </div>
+      )}
+
+      {/* Lớp phủ để làm nổi bật AccountSettingOverlay */}
+      {showAccountSettingOverlay && (
+        <div
+          className="fixed inset-0 bg-black/75 z-[150]"
+          onClick={handleOverlayClick}
+        />
+      )}
+
+      {showAccountSettingOverlay && (
+        <div className="absolute top-[90%] right-0 z-[200]">
+          <AccountSettingOverlay
+            onEdit={handleButtonClick}
+            onLogout={handleButtonClick}
           />
         </div>
       )}

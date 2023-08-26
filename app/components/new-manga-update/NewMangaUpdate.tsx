@@ -3,19 +3,25 @@ import "../../globals.css";
 import "./NewMangaUpdate.css";
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
+import { Domain } from "../../domain";
 
-const NewMangaUpdate: React.FC = () => {
+const NewMangaUpdate: React.FC = async () => {
+  const request = await fetch(`${Domain}NetTruyen?page=1`);
+  const response = await request.json();
+  const data = response.mangas;
+
   const renderMangaDiv = () => {
-    const mangaDiv = [];
-    for (let i = 0; i < 10; i++) {
+    const mangaDiv: React.JSX.Element[] = [];
+    data.forEach((item: any, index: number) => {
       mangaDiv.push(
-        <div className="manga w-fit h-fit flex flex-col gap-[20px] cursor-pointer" key={i}>
+        <div
+          className="manga w-fit h-fit flex flex-col gap-[20px] cursor-pointer"
+          key={index}
+        >
           <div className="w-[180px] h-[260px] relative overflow-hidden">
             <Image
-              src={
-                "https://honeysanime.com/wp-content/uploads/2017/12/Boruto-Naruto-Next-Generations-500x750.jpg"
-              }
-              alt={""}
+              src={item.cover}
+              alt={item.title[0].title}
               fill
               objectFit="cover"
               className="rounded-[20px] outline outline-2 outline-white/20 outline-offset-[-2px]"
@@ -23,7 +29,7 @@ const NewMangaUpdate: React.FC = () => {
           </div>
           <div className="w-[180px] h-fit flex flex-col items-center overflow-hidden gap-[4px] px-[8px]">
             <p className="w-full text-base text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
-              Uzumaki Boruto
+              {item.title[0].title}
             </p>
             <p className="text-sm text-white opacity-75 font-medium">
               Chapter 80
@@ -31,19 +37,17 @@ const NewMangaUpdate: React.FC = () => {
           </div>
           <div className="manga-info-overlay">
             <MangaInfoOverlay
-              coverImage={
-                "https://honeysanime.com/wp-content/uploads/2017/12/Boruto-Naruto-Next-Generations-500x750.jpg"
-              }
-              title="Uzumaki Boruto"
-              author="Ikemoto Mikio - Kishimoto Masashi - Kodachi Ukyou"
-              status="Đang tiến hành"
-              views={5661179}
-              description="Boruto là phần tiếp nối của siêu phẩm Naruto huyền thoại. Trong phần này, truyện tập trung vào cậu bé Boruto, con trai của Naruto. Truyện mở đầu bằng cảnh làng lá hoang tàn và một nhân vật bí ẩn tuyên bố về cái chết của Naruto cùng sự chấm dứt của thời đại Ninja hoàng kim. Chuyện gì đã xảy ra? Số phận của các nhân vật như Naruto, Sasuke… ra sao? Và vì sao Boruto lại đeo băng đô với biểu tượng làng lá bị cắt ngang?"
+              author={item.author}
+              views={item.views ?? 0}
+              title={item.title[0].title}
+              description={item.description}
+              coverImage={item.cover}
+              status={item.status}
             />
           </div>
         </div>
       );
-    }
+    });
     return mangaDiv;
   };
 
