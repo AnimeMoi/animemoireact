@@ -5,10 +5,8 @@ const meta: Meta<typeof SignInOverlay> = {
     title: 'Components/SignInOverlay',
     component: SignInOverlay,
     argTypes: {
-        onEmailSignUp: { action: 'onEmailSignUp' },
-        onGoogleSignUp: { action: 'onGoogleSignUp' },
-        onXSignUp: { action: 'onXSignUp' },
-        onFacebookSignUp: { action: 'onFacebookSignUp' }
+        onEmailSignIn: { action: 'onEmailSignIn' },
+        onAuthStateChanged: { action: 'onAuthStateChanged' }
     },
 };
 

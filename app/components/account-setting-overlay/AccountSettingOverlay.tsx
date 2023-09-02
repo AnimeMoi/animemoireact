@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../../globals.css";
 import "./AccountSettingOverlay.css";
 import auth from "../auth/Firebase";
-import { useToggleContext } from "@/app/toggleContext";
+import { useToggleContext } from "../../toggleContext";
 
 type AccountSettingProps = {
   onEdit: () => void;

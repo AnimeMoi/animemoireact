@@ -12,7 +12,6 @@ type Story = StoryObj<typeof NavBar>;
 
 export const Default: Story = {
     args: {
-        isHomePage: true,
-        isLoggedIn: true
+        isHomePage: true
     }
 };
