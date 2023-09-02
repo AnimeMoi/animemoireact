@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useToggleContext } from "@/app/toggleContext";
+import { useToggleContext } from "../toggleContext";
 import NewMangaUpdate_Yurineko from "./new-manga-update-yurineko/NewMangaUpdate";
 
 const VisibilityHandler: React.FC = () => {

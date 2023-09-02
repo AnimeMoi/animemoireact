@@ -2,7 +2,8 @@
 const nextConfig = {
   images: {
     domains: [
-      "st.ntcdntempv3.com",
+      // "st.ntcdntempv3.com",
+      "st.nettruyenus.com",
       "storage.yurineko.net",
       "animemoi.somee.com",
       "animemoi.up.railway.app",
