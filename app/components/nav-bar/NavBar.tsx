@@ -146,7 +146,6 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
         <div className="absolute top-[90%] right-0 z-[200]">
           <AccountSettingOverlay
             onEdit={handleButtonClick}
-            onLogout={handleButtonClick}
           />
         </div>
       )}

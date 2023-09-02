@@ -49,7 +49,7 @@ const SignInOverlay: React.FC<SignInProps> = ({
   const handleFacebookClick = () => {};
 
   return (
-    <div className="font-primary w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/50 backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">
+    <div className="font-primary w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">
       <p className="text-lg text-lightGray font-semibold text-center">
         Đăng nhập
       </p>

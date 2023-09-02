@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../globals.css";
 import "./AccountSettingOverlay.css";
 import auth from "../auth/Firebase";
+import { useToggleContext } from "@/app/toggleContext";
 
 type AccountSettingProps = {
   onEdit: () => void;
@@ -9,10 +10,15 @@ type AccountSettingProps = {
 
 const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
   const [isEditClicking, setIsEditClicking] = useState(false);
+  const { toggleYurinekoVisibility, isYurinekoVisible } = useToggleContext();
 
   const handleEditClick = () => {
     onEdit();
     setIsEditClicking(true);
+  };
+
+  const handleYurinekoCheckboxChange = () => {
+    toggleYurinekoVisibility();
   };
 
   function logout() {
@@ -24,7 +30,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
   }
 
   return (
-    <div className="font-primary w-[280px] h-fit flex flex-col gap-5 p-4 bg-richBlack/[.55] backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overlay-show">
+    <div className="font-primary w-[280px] h-fit flex flex-col gap-5 p-4 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overlay-show">
       <div className="w-full h-fit flex flex-row justify-between items-center">
         <div className="w-full h-fit flex flex-col justify-start gap-[5px]">
           <p className="text-sm text-lightGray font-semibold">Admin</p>
@@ -68,6 +74,16 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
               className="w-[16px] h-[16px]"
             />
             <span className="text-xs text-lightGray font-medium">LxManga</span>
+          </label>
+          <label className="w-full h-fit flex flex-row items-center gap-3">
+            <input
+              type="checkbox"
+              name="option"
+              className="w-[16px] h-[16px] accent-white"
+              checked={isYurinekoVisible}
+              onChange={handleYurinekoCheckboxChange}
+            />
+            <span className="text-xs text-lightGray font-medium">Yurineko</span>
           </label>
         </div>
       </div>
