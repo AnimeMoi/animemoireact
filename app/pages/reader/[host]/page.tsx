@@ -12,7 +12,7 @@ export default async function Page(params: any) {
     return (
         <>
             <button>
-                <Link href={`/pages/home/${params.params.host}`}>Back</Link>
+                <Link href={`/`}>Back</Link>
             </button>
             <div className={'flex flex-col items-center'}>
                 {data.map((chapter: any) => (

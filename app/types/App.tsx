@@ -22,6 +22,7 @@ export type Mangas = {
 
 export type Chapters = [
     {
+        id: number;
         title: string;
         url: string;
         view: string;
