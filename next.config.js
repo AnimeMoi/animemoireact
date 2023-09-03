@@ -12,6 +12,7 @@ const nextConfig = {
             "t.hentaivn.site",
             "honeysanime.com",
             "hoang3409.link",
+            "animemoi.zeabur.app",
             "st.nettruyenmax.com"
         ],
         remotePatterns: [
