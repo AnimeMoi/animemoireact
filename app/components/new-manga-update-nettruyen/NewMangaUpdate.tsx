@@ -6,38 +6,40 @@ import { CaretLeft, CaretRight, CaretDoubleLeft, CaretDoubleRight } from "@phosp
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import { Domain } from "../../domain";
+import Link from "next/link";
 
 const NewMangaUpdate: React.FC = () => {
-  // Client Component nên không thể sử dụng async/await được
-  // const request = await fetch(`${Domain}NetTruyen?page=1`);
-  // const response = await request.json();
-  // const data = response.mangas;
-
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const [data, setData] = useState([]); // Dữ liệu truyện
   const [totalManga, setTotalManga] = useState(0); // Tổng số manga
 
   useEffect(() => {
-    // Fetch dữ liệu truyện theo trang hiện tại
-    fetch(`${Domain}NetTruyen?page=${currentPage}&size=24`)
-      .then((response) => response.json())
-      .then((responseData) => {
+    const fetchData = async () => {
+      try {
+        // Fetch dữ liệu truyện theo trang hiện tại
+        const response = await fetch(
+          `${Domain}NetTruyen?page=${currentPage}&size=24`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const responseData = await response.json();
         const newData = responseData.mangas;
         setData(newData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
 
-    // Fetch tổng số manga
-    fetch(`${Domain}NetTruyen/Total`)
-      .then((response) => response.json())
-      .then((total) => {
-        setTotalManga(total); // Lưu tổng số manga vào state
-      })
-      .catch((error) => {
-        console.error("Error fetching total manga:", error);
-      });
+        // Fetch tổng số manga
+        const totalResponse = await fetch(`${Domain}NetTruyen/Total`);
+        if (!totalResponse.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const total = await totalResponse.json();
+        setTotalManga(total);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [currentPage]);
 
   const itemsPerPage = 24; // Số manga trên mỗi trang
@@ -54,9 +56,10 @@ const NewMangaUpdate: React.FC = () => {
       }
 
       mangaDiv.push(
-        <div
+        <Link
           className="manga w-fit h-fit flex flex-col gap-[18px] cursor-pointer"
           key={index}
+          href={`/pages/details/NetTruyen?id=${item.id}`}
         >
           <div className="w-[150px] h-[220px] relative overflow-hidden">
             <Image
@@ -71,9 +74,7 @@ const NewMangaUpdate: React.FC = () => {
             <p className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
               {item.title[0].title}
             </p>
-            <p className="text-[13px] text-white opacity-75 font-medium">
-              Chapter 80
-            </p>
+            <p className="text-[13px] text-white/75 font-medium">Chapter</p>
           </div>
           <div className="manga-info-overlay">
             <MangaInfoOverlay
@@ -85,7 +86,7 @@ const NewMangaUpdate: React.FC = () => {
               status={item.status}
             />
           </div>
-        </div>
+        </Link>
       );
     });
     return mangaDiv;
@@ -110,20 +111,18 @@ const NewMangaUpdate: React.FC = () => {
   };
 
   return (
-    <div className="font-primary w-full h-fit flex flex-col gap-[30px]">
+    <div className="w-full h-fit flex flex-col gap-[30px]">
       <div className="flex flex-row justify-between items-center">
         <p className="text-xl text-lightGray font-semibold">
           Truyện mới cập nhật
         </p>
-        <p className="text-base text-white/75 font-semibold">
-          NetTruyen
-        </p>
+        <p className="text-base text-white/75 font-semibold">NetTruyen</p>
       </div>
       <div className="flex flex-wrap justify-center gap-[44px]">
         {renderMangaDiv()}
       </div>
       <div className="flex justify-center mt-[30px]">
-        <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-lightGray/20">
+        <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
           <button
             className="w-fit h-fit flex flex-row items-center gap-[5px]"
             onClick={handleFirstPage}
