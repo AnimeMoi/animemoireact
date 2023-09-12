@@ -61,17 +61,17 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   const handleButtonClick = () => (): void => {};
 
   return (
-    <div className="font-primary w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15] sticky top-0 z-[100]">
+    <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15] sticky top-0 z-[100]">
       <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
         AnimeMoi
       </div>
       <div className="w-fit h-fit flex flex-row gap-[15px]">
         {isHomePage ? null : (
-          <div className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-lightGray/20">
+          <div className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20">
             <House color="#f4f4f4" weight="bold" size={18} />
           </div>
         )}
-        <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20">
+        <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
           <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
           <input
             type="text"
@@ -79,7 +79,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
             className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
           />
         </div>
-        <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-lightGray/20 cursor-pointer">
+        <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer">
           <List color="#f4f4f4" weight="bold" size={18} />
           <span className="text-sm text-lightGray/75 font-medium">
             Thể loại

@@ -25,9 +25,6 @@ module.exports = {
       red: colors.red,
       transparent: colors.transparent
     },
-    fontFamily:{
-      'primary': ['Quicksand']
-    },
     screens: {
       'phone': '390px',
       // => @media (min-width: 390px) { ... }

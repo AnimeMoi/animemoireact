@@ -13,26 +13,32 @@ const NewMangaUpdate: React.FC = () => {
   const [totalManga, setTotalManga] = useState(0); // Tổng số manga
 
   useEffect(() => {
-    // Fetch dữ liệu truyện theo trang hiện tại
-    fetch(`${Domain}Yurineko?page=${currentPage}&size=18`)
-      .then((response) => response.json())
-      .then((responseData) => {
+    const fetchData = async () => {
+      try {
+        // Fetch dữ liệu truyện theo trang hiện tại
+        const response = await fetch(
+          `${Domain}Yurineko?page=${currentPage}&size=18`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const responseData = await response.json();
         const newData = responseData.mangas;
         setData(newData);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
 
-    // Fetch tổng số manga
-    fetch(`${Domain}Yurineko/Total`)
-      .then((response) => response.json())
-      .then((total) => {
-        setTotalManga(total); // Lưu tổng số manga vào state
-      })
-      .catch((error) => {
-        console.error("Error fetching total manga:", error);
-      });
+        // Fetch tổng số manga
+        const totalResponse = await fetch(`${Domain}Yurineko/Total`);
+        if (!totalResponse.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const total = await totalResponse.json();
+        setTotalManga(total);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, [currentPage]);
 
   const itemsPerPage = 18; // Số manga trên mỗi trang
@@ -105,7 +111,7 @@ const NewMangaUpdate: React.FC = () => {
   };
 
   return (
-    <div className="font-primary w-full h-fit flex flex-col gap-[30px]">
+    <div className="w-full h-fit flex flex-col gap-[30px]">
       {/* <div className="flex flex-row justify-between items-center">
         <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-red-500">
           <Warning weight="bold" size={18} className="text-red-500" />
@@ -113,12 +119,14 @@ const NewMangaUpdate: React.FC = () => {
         </div>
         <p className="text-base text-white/75 font-semibold">Yurineko</p>
       </div> */}
-      <p className="w-full text-base text-white/75 font-semibold text-right">Yurineko</p>
+      <p className="w-full text-base text-white/75 font-semibold text-right">
+        Yurineko
+      </p>
       <div className="flex flex-wrap justify-center gap-[44px]">
         {renderMangaDiv()}
       </div>
       <div className="flex justify-center mt-[30px]">
-        <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-lightGray/20">
+        <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
           <button
             className="w-fit h-fit flex flex-row items-center gap-[5px]"
             onClick={handleFirstPage}

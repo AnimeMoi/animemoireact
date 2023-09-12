@@ -30,7 +30,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
   }
 
   return (
-    <div className="font-primary w-[280px] h-fit flex flex-col gap-5 p-4 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overlay-show">
+    <div className="w-[280px] h-fit flex flex-col gap-5 p-4 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overlay-show">
       <div className="w-full h-fit flex flex-row justify-between items-center">
         <div className="w-full h-fit flex flex-col justify-start gap-[5px]">
           <p className="text-sm text-lightGray font-semibold">Admin</p>
