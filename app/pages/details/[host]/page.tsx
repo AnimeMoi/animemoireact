@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AnyaSorry from "@/app/images/anya-spy-x-family-apologize.gif";
+import AnyaSorry from "../../../images/anya-spy-x-family-apologize.gif";
 import NavBar from "../../../components/nav-bar/NavBar";
 import MangaDetail from "../../../components/manga-detail/MangaDetail";
 import ChapterList from "../../../components/chapter-list/ChapterList";
