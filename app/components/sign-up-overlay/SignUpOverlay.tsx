@@ -3,7 +3,7 @@ import "../../globals.css";
 import "./SignUpOverlay.css";
 import Image from "next/image";
 import GoogleLogo from "../../images/brand-logo/google-logo.png";
-import FacebookLogo from "../../images/brand-logo/facebook-logo.png";
+import GithubLogo from "../../images/brand-logo/github-logo.png";
 import XLogo from "../../images/brand-logo/x-logo.png";
 import auth, { GoogleProvider, XProvider } from "../auth/Firebase";
 import { signInWithPopup } from "firebase/auth";
@@ -13,7 +13,10 @@ type SignUpProps = {
   onAuthStateChanged: (user: any) => void;
 };
 
-const SignUpOverlay: React.FC<SignUpProps> = ({ onEmailSignUp, onAuthStateChanged }) => {
+const SignUpOverlay: React.FC<SignUpProps> = ({
+  onEmailSignUp,
+  onAuthStateChanged,
+}) => {
   const [isEmailClicking, setIsEmailClicking] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -65,7 +68,7 @@ const SignUpOverlay: React.FC<SignUpProps> = ({ onEmailSignUp, onAuthStateChange
       });
   };
 
-  const handleFacebookClick = () => {};
+  const handleGithubClick = () => {};
 
   return (
     <div className="w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">
@@ -89,10 +92,10 @@ const SignUpOverlay: React.FC<SignUpProps> = ({ onEmailSignUp, onAuthStateChange
         </div>
         <div
           className="move-up w-[145px] h-[46px] flex flex-row justify-center items-center gap-[10px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
-          onClick={handleFacebookClick}
+          onClick={handleGithubClick}
         >
-          <Image src={FacebookLogo} alt={""} className="w-[16px] h-[16px]" />
-          <span className="text-sm text-lightGray font-semibold">Facebook</span>
+          <Image src={GithubLogo} alt={""} className="w-[16px] h-[16px]" />
+          <span className="text-sm text-lightGray font-semibold">Github</span>
         </div>
       </div>
       <div className="w-full h-fit flex flex-row items-center gap-[10px]">

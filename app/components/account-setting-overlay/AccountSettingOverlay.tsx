@@ -2,31 +2,30 @@ import React, { useState } from "react";
 import "../../globals.css";
 import "./AccountSettingOverlay.css";
 import auth from "../auth/Firebase";
-import { useToggleContext } from "../../toggleContext";
 
 type AccountSettingProps = {
   onEdit: () => void;
+  onClose: () => void; // Thêm onClose prop để ẩn overlay
 };
 
-const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
+const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onClose }) => {
   const [isEditClicking, setIsEditClicking] = useState(false);
-  const { toggleYurinekoVisibility, isYurinekoVisible } = useToggleContext();
 
   const handleEditClick = () => {
     onEdit();
     setIsEditClicking(true);
   };
 
-  const handleYurinekoCheckboxChange = () => {
-    toggleYurinekoVisibility();
-  };
-
   function logout() {
-    auth.signOut().then(() => {
-        console.log("Logout success")
-    }).catch((e) => {
-        console.error(e)
-    })
+    auth
+      .signOut()
+      .then(() => {
+        console.log("Logout success");
+        onClose(); // Gọi onClose để ẩn overlay sau khi đăng xuất
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }
 
   return (
@@ -71,17 +70,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit }) => {
             <input
               type="checkbox"
               name="option"
-              className="w-[16px] h-[16px]"
-            />
-            <span className="text-xs text-lightGray font-medium">LxManga</span>
-          </label>
-          <label className="w-full h-fit flex flex-row items-center gap-3">
-            <input
-              type="checkbox"
-              name="option"
               className="w-[16px] h-[16px] accent-white"
-              checked={isYurinekoVisible}
-              onChange={handleYurinekoCheckboxChange}
             />
             <span className="text-xs text-lightGray font-medium">Yurineko</span>
           </label>
