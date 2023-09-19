@@ -4,19 +4,25 @@ const nextConfig = {
     domains: [
       "animemoi.somee.com",
       "animemoi.up.railway.app",
-      // "animemoiapi.onrender.com",
+      "animemoiapi.onrender.com",
       "anime-moi-api.onrender.com",
       "animemoi.zeabur.app",
-      "sayhentai.me",
-      "t.hentaivn.site",
       "honeysanime.com",
       "hoang3409.link",
       // NetTruyen
-      // "nettruyenus.com",
+      "nettruyenus.com",
       "st.nettruyenmax.com",
       "st.nettruyenus.com",
+      "st.ntcdntempv3.com",
+      "telegraph-image-60t.pages.dev",
+      "telegra.ph",
       // Yurineko
       "storage.yurineko.net",
+      // BaoTangTruyen
+      "img.baotangtruyenvip.com",
+      // CManga
+      "cmangaah.com",
+      "cmangaaz.com",
     ],
     remotePatterns: [
       {

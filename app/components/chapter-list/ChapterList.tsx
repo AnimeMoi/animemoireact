@@ -103,7 +103,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
       <div className="w-full h-[542px] flex flex-col gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
         {chapters.map((chapter) => (
           <div
-            key={chapter.title}
+            key={chapter.id}
             className="flex flex-row justify-between items-center"
           >
             <Link

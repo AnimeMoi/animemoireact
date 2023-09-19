@@ -9,7 +9,7 @@ export default async function Page(params: any) {
     <div className="w-screen min-h-screen flex justify-center items-center bg-richBlack">
       <div className="hidden w-[1200px] h-full tablet:flex flex-col justify-start items-center gap-[50px] px-[40px] pb-[40px]">
         <NavBar isHomePage={false} />
-        <MangaDetail />
+        <MangaDetail host={params.params.host} params={params} />
         <ChapterList host={params.params.host} params={params} />
         <div className="w-full h-[160px]"></div>
       </div>

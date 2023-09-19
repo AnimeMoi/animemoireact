@@ -8,7 +8,8 @@ import Avatar from "../../images/avatar.jpg";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
-import Firebase from "../auth/Firebase";
+import auth from "../auth/Firebase";
+import { getGenreRef } from "../genre/Genre";
 
 type NavBarProps = {
   isHomePage: boolean;
@@ -18,7 +19,7 @@ function CheckAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    Firebase.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
       } else {
@@ -60,6 +61,14 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 
   const handleButtonClick = () => (): void => {};
 
+  const genreRef = getGenreRef();
+
+  const handleScrollToGenre = () => {
+    if (genreRef?.current) {
+      genreRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15] sticky top-0 z-[100]">
       <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
@@ -79,7 +88,10 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
             className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
           />
         </div>
-        <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer">
+        <div
+          className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
+          onClick={handleScrollToGenre}
+        >
           <List color="#f4f4f4" weight="bold" size={18} />
           <span className="text-sm text-lightGray/75 font-medium">
             Thể loại
@@ -146,6 +158,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
         <div className="absolute top-[90%] right-0 z-[200]">
           <AccountSettingOverlay
             onEdit={handleButtonClick}
+            onClose={() => setShowOverlayType(null)}
           />
         </div>
       )}

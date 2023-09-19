@@ -1,6 +1,6 @@
 import React from "react";
 import "../../globals.css";
-import "../new-manga-update-nettruyen/NewMangaUpdate.css";
+import "../new-manga-update/NewMangaUpdate.css";
 import Image from "next/image";
 
 type MangaInfoProps = {
