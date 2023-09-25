@@ -2,7 +2,12 @@
 import React, { useState, useEffect } from "react";
 import "../../globals.css";
 import "./NewMangaUpdate.css";
-import { CaretLeft, CaretRight, CaretDoubleLeft, CaretDoubleRight } from "@phosphor-icons/react";
+import {
+  CaretLeft,
+  CaretRight,
+  CaretDoubleLeft,
+  CaretDoubleRight,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import { Domain } from "../../domain";
@@ -62,7 +67,10 @@ const NewMangaUpdate: React.FC = () => {
     const mangaDiv: React.JSX.Element[] = [];
     data.forEach((item: any, index: number) => {
       // Sử dụng Regular Expression để lấy số chapter từ lastChapterTitle
-      const chapterNumber = item.lastChapterTitle && item.lastChapterTitle.match(/(\d+(\.\d+)?)/)?.[0] || "N/A";
+      const chapterNumber =
+        (item.lastChapterTitle &&
+          item.lastChapterTitle.match(/(\d+(\.\d+)?)/)?.[0]) ||
+        "N/A";
 
       mangaDiv.push(
         <Link
@@ -73,7 +81,7 @@ const NewMangaUpdate: React.FC = () => {
           <div className="w-[150px] h-[220px] relative overflow-hidden">
             <Image
               src={item.cover}
-              alt={item.title[0].title}
+              alt={item.titles[0]}
               fill
               className="object-cover rounded-[18px] outline outline-2 outline-white/20 outline-offset-[-2px]"
               sizes="1200px"
@@ -81,7 +89,7 @@ const NewMangaUpdate: React.FC = () => {
           </div>
           <div className="w-[150px] h-fit flex flex-col items-center overflow-hidden gap-[2px] px-[4px]">
             <p className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
-              {item.title[0].title}
+              {item.titles[0]}
             </p>
             <p className="text-[13px] text-white/75 font-medium">
               {selectedSource === "NetTruyen"
@@ -93,13 +101,13 @@ const NewMangaUpdate: React.FC = () => {
             <MangaInfoOverlay
               author={item.author ?? "Đang cập nhật"}
               views={item.views ?? 0}
-              title={item.title[0].title}
+              title={item.titles[0]}
               description={
                 item.description
                   ? item.description
                   : "Nội dung truyện đang được cập nhật."
               }
-              coverImage={item.cover}
+              cover={item.cover}
               status={item.status}
             />
           </div>

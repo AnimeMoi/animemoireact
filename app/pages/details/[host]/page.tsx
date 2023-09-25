@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AnyaSorry from "../../../images/anya-spy-x-family-apologize.gif";
+import Thumbnail from "../../../images/thumbnail.png";
 import NavBar from "../../../components/nav-bar/NavBar";
 import MangaDetail from "../../../components/manga-detail/MangaDetail";
 import ChapterList from "../../../components/chapter-list/ChapterList";
@@ -13,17 +13,17 @@ export default async function Page(params: any) {
         <ChapterList host={params.params.host} params={params} />
         <div className="w-full h-[160px]"></div>
       </div>
-      <div className="tablet:hidden w-full h-full flex flex-col justify-center items-center gap-[30px]">
-        <div className="w-[198px] h-[198px] relative overflow-hidden">
+      <div className="tablet:hidden w-full h-full flex flex-col justify-center items-center gap-[50px]">
+        <div className="w-[400px] h-[200px] relative overflow-hidden">
           <Image
-            src={AnyaSorry}
+            src={Thumbnail}
             alt=""
             fill
             sizes="(max-width: 390px) 100vw, (max-width: 1080px) 50vw"
-            className="object-cover rounded-[20px] outline outline-2 outline-white/20 outline-offset-[-2px]"
+            className="object-contain"
           />
         </div>
-        <div className="w-[260px] flex flex-col gap-[8px] text-center">
+        <div className="w-[350px] flex flex-col gap-[8px] text-center">
           <p className="text-[22px] text-lightGray font-semibold">
             AnimeMoi mobile is coming
           </p>
