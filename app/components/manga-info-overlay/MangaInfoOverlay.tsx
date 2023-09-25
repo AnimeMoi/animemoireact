@@ -2,6 +2,7 @@ import React from "react";
 import "../../globals.css";
 import "../new-manga-update/NewMangaUpdate.css";
 import Image from "next/image";
+import MangaDetail from "../manga-detail/MangaDetail";
 
 type MangaInfoProps = {
   cover: string;
@@ -12,7 +13,7 @@ type MangaInfoProps = {
   description: string;
 };
 
-const getStatusText = (status: number) => {
+export const getStatusText = (status: number) => {
   switch (status) {
     case 0:
       return "Hoàn thành";

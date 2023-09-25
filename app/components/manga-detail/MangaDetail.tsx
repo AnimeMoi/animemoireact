@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../../globals.css";
 import Image from "next/image";
 import { Domain } from "../../domain";
+import { getStatusText } from "../manga-info-overlay/MangaInfoOverlay";
 
 type MangaDetailProps = {
   host: string;
@@ -33,6 +34,8 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
     fetchData();
   }, [host, params]);
 
+  const statusText = data ? getStatusText(data.status) : "";
+
   return (
     <>
       {data && (
@@ -57,7 +60,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                     Tác giả: {data.author ?? "Đang cập nhật"}
                   </p>
                   <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-                    Tình trạng: {data.status}
+                    Tình trạng: {statusText}
                   </p>
                   <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
                     Lượt đọc: {data.views ?? 0}
