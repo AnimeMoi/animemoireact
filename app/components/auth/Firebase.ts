@@ -1,5 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, TwitterAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  TwitterAuthProvider,
+} from "firebase/auth";
 import { useEffect, useState } from "react";
 
 const firebaseConfig = {
@@ -18,7 +22,7 @@ export default auth;
 export const GoogleProvider = new GoogleAuthProvider();
 export const XProvider = new TwitterAuthProvider();
 
-export const checkAuth = () => {
+export const CheckAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
