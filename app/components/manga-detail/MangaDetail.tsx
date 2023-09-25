@@ -50,7 +50,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
             <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden py-[5px]">
               <div className="flex flex-col gap-[10px]">
                 <p className="w-full text-lg text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
-                  {data.title[0].title}
+                  {data.titles[0]}
                 </p>
                 <div className="flex flex-col gap-[5px]">
                   <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">

@@ -100,7 +100,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           Đọc từ đầu
         </p>
       </div>
-      <div className="w-full h-[542px] flex flex-col gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
+      <div className="w-full max-h-[542px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
         {chapters.map((chapter) => (
           <div
             key={chapter.id}

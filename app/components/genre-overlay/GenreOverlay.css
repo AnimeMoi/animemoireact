@@ -1,0 +1,41 @@
+.genre {
+  position: relative;
+  cursor: pointer;
+  animation: overlayScaleIn 0.4s ease forwards;
+}
+
+@keyframes overlayScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.genre-name:hover {
+  color: #d9f21c;
+}
+
+.genre-name::after {
+  content: attr(data-description);
+  position: absolute;
+  top: 106%;
+  left: 0;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.3s linear;
+  background-color: #02040a;
+  color: #f4f4f4;
+  padding: 16px 20px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  line-height: 24px;
+}
+
+.genre-name:hover::after {
+  transform: scale(1);
+  opacity: 1;
+}

@@ -4,23 +4,37 @@ import "../new-manga-update/NewMangaUpdate.css";
 import Image from "next/image";
 
 type MangaInfoProps = {
-  coverImage: any;
+  cover: string;
   title: string;
   author: string;
-  status: string;
+  status: number;
   views: number;
   description: string;
 };
 
+const getStatusText = (status: number) => {
+  switch (status) {
+    case 0:
+      return "Hoàn thành";
+    case 2:
+      return "Đang tiến hành";
+    case 3:
+      return "Tạm dừng";
+    case 4:
+      return "Không xác định";
+  }
+};
+
 const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
-  const { coverImage, title, author, status, views, description } = props;
+  const { cover, title, author, status, views, description } = props;
+  const statusText = getStatusText(status);
 
   return (
     <div className="w-[320px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/80 backdrop-blur-[10px] rounded-[24px] border-[1.5px] border-white/20">
       <div className="w-full h-fit flex flex-row items-start gap-[15px]">
         <div className="w-[90px] h-[130px] relative overflow-hidden">
           <Image
-            src={coverImage}
+            src={cover}
             alt={title}
             fill
             className="object-cover rounded-[8px] outline outline-[1px] outline-white/20 outline-offset-[-1px]"
@@ -35,7 +49,7 @@ const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
             Tác giả: {author}
           </p>
           <p className="w-full text-xs text-white opacity-75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-            Tình trạng: {status}
+            Tình trạng: {statusText}
           </p>
           {/* <p className="w-full text-xs text-white opacity-75 font-medium whitespace-normal text-ellipsis overflow-hidden">
             Lượt đọc: {views.toLocaleString().replace(/,/g, ".")}
