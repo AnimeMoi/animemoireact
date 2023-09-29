@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "../../globals.css";
+import "./MangaDetail.css";
 import Image from "next/image";
 import { Domain } from "../../domain";
 import { getStatusText } from "../manga-info-overlay/MangaInfoOverlay";
@@ -68,7 +69,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                 </div>
               </div>
               <div className="w-full h-fit flex">
-                <div className="flex px-[15px] py-[10px] rounded-full bg-success cursor-pointer">
+                <div className="flex px-[15px] py-[10px] rounded-full bg-success cursor-pointer move-up">
                   <span className="text-[13px] text-white font-semibold">
                     Theo dõi
                   </span>
@@ -91,3 +92,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 };
 
 export default MangaDetail;
+
+/*
+
+*/

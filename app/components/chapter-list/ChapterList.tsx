@@ -108,7 +108,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           >
             <Link
               href={`/pages/reader/${host}?id=${chapter.id}`}
-              className="w-[320px] text-sm text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
+              className="w-[320px] text-sm text-lightGray hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
             >
               {chapter.title}
             </Link>

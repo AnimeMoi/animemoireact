@@ -20,6 +20,7 @@ module.exports = {
       'lightGray': '#f4f4f4',
       'richBlack': '#02040a',
       'success': '#00C851',
+      'warning': '#ffbb33',
       black: colors.black,
       white: colors.white,
       red: colors.red,

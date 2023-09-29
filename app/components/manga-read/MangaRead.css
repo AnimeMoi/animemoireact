@@ -1,0 +1,7 @@
+.scale-in {
+    transition: transform 0.3s ease;
+}
+
+.scale-in:hover {
+    transform: scale(1.1);
+}
