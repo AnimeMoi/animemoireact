@@ -11,7 +11,7 @@ import { Chapters } from "../../../types/App";
 export default function Page(params: any) {
 	const [dataDetailManga, setDataDetailManga] = useState<any | null>(null);
 	const [chapters, setChapters] = useState<Chapters>([
-		{ id: 0, title: "", url: "", timeUpdate: "" },
+		{ id: 0, title: "", timeUpdate: "", views: 0 },
 	]);
 
 	useEffect(() => {

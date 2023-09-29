@@ -79,7 +79,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ data, host }) => {
 						className="flex flex-row justify-between items-center"
 					>
 						<Link
-							href={`/pages/reader/${host}?id=${chapter.id}`}
+							href={`/pages/reader/${host}?idComic=${chapter.idComic}&id=${chapter.id}`}
 							className="w-[320px] text-sm text-lightGray hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
 						>
 							{chapter.title}
