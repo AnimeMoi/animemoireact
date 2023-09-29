@@ -1,15 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../../globals.css";
 import "./MangaRead.css";
-import {
-  MagnifyingGlass,
-  CaretRight,
-  CaretLeft,
-  SealWarning,
-} from "@phosphor-icons/react";
+import {CaretLeft, CaretRight, MagnifyingGlass, SealWarning,} from "@phosphor-icons/react";
 import Image from "next/image";
-import { Domain, DomainGetImage } from "../../domain";
+import {Domain, DomainGetImage} from "../../domain";
 import Loading from "../../loading";
 
 type MangaReadProps = {
@@ -17,7 +12,7 @@ type MangaReadProps = {
   params: any;
 };
 
-const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
+const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
@@ -25,8 +20,14 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${Domain}${host}/ChapterDetail?url=${params.searchParams.id}`
+          `${Domain}${params.params.host}/ChapterDetail?url=${params.searchParams.id}`
         );
+
+        const data = await response.json();
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].includes("ntcdntemp"))
+            data[i] = `${DomainGetImage}${params.params.host}/GetImage?url=${data[i]}`
+        }
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -58,22 +59,24 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
         </div>
         <div className="flex flex-row justify-center items-center gap-[30px]">
           <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-            <CaretLeft color="#f4f4f4" weight="bold" size={16} />
+            <CaretLeft color="#f4f4f4" weight="bold" size={16}/>
             <span className="text-sm text-white/75 font-semibold">
               Chương trước
             </span>
           </button>
           <div className="flex flex-row items-center gap-[15px]">
-            <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
-              <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
+            <div
+              className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
+              <MagnifyingGlass color="#f4f4f4" weight="bold" size={18}/>
               <input
                 type="text"
                 placeholder="Tìm chương"
                 className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
               />
             </div>
-            <div className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full bg-warning cursor-pointer">
-              <SealWarning color="#000" weight="bold" size={20} />
+            <div
+              className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full bg-warning cursor-pointer">
+              <SealWarning color="#000" weight="bold" size={20}/>
               <span className="text-sm text-black font-medium">Báo lỗi</span>
             </div>
           </div>
@@ -81,19 +84,19 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
             <span className="text-sm text-white/75 font-semibold">
               Chương sau
             </span>
-            <CaretRight color="#f4f4f4" weight="bold" size={16} />
+            <CaretRight color="#f4f4f4" weight="bold" size={16}/>
           </button>
         </div>
       </div>
       {isLoading ? (
         // Nếu isLoading là true, hiển thị component Loading
-        <Loading />
+        <Loading/>
       ) : (
         <div className="w-full h-fit flex flex-col items-center">
           {data.map((chapter: any) => (
             <Image
               key={chapter}
-              src={`${DomainGetImage}${host}/GetImage?url=${chapter}`}
+              src={chapter}
               alt={""}
               width={"700"}
               height={"1000"}
