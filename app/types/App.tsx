@@ -21,10 +21,10 @@
 // };
 
 export type Chapter = {
-  id: number;
-  title: string;
-  url: string;
-  timeUpdate: string;
+	id: number;
+	title: string;
+	timeUpdate: string;
+	views: number;
 };
 
 export type Chapters = Chapter[];
