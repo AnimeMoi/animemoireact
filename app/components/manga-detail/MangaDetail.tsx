@@ -5,6 +5,7 @@ import "./MangaDetail.css";
 import Image from "next/image";
 import { Domain } from "../../domain";
 import { getStatusText } from "../manga-info-overlay/MangaInfoOverlay";
+import { CheckAuth } from "../auth/Firebase";
 
 type MangaDetailProps = {
 	data: any;
@@ -12,6 +13,29 @@ type MangaDetailProps = {
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ data }) => {
 	const statusText = data ? getStatusText(data.status) : "";
+	let followCount = 0;
+	const user = CheckAuth();
+
+	const handleFollowButton = async (comic: any) => {
+		if (user === null) {
+			console.log("not login");
+			return;
+		}
+		const token = await user.getIdTokenResult();
+		const response = await fetch(
+			`${Domain}Service/Follow?idComic=${comic.id}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token.token}`,
+				},
+			}
+		);
+
+		const data = await response.json();
+		console.log(`ok: ${data.message}`);
+	};
 
 	return (
 		<>
@@ -46,7 +70,10 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ data }) => {
 							</div>
 							<div className="w-full h-fit flex">
 								<div className="flex px-[15px] py-[10px] rounded-full bg-success cursor-pointer move-up">
-									<span className="text-[13px] text-white font-semibold">
+									<span
+										className="text-[13px] text-white font-semibold"
+										onClick={() => handleFollowButton(data)}
+									>
 										Theo dõi
 									</span>
 								</div>
