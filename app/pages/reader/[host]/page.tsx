@@ -1,13 +1,17 @@
 import Image from "next/image";
 import Thumbnail from "../../../images/thumbnail.png";
 import NavBar from "../../../components/nav-bar/NavBar";
+import ScrollIndicator from "../../../components/scroll-indicator/ScrollIndicator";
 import MangaRead from "../../../components/manga-read/MangaRead";
 
 export default async function Page(params: any) {
   return (
     <div className="w-screen min-h-screen flex justify-center items-center bg-richBlack">
       <div className="hidden w-[1200px] h-full tablet:flex flex-col justify-start items-center gap-[50px] px-[40px]">
-        <NavBar isHomePage={false} />
+        <div className="w-full h-fit flex flex-col sticky top-0 z-[100]">
+          <NavBar isHomePage={false} />
+          <ScrollIndicator />
+        </div>
         <div className="w-full min-h-[calc(100vh-90px-50px)] flex flex-col gap-[50px]">
           <MangaRead host={params.params.host} params={params} />
           <div className="w-full h-[50px]"></div>

@@ -5,6 +5,7 @@ import "./MangaDetail.css";
 import Image from "next/image";
 import { Domain } from "../../domain";
 import { getStatusText } from "../manga-info-overlay/MangaInfoOverlay";
+// import { CheckAuth } from "../auth/Firebase";
 
 type MangaDetailProps = {
   host: string;
@@ -27,6 +28,16 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 
         const responseData = await response.json();
         setData(responseData);
+
+        const manga = {
+          id: responseData.id,
+          cover: responseData.cover,
+          title: responseData.titles[0],
+          lastChapterTitle: responseData.lastChapterTitle,
+          lastTimeUpdate: responseData.lastTimeUpdate,
+        };
+
+        localStorage.setItem("manga", JSON.stringify(manga));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -36,6 +47,36 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
   }, [host, params]);
 
   const statusText = data ? getStatusText(data.status) : "";
+
+  /*
+  let followCount = 0;
+  const user = CheckAuth();
+
+  const handleFollowClick = async (manga: any) => {
+    if (user === null) {
+      alert("Bạn cần đăng nhập để theo dõi truyện.");
+      return;
+    }
+    const token = await user.getIdTokenResult();
+    const response = await fetch(
+      `${Domain}Service/Follow?idComic=${manga.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    if (data.success) {
+      console.log(`Đã theo dõi truyện: ${manga.title}`);
+    } else {
+      console.error(`Lỗi khi theo dõi truyện: ${data.message}`);
+    }
+  };
+  */
 
   return (
     <>
@@ -69,7 +110,10 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                 </div>
               </div>
               <div className="w-full h-fit flex">
-                <div className="flex px-[15px] py-[10px] rounded-full bg-success cursor-pointer move-up">
+                <div
+                  className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
+                  // onClick={() => handleFollowClick(data)}
+                >
                   <span className="text-[13px] text-white font-semibold">
                     Theo dõi
                   </span>
@@ -92,7 +136,3 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 };
 
 export default MangaDetail;
-
-/*
-
-*/

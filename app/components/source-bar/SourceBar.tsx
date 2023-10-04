@@ -35,7 +35,7 @@ const SourceBar: React.FC = () => {
   const isLoggedIn = CheckAuth();
 
   return (
-    <>
+    <div className="w-full h-fit flex justify-center">
       {isLoggedIn && (
         <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-semibold rounded-full border-[1.5px] border-white/20">
           {sources.map((source) => (
@@ -63,7 +63,7 @@ const SourceBar: React.FC = () => {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -3,6 +3,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   TwitterAuthProvider,
+  User,
 } from "firebase/auth";
 import { useEffect, useState } from "react";
 
@@ -23,14 +24,14 @@ export const GoogleProvider = new GoogleAuthProvider();
 export const XProvider = new TwitterAuthProvider();
 
 export const CheckAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<User | null>(null);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
+        setIsLoggedIn(user);
       } else {
-        setIsLoggedIn(false);
+        setIsLoggedIn(null);
       }
     });
   }, []);

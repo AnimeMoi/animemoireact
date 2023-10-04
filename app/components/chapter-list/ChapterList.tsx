@@ -70,6 +70,29 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
     }
   };
 
+  const handleChapterClick = (chapter: Chapters[number]) => {
+    const storedMangas = localStorage.getItem("mangas");
+    const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+
+    const storedManga = localStorage.getItem("manga");
+    const manga = storedManga ? JSON.parse(storedManga) : {};
+
+    manga.lastChapterTitle = chapter.title;
+
+    const existingMangaIndex = mangas.findIndex(
+      (item: any) => item.id === manga.id
+    );
+
+    if (existingMangaIndex !== -1) {
+      mangas[existingMangaIndex] = manga;
+    } else {
+      mangas.push(manga);
+    }
+
+    localStorage.setItem("mangas", JSON.stringify(mangas));
+    localStorage.setItem("manga", JSON.stringify(manga));
+  };
+
   return (
     <div className="w-[500px] h-fit flex flex-col gap-[30px]">
       <div className="flex flex-row justify-between items-center">
@@ -108,9 +131,14 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           >
             <Link
               href={`/pages/reader/${host}?id=${chapter.id}`}
-              className="w-[320px] text-sm text-lightGray hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
+              legacyBehavior
             >
-              {chapter.title}
+              <a
+                className="w-[320px] text-sm text-lightGray hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
+                onClick={() => handleChapterClick(chapter)}
+              >
+                {chapter.title}
+              </a>
             </Link>
             <p className="text-sm text-white/75 font-medium">
               {formatDate(chapter.timeUpdate)}

@@ -8,7 +8,9 @@ export default async function Page(params: any) {
   return (
     <div className="w-screen min-h-screen flex justify-center items-center bg-richBlack">
       <div className="hidden w-[1200px] h-full tablet:flex flex-col justify-start items-center gap-[50px] px-[40px]">
-        <NavBar isHomePage={false} />
+        <div className="w-full h-fit flex sticky top-0 z-[100]">
+          <NavBar isHomePage={false} />
+        </div>
         <div className="w-full min-h-[calc(100vh-90px-50px)] flex flex-col gap-[50px]">
           <div className="w-full h-fit flex flex-row flex-wrap justify-center gap-[60px]">
             <MangaDetail host={params.params.host} params={params} />

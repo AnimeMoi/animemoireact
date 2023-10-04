@@ -12,6 +12,7 @@ import GenreOverlay from "../genre-overlay/GenreOverlay";
 import SearchResult from "../search-result/SearchResult";
 import { CheckAuth } from "../auth/Firebase";
 import { Domain } from "../../domain";
+import Link from "next/link";
 
 type NavBarProps = {
   isHomePage: boolean;
@@ -97,15 +98,18 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   }, [delayedChange]);
 
   return (
-    <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15] sticky top-0 z-[100]">
+    <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
       <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
-        AnimeMoi
+        <Link href={`/`}>AnimeMoi</Link>
       </div>
       <div className="w-fit h-fit flex flex-row gap-[15px]">
         {isHomePage ? null : (
-          <div className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20">
+          <Link
+            href={`/`}
+            className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20"
+          >
             <House color="#f4f4f4" weight="bold" size={18} />
-          </div>
+          </Link>
         )}
         <div className="relative">
           <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">

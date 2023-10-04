@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "../../globals.css";
 import "./SearchResult.css";
 import Image from "next/image";
@@ -16,7 +17,11 @@ const SearchResult: React.FC<SearchResultProps> = ({ results }) => {
           "N/A";
 
         return (
-          <div className="flex flex-row gap-[15px]" key={result.id}>
+          <Link
+            className="flex flex-row gap-[15px]"
+            key={result.id}
+            href={`/pages/details/NetTruyen?id=${result.id}`}
+          >
             <div className="w-[60px] h-[88px] relative overflow-hidden">
               <Image
                 src={result.cover}
@@ -37,7 +42,7 @@ const SearchResult: React.FC<SearchResultProps> = ({ results }) => {
                 Chapter {chapterNumber ?? "Đang cập nhật"}
               </p>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
