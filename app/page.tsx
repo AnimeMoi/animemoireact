@@ -62,8 +62,3 @@ export default function Home() {
     </SourceProvider>
   );
 }
-
-/*
-- Add ScrollIndicator component to track story reading progress on reader page
-- Add MangaHistory component to save manga reading history
-*/
