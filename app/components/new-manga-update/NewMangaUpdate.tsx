@@ -1,19 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "../../globals.css";
 import "./NewMangaUpdate.css";
-import {
-  CaretLeft,
-  CaretRight,
-  CaretDoubleLeft,
-  CaretDoubleRight,
-} from "@phosphor-icons/react";
+import {CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight,} from "@phosphor-icons/react";
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
-import { Domain } from "../../domain";
+import {Domain} from "../../domain";
 import Link from "next/link";
 import Loading from "../../loading";
-import { useSourceContext } from "../../sourceContext";
+import {useSourceContext} from "../../sourceContext";
 
 const NewMangaUpdate: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
@@ -21,7 +16,7 @@ const NewMangaUpdate: React.FC = () => {
   const [totalManga, setTotalManga] = useState(0); // Tổng số manga
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
-  const { selectedSource } = useSourceContext(); // Sử dụng React Context
+  const {selectedSource} = useSourceContext(); // Sử dụng React Context
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +71,7 @@ const NewMangaUpdate: React.FC = () => {
         <Link
           className="manga w-fit h-fit flex flex-col gap-[18px] cursor-pointer"
           key={index}
-          href={`/pages/details/NetTruyen?id=${item.id}`}
+          href={`/pages/details/${selectedSource}?id=${item.id}`}
         >
           <div className="w-[150px] h-[220px] relative overflow-hidden">
             <Image
@@ -88,7 +83,8 @@ const NewMangaUpdate: React.FC = () => {
             />
           </div>
           <div className="w-[150px] h-fit flex flex-col items-center overflow-hidden gap-[2px] px-[4px]">
-            <p className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
+            <p
+              className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
               {item.titles[0]}
             </p>
             <p className="text-[13px] text-white/75 font-medium">
@@ -145,7 +141,7 @@ const NewMangaUpdate: React.FC = () => {
       </p>
       {isLoading ? (
         // Nếu isLoading là true, hiển thị component Loading
-        <Loading />
+        <Loading/>
       ) : (
         <div className="flex flex-wrap justify-center gap-[44px]">
           {renderMangaDiv()}
@@ -153,13 +149,14 @@ const NewMangaUpdate: React.FC = () => {
       )}
       {shouldShowPagination && (
         <div className="flex justify-center mt-[30px]">
-          <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
+          <div
+            className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
               onClick={handleFirstPage}
               disabled={currentPage === 1}
             >
-              <CaretDoubleLeft color="#f4f4f4" weight="bold" size={16} />
+              <CaretDoubleLeft color="#f4f4f4" weight="bold" size={16}/>
               <span className="text-sm text-white/75 font-semibold">
                 Trang đầu
               </span>
@@ -169,7 +166,7 @@ const NewMangaUpdate: React.FC = () => {
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
-              <CaretLeft color="#f4f4f4" weight="bold" size={16} />
+              <CaretLeft color="#f4f4f4" weight="bold" size={16}/>
             </button>
             <span className="text-sm text-lightGray font-semibold mx-2.5">
               {currentPage} trên {totalPages}
@@ -179,7 +176,7 @@ const NewMangaUpdate: React.FC = () => {
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              <CaretRight color="#f4f4f4" weight="bold" size={16} />
+              <CaretRight color="#f4f4f4" weight="bold" size={16}/>
             </button>
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
@@ -189,7 +186,7 @@ const NewMangaUpdate: React.FC = () => {
               <span className="text-sm text-white/75 font-semibold">
                 Trang cuối
               </span>
-              <CaretDoubleRight color="#f4f4f4" weight="bold" size={16} />
+              <CaretDoubleRight color="#f4f4f4" weight="bold" size={16}/>
             </button>
           </div>
         </div>
