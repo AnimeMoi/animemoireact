@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { TrashSimple } from "@phosphor-icons/react";
 import "../../globals.css";
 import Image from "next/image";
 
@@ -50,12 +51,20 @@ const MangaHistory: React.FC = () => {
                   Đang đọc: {manga.lastChapterTitle}
                 </p>
               </div>
-              <p
+              {/* <p
                 className="text-xs text-red-500 font-semibold cursor-pointer"
                 onClick={() => handleDeleteClick(index)}
               >
                 Xoá
-              </p>
+              </p> */}
+              <div className="w-full h-fit flex justify-end">
+                <div
+                  className="w-fit h-fit p-[10px] bg-red-500 rounded-full cursor-pointer"
+                  onClick={() => handleDeleteClick(index)}
+                >
+                  <TrashSimple color="#fff" weight="bold" size={14} />
+                </div>
+              </div>
             </div>
           </div>
         ))}

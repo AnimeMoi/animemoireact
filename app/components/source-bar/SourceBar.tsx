@@ -36,7 +36,7 @@ const SourceBar: React.FC = () => {
 
   return (
     <div className="w-full h-fit flex justify-center">
-      {isLoggedIn && (
+      {isLoggedIn ? (
         <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-semibold rounded-full border-[1.5px] border-white/20">
           {sources.map((source) => (
             <div
@@ -62,6 +62,10 @@ const SourceBar: React.FC = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <p className="text-sm text-white/75 font-semibold">
+          Đăng nhập để được đọc truyện từ nhiều nguồn mà AnimeMoi đã tổng hợp.
+        </p>
       )}
     </div>
   );

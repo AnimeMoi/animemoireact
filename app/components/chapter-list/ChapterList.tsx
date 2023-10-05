@@ -16,7 +16,7 @@ type ChapterListProps = {
 
 const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
   const [chapters, setChapters] = useState<Chapters>([
-    { id: 0, title: "", url: "", timeUpdate: "" },
+    { id: 0, title: "", timeUpdate: "", views: 0 },
   ]);
 
   const [isLatestFirst, setIsLatestFirst] = useState(true); // State để theo dõi thứ tự hiển thị chapter
