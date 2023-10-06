@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   TwitterAuthProvider,
   User,
@@ -22,6 +23,7 @@ const auth = getAuth(app);
 export default auth;
 export const GoogleProvider = new GoogleAuthProvider();
 export const XProvider = new TwitterAuthProvider();
+export const GithubProvider = new GithubAuthProvider();
 
 export const CheckAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<User | null>(null);

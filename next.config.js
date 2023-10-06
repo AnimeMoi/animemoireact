@@ -25,7 +25,9 @@ const nextConfig = {
             "cmangaah.com",
             "cmangaaz.com",
             "www.cmangaad.com",
-            "old.cmangaaz.com"
+            "old.cmangaaz.com",
+            // tele
+            "api.telegram.org"
         ],
         remotePatterns: [
             {

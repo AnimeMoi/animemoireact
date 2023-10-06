@@ -21,10 +21,19 @@
 // };
 
 export type Chapter = {
-  id: number;
-  title: string;
-  timeUpdate: string;
-  views: number;
+	id: number;
+	title: string;
+	timeUpdate: string;
+	views: number;
 };
 
 export type Chapters = Chapter[];
+
+export type SourceProviderProps = {
+	children: React.ReactNode;
+};
+
+export type SourceContextProps = {
+	selectedSource: string;
+	onSelectSource: (source: string) => void;
+};
