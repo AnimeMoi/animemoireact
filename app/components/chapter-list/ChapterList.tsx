@@ -20,7 +20,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(
-					`${Domain}${host}/Chapter?url=${params.searchParams.id}`
+					`${Domain}AnimeMoi/Chapter?idComic=${params.searchParams.id}`
 				);
 				if (!response.ok) {
 					throw new Error("Network response was not ok");
