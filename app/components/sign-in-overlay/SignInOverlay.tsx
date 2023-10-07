@@ -12,10 +12,7 @@ import auth, {
 } from "../auth/Firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-
-type SignInProps = {
-	onAuthStateChanged: (user: any) => void;
-};
+import { SignInProps } from "../../types/App";
 
 const SignInOverlay: React.FC<SignInProps> = ({ onAuthStateChanged }) => {
 	const [isEmailClicking, setIsEmailClicking] = useState(false);

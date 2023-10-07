@@ -5,14 +5,9 @@ import "./ChapterList.css";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import Link from "next/link";
 import { Domain } from "../../domain";
-import { Chapters } from "../../types/App";
+import { ChapterListProps, Chapters } from "../../types/App";
 import moment from "moment";
 import "moment/locale/vi";
-
-type ChapterListProps = {
-	host: string;
-	params: any; // Truyền biến params qua props
-};
 
 const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 	const [chapters, setChapters] = useState<Chapters>([

@@ -14,11 +14,7 @@ import Loading from "../../loading";
 import ReportManga from "../report-manga/ReportManga";
 import moment from "moment";
 import { getLinkTelegramImage } from "../../utils/image";
-
-type MangaReadProps = {
-	host: string;
-	params: any;
-};
+import { MangaReadProps } from "../../types/App";
 
 const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
 	const [data, setData] = useState<string[]>([]);

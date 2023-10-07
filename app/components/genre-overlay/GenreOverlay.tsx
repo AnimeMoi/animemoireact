@@ -6,9 +6,9 @@ import "./GenreOverlay.css";
 import NetTruyenGenre from "../../genre-types/NetTruyen/tags.json";
 
 const GenreOverlay: React.FC = () => {
-  const [genres, setGenres] = useState<any>([]);
+	const [genres, setGenres] = useState<any>([]);
 
-  /*
+	/*
   const { selectedSource } = useSourceContext(); // Sử dụng React Context
 
   // Kiểm tra xem selectedSource có bằng "NetTruyen" hay không
@@ -17,7 +17,7 @@ const GenreOverlay: React.FC = () => {
     selectedSource === "NetTruyen" ? "Nettruyen" : selectedSource;
   */
 
-  /*
+	/*
   useEffect(() => {
     // Thực hiện lấy dữ liệu từ URL JSON
     const fetchData = async () => {
@@ -41,18 +41,18 @@ const GenreOverlay: React.FC = () => {
   }, [actualSelectedSource]);
   */
 
-  useEffect(() => {
-    setGenres(NetTruyenGenre);
-  });
+	useEffect(() => {
+		setGenres(NetTruyenGenre);
+	}, []);
 
-  /*
+	/*
   // Kiểm tra xem actualSelectedSource có bằng "Nettruyen" hay không
   // Nếu actualSelectedSource bằng "Nettruyen", shouldShowGenre sẽ có giá trị true, ngược lại, nó sẽ có giá trị false
   const shouldShowGenre = actualSelectedSource === "Nettruyen";
   */
 
-  return (
-    /*
+	return (
+		/*
     <>
       {shouldShowGenre && (
         <div className="genre grid gap-x-[40px] gap-y-5 grid-cols-6 p-5 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-sm text-white/75 font-medium">
@@ -69,18 +69,18 @@ const GenreOverlay: React.FC = () => {
       )}
     </>
     */
-    <div className="genre grid gap-x-[40px] gap-y-5 grid-cols-6 p-5 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-sm text-white/75 font-medium">
-      {genres.map((genre: any) => (
-        <div
-          key={genre.Id}
-          className="genre-name"
-          data-description={genre.Description}
-        >
-          {genre.Name}
-        </div>
-      ))}
-    </div>
-  );
+		<div className="genre grid gap-x-[40px] gap-y-5 grid-cols-6 p-5 bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-sm text-white/75 font-medium">
+			{genres.map((genre: any) => (
+				<div
+					key={genre.Id}
+					className="genre-name"
+					data-description={genre.Description}
+				>
+					{genre.Name}
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default GenreOverlay;

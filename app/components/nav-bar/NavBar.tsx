@@ -13,10 +13,9 @@ import SearchResult from "../search-result/SearchResult";
 import { CheckAuth } from "../auth/Firebase";
 import { Domain } from "../../domain";
 import Link from "next/link";
-
-type NavBarProps = {
-	isHomePage: boolean;
-};
+import { search } from "../../utils/search";
+import { NavBarProps } from "../../types/App";
+import { ButtonWithIcon } from "../button/button";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
@@ -65,27 +64,8 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 		if (delayedChange !== "") {
 			const fetchData = async (value: string) => {
 				try {
-					const response = await fetch(`${Domain}NetTruyen/Search`, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							query: value,
-							page: 0,
-							genres: [],
-							exclude: [],
-							status: 0,
-						}),
-					});
-
-					if (!response.ok) {
-						console.error("Network response was not ok");
-					}
-
-					const data = await response.json();
-					setSearchResults(data);
-					setIsSearchResultVisible(data.length > 0);
+					setIsSearchResultVisible(value.length > 0);
+					setSearchResults(await search(value, "NetTruyen"));
 				} catch (error) {
 					console.error("Error fetching data:", error);
 				}

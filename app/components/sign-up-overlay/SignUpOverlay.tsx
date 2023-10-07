@@ -11,10 +11,7 @@ import auth, {
 	XProvider,
 } from "../auth/Firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-
-type SignUpProps = {
-	onAuthStateChanged: (user: any) => void;
-};
+import { SignUpProps } from "../../types/App";
 
 const SignUpOverlay: React.FC<SignUpProps> = ({ onAuthStateChanged }) => {
 	const [isEmailClicking, setIsEmailClicking] = useState(false);

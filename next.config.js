@@ -27,7 +27,13 @@ const nextConfig = {
             "www.cmangaad.com",
             "old.cmangaaz.com",
             // tele
-            "api.telegram.org"
+            "api.telegram.org",
+            // hentaivn
+            "t.htvncdn.net",
+            // lxmanga
+            "lxmanga.net",
+            // sayhentai
+            "sayhentai.fun"
         ],
         remotePatterns: [
             {
