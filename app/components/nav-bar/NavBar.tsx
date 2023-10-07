@@ -15,7 +15,6 @@ import { Domain } from "../../domain";
 import Link from "next/link";
 import { search } from "../../utils/search";
 import { NavBarProps } from "../../types/App";
-import { ButtonWithIcon } from "../button/button";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
