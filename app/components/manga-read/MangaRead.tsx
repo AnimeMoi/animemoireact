@@ -42,7 +42,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(
-					`${Domain}${host}/ChapterDetail?url=${params.searchParams.id}`
+					`${Domain}AnimeMoi/ChapterDetail?idChapter=${params.searchParams.id}`
 				);
 
 				if (!response.ok) {
@@ -53,7 +53,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
 
 				const processedDataPromises = responseData.map((url) => {
 					if (url.includes("ntcdntemp")) {
-						return `${DomainGetImage}${params.params.host}/GetImage?url=${url}`;
+						return `${DomainGetImage}AnimeMoi/GetImage?host=${params.params.host}&url=${url}`;
 					}
 					if (!url.includes("http")) {
 						return getLinkTelegramImage(url);

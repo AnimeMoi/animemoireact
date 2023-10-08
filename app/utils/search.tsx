@@ -2,7 +2,7 @@ import { Domain } from "../domain";
 
 export async function search(query: string, host: string) {
 	try {
-		const response = await fetch(`${Domain}${host}/Search`, {
+		const response = await fetch(`${Domain}AnimeMoi/Search?host=${host}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

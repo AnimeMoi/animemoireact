@@ -15,7 +15,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(
-					`${Domain}${host}/Manga?url=${params.searchParams.id}`
+					`${Domain}AnimeMoi/Manga?idComic=${params.searchParams.id}`
 				);
 
 				if (!response.ok) {
