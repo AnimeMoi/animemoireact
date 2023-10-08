@@ -1,11 +1,12 @@
 "use client";
 import { redirect } from "next/navigation";
 import auth, { CheckAuth } from "../../components/auth/Firebase";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { search } from "../../utils/search";
 import { AddComic } from "../../components/add-comic/AddComic";
 import { ButtonPrimary } from "../../components/button/button";
+import { Domain } from "../../domain";
 
 export default function Page() {
 	// Check role begin
@@ -18,34 +19,20 @@ export default function Page() {
 	}, [isAdmin]);
 	// Check role end
 
-	// Search Begin
-	const [searchInput, setSearchInput] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
-	const [delayedChange, setDelayedChange] = useState("");
-
+	// Get total comic
+	const [totalComic, setTotalComic] = useState("Loading");
 	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setDelayedChange(searchInput);
-		}, 300);
-		return () => clearTimeout(timeout);
-	}, [searchInput]);
-
-	useEffect(() => {
-		if (delayedChange !== "") {
-			const fetchData = async (value: string) => {
-				setIsSearchResultVisible(value.length > 0);
-				setSearchResults(await search(value, "NetTruyen"));
-			};
-
-			fetchData(delayedChange);
-		} else {
-			setIsSearchResultVisible(false);
-		}
-	}, [delayedChange]);
-	// Search End
-
-	// var totalComic = fetch(`${Domain}Admin`);
+		fetch("https://hoang3409.link/api/AnimeMoi/TotalComic?host=all")
+			.then((result) => result.text())
+			.then((result) => {
+				setTotalComic(result);
+			})
+			.catch((e) => {
+				console.error(e);
+				setTotalComic("Error");
+			});
+	});
+	// End get total comic
 
 	const [addComic, setAddComic] = useState(false);
 
@@ -54,25 +41,21 @@ export default function Page() {
 	};
 
 	return (
-		<>
+		<div>
 			{user === null ? (
-				<></>
+				<div>You are not an admin</div>
 			) : (
 				<div className="w-screen min-h-screen flex items-center bg-richBlack flex-col gap-5">
 					<h1 className="text-white text-xl">{`Hello admin ${user?.displayName}`}</h1>
-					<div>
-						<span className="text-white">Tổng số truyện hiện tại: </span>
-					</div>
-					<div>
-						<ButtonPrimary
-							text="Thêm truyện"
-							func={handleShowComponentAddComic}
-						></ButtonPrimary>
-					</div>
+					<h2 className="text-white">Tổng số truyện hiện tại: {totalComic}</h2>
+					<ButtonPrimary
+						text="Thêm truyện"
+						func={handleShowComponentAddComic}
+					></ButtonPrimary>
 					{addComic === false ? <></> : <AddComic></AddComic>}
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
 

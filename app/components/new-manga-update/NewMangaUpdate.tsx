@@ -28,7 +28,7 @@ const NewMangaUpdate: React.FC = () => {
 			try {
 				// Fetch dữ liệu truyện theo trang hiện tại
 				const response = await fetch(
-					`${Domain}${selectedSource}?page=${currentPage}&size=24`
+					`${Domain}AnimeMoi?host=${selectedSource}&page=${currentPage}&size=24`
 				);
 
 				if (!response.ok) {
