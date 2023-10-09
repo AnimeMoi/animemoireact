@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Domain } from "../../domain";
 import { MangaDetailProps } from "../../types/App";
 import { getStatusText } from "../../utils/status";
+import auth from "../auth/Firebase";
 // import { CheckAuth } from "../auth/Firebase";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
@@ -44,35 +45,27 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 
 	const statusText = data ? getStatusText(data.status) : "";
 
-	/*
-  let followCount = 0;
-  const user = CheckAuth();
+	const handleFollowClick = async (manga: any) => {
+		var user = auth.currentUser;
+		if (user === null) {
+			alert("Bạn cần đăng nhập để theo dõi truyện.");
+			return;
+		}
+		const token = await user.getIdTokenResult();
+		const response = await fetch(
+			`${Domain}Service/Follow?idComic=${manga.id}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token.token}`,
+				},
+			}
+		);
 
-  const handleFollowClick = async (manga: any) => {
-    if (user === null) {
-      alert("Bạn cần đăng nhập để theo dõi truyện.");
-      return;
-    }
-    const token = await user.getIdTokenResult();
-    const response = await fetch(
-      `${Domain}Service/Follow?idComic=${manga.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token.token}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-    if (data.success) {
-      console.log(`Đã theo dõi truyện: ${manga.title}`);
-    } else {
-      console.error(`Lỗi khi theo dõi truyện: ${data.message}`);
-    }
-  };
-  */
+		const data = await response.json();
+		alert(`Theo dõi thành công ${data.message}`);
+	};
 
 	return (
 		<>
@@ -108,7 +101,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 							<div className="w-full h-fit flex">
 								<div
 									className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
-									// onClick={() => handleFollowClick(data)}
+									onClick={() => handleFollowClick(data)}
 								>
 									<span className="text-[13px] text-white font-semibold">
 										Theo dõi

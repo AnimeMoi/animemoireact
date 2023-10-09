@@ -11,3 +11,15 @@ export async function getComic(
 	const data = await request.json();
 	return data.mangas;
 }
+
+export async function getTotal(host: string = "all"): Promise<number> {
+	return fetch(`https://hoang3409.link/api/AnimeMoi/TotalComic?host=${host}`)
+		.then((result) => result.text())
+		.then((result) => {
+			return parseInt(result);
+		})
+		.catch((e) => {
+			console.error(e);
+			return 0;
+		});
+}

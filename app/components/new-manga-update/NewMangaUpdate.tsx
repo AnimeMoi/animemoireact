@@ -14,11 +14,12 @@ import { Domain } from "../../domain";
 import Link from "next/link";
 import Loading from "../../loading";
 import { useSourceContext } from "../../sourceContext";
+import { getTotal } from "../../utils/comic";
 
 const NewMangaUpdate: React.FC = () => {
 	const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
 	const [data, setData] = useState([]); // Dữ liệu truyện
-	const [totalManga, setTotalManga] = useState(0); // Tổng số manga
+	const [totalComic, setTotalComic] = useState(0); // Tổng số manga
 	const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
 	const { selectedSource } = useSourceContext(); // Sử dụng React Context
@@ -39,17 +40,6 @@ const NewMangaUpdate: React.FC = () => {
 				const newData = responseData.mangas;
 				setData(newData);
 
-				// Fetch tổng số manga (Hiện tại hỗ trợ NetTruyen và Yurineko)
-				const totalResponse = await fetch(`${Domain}${selectedSource}/Total`);
-
-				if (!totalResponse.ok) {
-					throw new Error("Network response was not ok");
-				}
-
-				const total = await totalResponse.json();
-				setTotalManga(total);
-
-				// Tải xong dữ liệu, tắt trạng thái loading
 				setIsLoading(false);
 			} catch (error) {
 				console.error("Error fetching data:", error);
@@ -60,8 +50,17 @@ const NewMangaUpdate: React.FC = () => {
 		fetchData();
 	}, [currentPage, selectedSource]);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			let result = await getTotal(selectedSource);
+			setTotalComic(result);
+		};
+
+		fetchData();
+	}, [selectedSource]);
+
 	const itemsPerPage = 24; // Số manga trên mỗi trang
-	const totalPages = Math.ceil(totalManga / itemsPerPage); // Tổng số trang
+	const totalPages = Math.ceil(totalComic / itemsPerPage); // Tổng số trang
 
 	const renderMangaDiv = () => {
 		const mangaDiv: React.JSX.Element[] = [];

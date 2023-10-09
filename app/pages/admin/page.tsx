@@ -1,12 +1,11 @@
 "use client";
 import { redirect } from "next/navigation";
-import auth, { CheckAuth } from "../../components/auth/Firebase";
-import { ReactNode, useEffect, useState } from "react";
+import { CheckAuth } from "../../components/auth/Firebase";
+import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { search } from "../../utils/search";
 import { AddComic } from "../../components/add-comic/AddComic";
 import { ButtonPrimary } from "../../components/button/button";
-import { Domain } from "../../domain";
+import { getTotal } from "../../utils/comic";
 
 export default function Page() {
 	// Check role begin
@@ -22,23 +21,30 @@ export default function Page() {
 	// Get total comic
 	const [totalComic, setTotalComic] = useState("Loading");
 	useEffect(() => {
-		fetch("https://hoang3409.link/api/AnimeMoi/TotalComic?host=all")
-			.then((result) => result.text())
-			.then((result) => {
-				setTotalComic(result);
-			})
-			.catch((e) => {
-				console.error(e);
-				setTotalComic("Error");
-			});
-	});
+		const fetchData = async () => {
+			let result = await getTotal();
+			setTotalComic(result.toString());
+		};
+
+		fetchData();
+	}, []);
 	// End get total comic
 
 	const [addComic, setAddComic] = useState(false);
+	const [deleteComic, setDeteleComic] = useState(false);
+	const [deleteChapter, setDeteleChapter] = useState(false);
 
 	const handleShowComponentAddComic = () => {
+		
 		setAddComic(!addComic);
 	};
+	const handleShowComponentDeleteComic = () => {
+		setDeteleComic(!deleteComic);
+	};
+
+	const handleShowComponentDeleteChapter = () => {
+		setDeteleChapter(!deleteChapter);
+	}
 
 	return (
 		<div>
@@ -48,10 +54,20 @@ export default function Page() {
 				<div className="w-screen min-h-screen flex items-center bg-richBlack flex-col gap-5">
 					<h1 className="text-white text-xl">{`Hello admin ${user?.displayName}`}</h1>
 					<h2 className="text-white">Tổng số truyện hiện tại: {totalComic}</h2>
-					<ButtonPrimary
-						text="Thêm truyện"
-						func={handleShowComponentAddComic}
-					></ButtonPrimary>
+					<div className="flex gap-5">
+						<ButtonPrimary
+							text="Thêm truyện"
+							func={handleShowComponentAddComic}
+						></ButtonPrimary>
+						<ButtonPrimary
+							text="Xoá truyện"
+							func={handleShowComponentDeleteComic}
+						></ButtonPrimary>
+						<ButtonPrimary
+							text="Xoá chương"
+							func={handleShowComponentDeleteChapter}
+						></ButtonPrimary>
+					</div>
 					{addComic === false ? <></> : <AddComic></AddComic>}
 				</div>
 			)}
