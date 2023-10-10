@@ -25,18 +25,19 @@ export const GoogleProvider = new GoogleAuthProvider();
 export const XProvider = new TwitterAuthProvider();
 export const GithubProvider = new GithubAuthProvider();
 
-export const CheckAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<User | null>(null);
+let _user: User | null = null;
+
+export const GetUser = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(user);
+        _user = user;
       } else {
-        setIsLoggedIn(null);
+        _user = null;
       }
     });
   }, []);
 
-  return isLoggedIn;
+  return _user;
 };

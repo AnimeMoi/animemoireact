@@ -6,7 +6,7 @@ export const ButtonPrimary = ({ text, func }: ButtonProps): JSX.Element => {
 			className="scale-up flex px-[12px] py-[8px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
 			onClick={func}
 		>
-			<div className="text-xs text-lightGray font-semibold">{text}</div>
+			<p className="text-xs text-lightGray font-semibold">{text}</p>
 		</div>
 	);
 };

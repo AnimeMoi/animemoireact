@@ -1,16 +1,18 @@
 "use client";
 import { redirect } from "next/navigation";
-import { CheckAuth } from "../../components/auth/Firebase";
+import { GetUser } from "../../components/auth/Firebase";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
-import { AddComic } from "../../components/add-comic/AddComic";
+import { AddComic } from "../../components/admin/add-comic/AddComic";
 import { ButtonPrimary } from "../../components/button/button";
 import { getTotal } from "../../utils/comic";
+import { DeleteComic } from "../../components/admin/delete-comic/DeleteComic";
+import { DeleteChapter } from "../../components/admin/delete-chapter/DeleteChapter";
 
 export default function Page() {
 	// Check role begin
 	const [isAdmin, setIsAdmin] = useState(true);
-	const user = CheckAuth();
+	const user = GetUser();
 	checkRole(user, setIsAdmin);
 
 	useEffect(() => {
@@ -35,7 +37,6 @@ export default function Page() {
 	const [deleteChapter, setDeteleChapter] = useState(false);
 
 	const handleShowComponentAddComic = () => {
-		
 		setAddComic(!addComic);
 	};
 	const handleShowComponentDeleteComic = () => {
@@ -44,7 +45,7 @@ export default function Page() {
 
 	const handleShowComponentDeleteChapter = () => {
 		setDeteleChapter(!deleteChapter);
-	}
+	};
 
 	return (
 		<div>
@@ -68,7 +69,9 @@ export default function Page() {
 							func={handleShowComponentDeleteChapter}
 						></ButtonPrimary>
 					</div>
-					{addComic === false ? <></> : <AddComic></AddComic>}
+					{addComic === false ? <></> : <AddComic />}
+					{deleteComic === false ? <></> : <DeleteComic />}
+					{deleteChapter === false ? <></> : <DeleteChapter />}
 				</div>
 			)}
 		</div>
