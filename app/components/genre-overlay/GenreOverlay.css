@@ -1,4 +1,4 @@
-.genre {
+.genre-wrapper {
   position: relative;
   cursor: pointer;
   animation: overlayScaleIn 0.4s ease forwards;

@@ -5,14 +5,8 @@ import "./ChapterList.css";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import Link from "next/link";
 import { Domain } from "../../domain";
-import { Chapters } from "../../types/App";
-import moment from "moment";
-import "moment/locale/vi";
-
-type ChapterListProps = {
-  host: string;
-  params: any; // Truyền biến params qua props
-};
+import { Chapters, ChapterListProps } from "../../types/App";
+import { formatDate } from "../../utils/formatDate";
 
 const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
   const [chapters, setChapters] = useState<Chapters>([
@@ -25,7 +19,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${Domain}${host}/Chapter?url=${params.searchParams.id}`
+          `${Domain}AnimeMoi/Chapter?idComic=${params.searchParams.id}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -48,26 +42,6 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
   const toggleOrder = () => {
     // Hàm để đảo ngược thứ tự hiển thị
     setIsLatestFirst(!isLatestFirst);
-  };
-
-  const formatDate = (timeUpdate: string) => {
-    const chapterDate = moment(timeUpdate);
-    const currentYear = moment().year();
-    const diffInMonths = moment().diff(chapterDate, "months");
-
-    if (chapterDate.isValid()) {
-      if (diffInMonths === 0) {
-        return chapterDate.fromNow();
-      } else {
-        const formattedDate = chapterDate.format(
-          currentYear === chapterDate.year() ? "HH:mm - DD/MM" : "DD/MM/YY"
-        );
-
-        return formattedDate;
-      }
-    } else {
-      return "Ngày tháng không hợp lệ";
-    }
   };
 
   const handleChapterClick = (chapter: Chapters[number]) => {
@@ -131,6 +105,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           >
             <Link
               href={`/pages/reader/${host}?id=${chapter.id}`}
+              passHref
               legacyBehavior
             >
               <a

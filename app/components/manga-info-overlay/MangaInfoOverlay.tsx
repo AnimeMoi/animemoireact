@@ -2,29 +2,8 @@ import React from "react";
 import "../../globals.css";
 import "../new-manga-update/NewMangaUpdate.css";
 import Image from "next/image";
-import MangaDetail from "../manga-detail/MangaDetail";
-
-type MangaInfoProps = {
-  cover: string;
-  title: string;
-  author: string;
-  status: number;
-  views: number;
-  description: string;
-};
-
-export const getStatusText = (status: number) => {
-  switch (status) {
-    case 0:
-      return "Hoàn thành";
-    case 2:
-      return "Đang tiến hành";
-    case 3:
-      return "Tạm dừng";
-    case 4:
-      return "Không xác định";
-  }
-};
+import { MangaInfoProps } from "../../types/App";
+import { getStatusText } from "../../utils/getStatusText";
 
 const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
   const { cover, title, author, status, views, description } = props;

@@ -30,6 +30,9 @@ const SourceBar: React.FC = () => {
     { name: "BaoTangTruyen", label: "BaoTangTruyen" },
     { name: "CManga", label: "CManga" },
     { name: "Yurineko", label: "Yurineko" },
+    { name: "HentaiVn", label: "HentaiVN" },
+    { name: "LxManga", label: "LxManga" },
+    { name: "SayHentai", label: "SayHentai" },
   ];
 
   const isLoggedIn = CheckAuth();
@@ -37,12 +40,12 @@ const SourceBar: React.FC = () => {
   return (
     <div className="w-full h-fit flex justify-center">
       {isLoggedIn ? (
-        <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-semibold rounded-full border-[1.5px] border-white/20">
+        <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-medium rounded-full border-[1.5px] border-white/20">
           {sources.map((source) => (
             <div
               key={source.name}
               className={clsx("px-[15px] py-[10px] cursor-pointer relative", {
-                "text-black": selectedSource === source.name,
+                "text-black font-semibold": selectedSource === source.name,
               })}
               onClick={() => onSelectSource(source.name)} // Gọi hàm callback từ React Context
             >
@@ -63,8 +66,9 @@ const SourceBar: React.FC = () => {
           ))}
         </div>
       ) : (
-        <p className="text-sm text-white/75 font-semibold">
-          Đăng nhập để được đọc truyện từ nhiều nguồn mà AnimeMoi đã tổng hợp.
+        <p className="text-sm text-white/75 font-medium">
+          Bạn đọc hãy đăng nhập để được đọc truyện từ nhiều nguồn mà AnimeMoi đã
+          tổng hợp.
         </p>
       )}
     </div>

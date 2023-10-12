@@ -4,22 +4,24 @@ import "../../globals.css";
 import "./MangaDetail.css";
 import Image from "next/image";
 import { Domain } from "../../domain";
-import { getStatusText } from "../manga-info-overlay/MangaInfoOverlay";
-// import { CheckAuth } from "../auth/Firebase";
-
-type MangaDetailProps = {
-  host: string;
-  params: any; // Truyền biến params qua props
-};
+import { getStatusText } from "../../utils/getStatusText";
+import { MangaDetailProps } from "../../types/App";
+import AnimeMoiGenres from "../../public/assets/genre-types/AnimeMoi/tags.json";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
   const [data, setData] = useState<any | null>(null);
+  const [genres, setGenres] = useState<string[]>([]);
+
+  const mapGenreIdToName = (genreId: number): string => {
+    const genre = AnimeMoiGenres.find((item) => item.id === genreId);
+    return genre ? genre.Name : `Thể loại không xác định: (${genreId})`;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${Domain}${host}/Manga?url=${params.searchParams.id}`
+          `${Domain}AnimeMoi/Manga?idComic=${params.searchParams.id}`
         );
 
         if (!response.ok) {
@@ -28,6 +30,12 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 
         const responseData = await response.json();
         setData(responseData);
+
+        const mangaGenres = responseData.genres || [];
+        const genreNames = mangaGenres.map((genreId: number) =>
+          mapGenreIdToName(genreId)
+        );
+        setGenres(genreNames);
 
         const manga = {
           id: responseData.id,
@@ -48,36 +56,6 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 
   const statusText = data ? getStatusText(data.status) : "";
 
-  /*
-  let followCount = 0;
-  const user = CheckAuth();
-
-  const handleFollowClick = async (manga: any) => {
-    if (user === null) {
-      alert("Bạn cần đăng nhập để theo dõi truyện.");
-      return;
-    }
-    const token = await user.getIdTokenResult();
-    const response = await fetch(
-      `${Domain}Service/Follow?idComic=${manga.id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token.token}`,
-        },
-      }
-    );
-
-    const data = await response.json();
-    if (data.success) {
-      console.log(`Đã theo dõi truyện: ${manga.title}`);
-    } else {
-      console.error(`Lỗi khi theo dõi truyện: ${data.message}`);
-    }
-  };
-  */
-
   return (
     <>
       {data && (
@@ -92,8 +70,8 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                 sizes="1200px"
               />
             </div>
-            <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden py-[5px]">
-              <div className="flex flex-col gap-[10px]">
+            <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden">
+              <div className="flex flex-col gap-[15px]">
                 <p className="w-full text-lg text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
                   {data.titles[0]}
                 </p>
@@ -104,19 +82,16 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                   <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
                     Tình trạng: {statusText}
                   </p>
-                  <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-                    Lượt đọc: {data.views ?? 0}
+                  <p className="w-full text-sm text-white/75 font-medium leading-6 max-h-[72px] text-ellipsis overflow-hidden">
+                    Thể loại: {genres.join(" - ")}
                   </p>
                 </div>
               </div>
               <div className="w-full h-fit flex">
-                <div
-                  className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
-                  // onClick={() => handleFollowClick(data)}
-                >
-                  <span className="text-[13px] text-white font-semibold">
+                <div className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up">
+                  <p className="text-[13px] text-white font-semibold">
                     Theo dõi
-                  </span>
+                  </p>
                 </div>
               </div>
             </div>

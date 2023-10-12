@@ -30,7 +30,7 @@ const MangaHistory: React.FC = () => {
       <div className="flex flex-row flex-wrap gap-[50px]">
         {mangas.map((manga: any, index: number) => (
           <div
-            key={index}
+            key={manga.id}
             className="w-[340px] h-fit flex flex-row gap-5 p-[15px] rounded-[26px] border-[1.5px] border-white/20"
           >
             <div className="w-[100px] h-[140px] relative overflow-hidden">
@@ -47,16 +47,10 @@ const MangaHistory: React.FC = () => {
                 <p className="w-full text-sm text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
                   {manga.title}
                 </p>
-                <p className="w-full text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-                  Đang đọc: {manga.lastChapterTitle}
+                <p className="w-full text-xs text-white/75 hover:text-[#d9f21c] font-medium whitespace-nowrap text-ellipsis overflow-hidden cursor-pointer">
+                  Đọc tiếp: {manga.lastChapterTitle}
                 </p>
               </div>
-              {/* <p
-                className="text-xs text-red-500 font-semibold cursor-pointer"
-                onClick={() => handleDeleteClick(index)}
-              >
-                Xoá
-              </p> */}
               <div className="w-full h-fit flex justify-end">
                 <div
                   className="w-fit h-fit p-[10px] bg-red-500 rounded-full cursor-pointer"

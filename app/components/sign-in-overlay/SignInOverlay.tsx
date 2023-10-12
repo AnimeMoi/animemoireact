@@ -2,25 +2,37 @@ import React, { useState } from "react";
 import "../../globals.css";
 import "./SignInOverlay.css";
 import Image from "next/image";
-import GoogleLogo from "../../images/brand-logo/google-logo.png";
-import GithubLogo from "../../images/brand-logo/github-logo.png";
-import XLogo from "../../images/brand-logo/x-logo.png";
-import auth, { GoogleProvider, XProvider } from "../auth/Firebase";
-import { signInWithPopup } from "firebase/auth";
+import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
+import GithubLogo from "../../public/assets/images/brand-logo/github-logo.png";
+import XLogo from "../../public/assets/images/brand-logo/x-logo.png";
+import auth, {
+  GoogleProvider,
+  GithubProvider,
+  XProvider,
+} from "../auth/Firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
+import { SignInProps } from "../../types/App";
 
-type SignInProps = {
-  onEmailSignIn: () => void;
-  onAuthStateChanged: (user: any) => void;
-};
-
-const SignInOverlay: React.FC<SignInProps> = ({
-  onEmailSignIn,
-  onAuthStateChanged,
-}) => {
+const SignInOverlay: React.FC<SignInProps> = ({ onAuthStateChanged }) => {
   const [isEmailClicking, setIsEmailClicking] = useState(false);
 
   const handleEmailClick = () => {
-    onEmailSignIn();
+    let email = document.getElementById("email") as HTMLInputElement | null;
+    let password = document.getElementById(
+      "password"
+    ) as HTMLInputElement | null;
+    if (password === null || email === null) return;
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then((result) => {
+        onAuthStateChanged(result.user);
+      })
+      .catch((error: FirebaseError) => {
+        var err = document.getElementById("error");
+        if (err === null) return;
+        err.innerText = error.message;
+        console.error(error);
+      });
     setIsEmailClicking(true);
   };
 
@@ -29,7 +41,10 @@ const SignInOverlay: React.FC<SignInProps> = ({
       .then((result) => {
         onAuthStateChanged(result.user);
       })
-      .catch((error) => {
+      .catch((error: FirebaseError) => {
+        var err = document.getElementById("error");
+        if (err === null) return;
+        err.innerText = error.message;
         console.error(error);
       });
   };
@@ -39,12 +54,26 @@ const SignInOverlay: React.FC<SignInProps> = ({
       .then((result) => {
         onAuthStateChanged(result.user);
       })
-      .catch((error) => {
+      .catch((error: FirebaseError) => {
+        var err = document.getElementById("error");
+        if (err === null) return;
+        err.innerText = error.message;
         console.error(error);
       });
   };
 
-  const handleGithubClick = () => {};
+  const handleGithubClick = () => {
+    signInWithPopup(auth, GithubProvider)
+      .then((result) => {
+        onAuthStateChanged(result.user);
+      })
+      .catch((error: FirebaseError) => {
+        var err = document.getElementById("error");
+        if (err === null) return;
+        err.innerText = error.message;
+        console.error(error);
+      });
+  };
 
   return (
     <div className="w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">

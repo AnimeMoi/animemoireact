@@ -1,14 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-
-type SourceProviderProps = {
-  children: React.ReactNode;
-};
-
-type SourceContextProps = {
-  selectedSource: string;
-  onSelectSource: (source: string) => void;
-};
+import { SourceContextProps, SourceProviderProps } from "./types/App";
 
 export const SourceContext = createContext<SourceContextProps>({
   selectedSource: "NetTruyen", // Mặc định là "NetTruyen"

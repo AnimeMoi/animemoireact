@@ -13,14 +13,11 @@ import { Domain, DomainGetImage } from "../../domain";
 import Loading from "../../loading";
 import ReportManga from "../report-manga/ReportManga";
 import moment from "moment";
-
-type MangaReadProps = {
-  host: string;
-  params: any;
-};
+import { getLinkTelegramImage } from "../../utils/image";
+import { MangaReadProps } from "../../types/App";
 
 const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
   const [showOverlayType, setShowOverlayType] = useState<"reportManga" | null>(
@@ -45,7 +42,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${Domain}${host}/ChapterDetail?url=${params.searchParams.id}`
+          `${Domain}AnimeMoi/ChapterDetail?idChapter=${params.searchParams.id}`
         );
 
         if (!response.ok) {
@@ -53,7 +50,19 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
         }
 
         const responseData = await response.json();
-        setData(responseData);
+
+        const processedDataPromises = responseData.map((url: string) => {
+          if (url.includes("ntcdntemp")) {
+            return `${DomainGetImage}AnimeMoi/GetImage?host=${params.params.host}&url=${url}`;
+          }
+          if (!url.includes("http")) {
+            return getLinkTelegramImage(url);
+          }
+          return Promise.resolve(url);
+        });
+        const processedData = await Promise.all(processedDataPromises);
+
+        setData(processedData);
 
         setIsLoading(false);
       } catch (error) {
@@ -69,7 +78,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
     typeof window !== "undefined" && localStorage.getItem("manga");
   const manga = storedManga ? JSON.parse(storedManga) : null;
 
-  const formattedLastTimeUpdate = manga.lastTimeUpdate
+  const formattedLastTimeUpdate = manga?.lastTimeUpdate
     ? moment(manga.lastTimeUpdate).format("HH:mm DD/MM/YYYY")
     : null;
 
@@ -80,7 +89,10 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
           <div className="w-full h-fit flex flex-col gap-[60px]">
             <div className="flex flex-col items-center gap-[6px]">
               <p className="text-xl text-lightGray font-semibold">
-                {manga.title} - {manga.lastChapterTitle}
+                {manga.title}
+              </p>
+              <p className="text-xl text-lightGray font-semibold">
+                {manga.lastChapterTitle}
               </p>
               <p className="text-sm text-white/75 font-medium italic">
                 [Cập nhật lúc: {formattedLastTimeUpdate}]
@@ -89,9 +101,9 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
             <div className="flex flex-row justify-center items-center gap-[30px]">
               <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
                 <CaretLeft color="#f4f4f4" weight="bold" size={16} />
-                <span className="text-sm text-white/75 font-semibold">
+                <p className="text-sm text-white/75 font-semibold">
                   Chương trước
-                </span>
+                </p>
               </button>
               <div className="flex flex-row items-center gap-[15px]">
                 <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
@@ -107,15 +119,13 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
                   onClick={handleOverlayToggle("reportManga")}
                 >
                   <SealWarning color="#000" weight="bold" size={20} />
-                  <span className="text-sm text-black font-medium">
-                    Báo lỗi
-                  </span>
+                  <p className="text-sm text-black font-medium">Báo lỗi</p>
                 </div>
               </div>
               <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-                <span className="text-sm text-white/75 font-semibold">
+                <p className="text-sm text-white/75 font-semibold">
                   Chương sau
-                </span>
+                </p>
                 <CaretRight color="#f4f4f4" weight="bold" size={16} />
               </button>
             </div>
@@ -128,7 +138,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
               {data.map((chapter: any) => (
                 <Image
                   key={chapter}
-                  src={`${DomainGetImage}${host}/GetImage?url=${chapter}`}
+                  src={chapter}
                   alt={""}
                   width={"700"}
                   height={"1000"}

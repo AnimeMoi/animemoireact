@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import "../../globals.css";
 import "./ReportManga.css";
-
-type ReportMangaProps = {
-  onSend: () => void;
-  onClose: () => void;
-};
+import { ReportMangaProps } from "../../types/App";
 
 const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
   const [isSendClicking, setIsSendClicking] = useState(false);
@@ -33,27 +29,23 @@ const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
       <div className="w-full h-fit flex flex-col gap-5">
         <label className="w-full h-fit flex flex-row gap-2.5">
           <input type="checkbox" name="option" className="w-[16px] h-[16px]" />
-          <span className="text-xs text-lightGray font-medium">
+          <p className="text-xs text-lightGray font-medium">
             Ảnh bị lỗi, không thấy ảnh
-          </span>
+          </p>
         </label>
         <label className="w-full h-fit flex flex-row gap-2.5">
           <input type="checkbox" name="option" className="w-[16px] h-[16px]" />
-          <span className="text-xs text-lightGray font-medium">
-            Chapter bị trùng
-          </span>
+          <p className="text-xs text-lightGray font-medium">Chapter bị trùng</p>
         </label>
         <label className="w-full h-fit flex flex-row gap-2.5">
           <input type="checkbox" name="option" className="w-[16px] h-[16px]" />
-          <span className="text-xs text-lightGray font-medium">
+          <p className="text-xs text-lightGray font-medium">
             Chapter chưa dịch
-          </span>
+          </p>
         </label>
         <label className="w-full h-fit flex flex-row gap-2.5">
           <input type="checkbox" name="option" className="w-[16px] h-[16px]" />
-          <span className="text-xs text-lightGray font-medium">
-            Up sai truyện
-          </span>
+          <p className="text-xs text-lightGray font-medium">Up sai truyện</p>
         </label>
       </div>
       <div className="w-full h-fit flex flex-row justify-end items-center gap-[15px]">
@@ -61,13 +53,13 @@ const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
           className="scale-up flex px-[14px] py-[10px] rounded-full bg-success cursor-pointer"
           onClick={handleSendClick}
         >
-          <span className="text-xs text-white font-semibold">Gửi đi</span>
+          <p className="text-xs text-white font-semibold">Gửi đi</p>
         </div>
         <div
           className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer"
           onClick={handleCloseClick}
         >
-          <span className="text-xs text-black font-semibold">Đóng</span>
+          <p className="text-xs text-black font-semibold">Đóng</p>
         </div>
       </div>
     </div>

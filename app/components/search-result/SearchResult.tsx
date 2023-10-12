@@ -2,19 +2,14 @@ import Link from "next/link";
 import "../../globals.css";
 import "./SearchResult.css";
 import Image from "next/image";
-
-type SearchResultProps = {
-  results: any[];
-};
+import { SearchResultProps } from "../../types/App";
 
 const SearchResult: React.FC<SearchResultProps> = ({ results }) => {
   return (
     <div className="w-[380px] max-h-[444px] flex flex-col flex-grow gap-5 p-[15px] bg-richBlack/80 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar overlay-show">
       {results.map((result) => {
         const chapterNumber =
-          (result.lastChapterTitle &&
-            result.lastChapterTitle.match(/(\d+(\.\d+)?)/)?.[0]) ||
-          "N/A";
+          result.lastChapterTitle?.match(/(\d+(\.\d+)?)/)?.[0] || "N/A";
 
         return (
           <Link

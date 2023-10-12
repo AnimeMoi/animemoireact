@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Thumbnail from "../../../images/thumbnail.png";
+import Thumbnail from "../../../public/assets/images/thumbnail.png";
 import NavBar from "../../../components/nav-bar/NavBar";
 import ScrollIndicator from "../../../components/scroll-indicator/ScrollIndicator";
 import MangaRead from "../../../components/manga-read/MangaRead";

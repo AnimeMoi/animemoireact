@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import "./SignUpOverlay.css";
+import "./SignInOverlay.css";
 import Image from "next/image";
-import GoogleLogo from "../../images/brand-logo/google-logo.png";
-import GithubLogo from "../../images/brand-logo/github-logo.png";
-import XLogo from "../../images/brand-logo/x-logo.png";
-import auth, { GoogleProvider, XProvider } from "../auth/Firebase";
+import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
+import GithubLogo from "../../public/assets/images/brand-logo/github-logo.png";
+import XLogo from "../../public/assets/images/brand-logo/x-logo.png";
+import auth, {
+  GoogleProvider,
+  GithubProvider,
+  XProvider,
+} from "../auth/Firebase";
 import { signInWithPopup } from "firebase/auth";
+import { SignUpProps } from "../../types/App";
 
-type SignUpProps = {
-  onEmailSignUp: () => void;
-  onAuthStateChanged: (user: any) => void;
-};
-
-const SignUpOverlay: React.FC<SignUpProps> = ({
-  onEmailSignUp,
-  onAuthStateChanged,
-}) => {
+const SignUpOverlay: React.FC<SignUpProps> = ({ onAuthStateChanged }) => {
   const [isEmailClicking, setIsEmailClicking] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -38,7 +35,7 @@ const SignUpOverlay: React.FC<SignUpProps> = ({
       return;
     }
 
-    onEmailSignUp();
+    SignUpOverlay(auth);
     setIsEmailClicking(true);
   };
 
@@ -68,7 +65,15 @@ const SignUpOverlay: React.FC<SignUpProps> = ({
       });
   };
 
-  const handleGithubClick = () => {};
+  const handleGithubClick = () => {
+    signInWithPopup(auth, GithubProvider)
+      .then((result) => {
+        onAuthStateChanged(result.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <div className="w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">

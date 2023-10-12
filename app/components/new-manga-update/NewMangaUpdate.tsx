@@ -1,14 +1,19 @@
 "use client";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../globals.css";
 import "./NewMangaUpdate.css";
-import {CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight,} from "@phosphor-icons/react";
+import {
+  CaretDoubleLeft,
+  CaretDoubleRight,
+  CaretLeft,
+  CaretRight,
+} from "@phosphor-icons/react";
 import Image from "next/image";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
-import {Domain} from "../../domain";
 import Link from "next/link";
 import Loading from "../../loading";
-import {useSourceContext} from "../../sourceContext";
+import { useSourceContext } from "../../sourceContext";
+import { fetchMangaData, fetchTotalManga } from "../../utils/manga";
 
 const NewMangaUpdate: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
@@ -16,39 +21,20 @@ const NewMangaUpdate: React.FC = () => {
   const [totalManga, setTotalManga] = useState(0); // Tổng số manga
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
-  const {selectedSource} = useSourceContext(); // Sử dụng React Context
+  const { selectedSource } = useSourceContext(); // Sử dụng React Context
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch dữ liệu truyện theo trang hiện tại
-        const response = await fetch(
-          `${Domain}${selectedSource}?page=${currentPage}&size=24`
-        );
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const responseData = await response.json();
-        const newData = responseData.mangas;
+        const newData = await fetchMangaData(selectedSource, currentPage);
         setData(newData);
 
-        // Fetch tổng số manga (Hiện tại hỗ trợ NetTruyen và Yurineko)
-        const totalResponse = await fetch(`${Domain}${selectedSource}/Total`);
-
-        if (!totalResponse.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const total = await totalResponse.json();
+        const total = await fetchTotalManga(selectedSource);
         setTotalManga(total);
 
-        // Tải xong dữ liệu, tắt trạng thái loading
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setIsLoading(false); // Đảm bảo tắt loading nếu có lỗi
+        setIsLoading(false);
       }
     };
 
@@ -60,17 +46,15 @@ const NewMangaUpdate: React.FC = () => {
 
   const renderMangaDiv = () => {
     const mangaDiv: React.JSX.Element[] = [];
-    data.forEach((item: any, index: number) => {
-      // Sử dụng Regular Expression để lấy số chapter từ lastChapterTitle
+    data.forEach((item: any) => {
+      // Sử dụng Optional Chain Expression để lấy số chapter từ lastChapterTitle
       const chapterNumber =
-        (item.lastChapterTitle &&
-          item.lastChapterTitle.match(/(\d+(\.\d+)?)/)?.[0]) ||
-        "N/A";
+        item.lastChapterTitle?.match(/(\d+(\.\d+)?)/)?.[0] || "N/A";
 
       mangaDiv.push(
         <Link
           className="manga w-fit h-fit flex flex-col gap-[18px] cursor-pointer"
-          key={index}
+          key={item.id}
           href={`/pages/details/${selectedSource}?id=${item.id}`}
         >
           <div className="w-[150px] h-[220px] relative overflow-hidden">
@@ -83,8 +67,7 @@ const NewMangaUpdate: React.FC = () => {
             />
           </div>
           <div className="w-[150px] h-fit flex flex-col items-center overflow-hidden gap-[2px] px-[4px]">
-            <p
-              className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
+            <p className="w-full text-[15px] text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
               {item.titles[0]}
             </p>
             <p className="text-[13px] text-white/75 font-medium">
@@ -141,7 +124,7 @@ const NewMangaUpdate: React.FC = () => {
       </p>
       {isLoading ? (
         // Nếu isLoading là true, hiển thị component Loading
-        <Loading/>
+        <Loading />
       ) : (
         <div className="flex flex-wrap justify-center gap-[44px]">
           {renderMangaDiv()}
@@ -149,44 +132,39 @@ const NewMangaUpdate: React.FC = () => {
       )}
       {shouldShowPagination && (
         <div className="flex justify-center mt-[30px]">
-          <div
-            className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
+          <div className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
               onClick={handleFirstPage}
               disabled={currentPage === 1}
             >
-              <CaretDoubleLeft color="#f4f4f4" weight="bold" size={16}/>
-              <span className="text-sm text-white/75 font-semibold">
-                Trang đầu
-              </span>
+              <CaretDoubleLeft color="#f4f4f4" weight="bold" size={16} />
+              <p className="text-sm text-white/75 font-semibold">Trang đầu</p>
             </button>
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
-              <CaretLeft color="#f4f4f4" weight="bold" size={16}/>
+              <CaretLeft color="#f4f4f4" weight="bold" size={16} />
             </button>
-            <span className="text-sm text-lightGray font-semibold mx-2.5">
+            <p className="text-sm text-lightGray font-semibold mx-2.5">
               {currentPage} trên {totalPages}
-            </span>
+            </p>
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              <CaretRight color="#f4f4f4" weight="bold" size={16}/>
+              <CaretRight color="#f4f4f4" weight="bold" size={16} />
             </button>
             <button
               className="w-fit h-fit flex flex-row items-center gap-[5px]"
               onClick={handleLastPage}
               disabled={currentPage === totalPages}
             >
-              <span className="text-sm text-white/75 font-semibold">
-                Trang cuối
-              </span>
-              <CaretDoubleRight color="#f4f4f4" weight="bold" size={16}/>
+              <p className="text-sm text-white/75 font-semibold">Trang cuối</p>
+              <CaretDoubleRight color="#f4f4f4" weight="bold" size={16} />
             </button>
           </div>
         </div>
