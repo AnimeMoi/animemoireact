@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Thumbnail from "./images/thumbnail.png";
+import Thumbnail from "./public/assets/images/thumbnail.png";
 import NavBar from "./components/nav-bar/NavBar";
 import NewMangaUpdate from "./components/new-manga-update/NewMangaUpdate";
 import MangaHistory from "./components/manga-history/MangaHistory";

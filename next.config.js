@@ -9,6 +9,8 @@ const nextConfig = {
             "animemoi.zeabur.app",
             "honeysanime.com",
             "hoang3409.link",
+            // Tele
+            "api.telegram.org",
             // NetTruyen
             "nettruyenus.com",
             "st.nettruyenmax.com",
@@ -26,8 +28,6 @@ const nextConfig = {
             "cmangaaz.com",
             "www.cmangaad.com",
             "old.cmangaaz.com",
-            // tele
-            "api.telegram.org",
             // hentaivn
             "t.htvncdn.net",
             // lxmanga
