@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Domain } from "../../domain";
 import { getStatusText } from "../../utils/getStatusText";
 import { MangaDetailProps } from "../../types/App";
+import auth from "../auth/Firebase";
 import AnimeMoiGenres from "../../public/assets/genre-types/AnimeMoi/tags.json";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
@@ -56,6 +57,28 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 
   const statusText = data ? getStatusText(data.status) : "";
 
+  const handleFollowClick = async (manga: any) => {
+    var user = auth.currentUser;
+    if (user === null) {
+      alert("Bạn cần đăng nhập để theo dõi truyện.");
+      return;
+    }
+    const token = await user.getIdTokenResult();
+    const response = await fetch(
+      `${Domain}Service/Follow?idComic=${manga.id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.token}`,
+        },
+      }
+    );
+
+    const data = await response.json();
+    alert(`Theo dõi thành công ${data.message}`);
+  };
+
   return (
     <>
       {data && (
@@ -88,7 +111,10 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
                 </div>
               </div>
               <div className="w-full h-fit flex">
-                <div className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up">
+                <div
+                  className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
+                  onClick={() => handleFollowClick(data)}
+                >
                   <p className="text-[13px] text-white font-semibold">
                     Theo dõi
                   </p>

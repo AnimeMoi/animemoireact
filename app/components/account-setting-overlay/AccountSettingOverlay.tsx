@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "../../globals.css";
 import "./AccountSettingOverlay.css";
-import auth, { CheckAuth } from "../auth/Firebase";
+import auth from "../auth/Firebase";
+import { ButtonPrimary } from "../button/Button";
 
 type AccountSettingProps = {
   onEdit: () => void;
@@ -39,12 +40,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onClose }) => {
             {auth.currentUser?.email}
           </p>
         </div>
-        <div
-          className="scale-up flex px-[12px] py-[8px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
-          onClick={handleEditClick}
-        >
-          <p className="text-xs text-lightGray font-semibold">Sửa</p>
-        </div>
+        <ButtonPrimary text="Sửa" func={handleEditClick}></ButtonPrimary>
       </div>
       <div className="w-full h-px bg-white/10"></div>
       <div className="w-full h-fit flex flex-col justify-start gap-5">

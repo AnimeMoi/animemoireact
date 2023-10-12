@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  GithubAuthProvider,
   GoogleAuthProvider,
   GithubAuthProvider,
   TwitterAuthProvider,
@@ -24,6 +25,7 @@ export default auth;
 export const GoogleProvider = new GoogleAuthProvider();
 export const GithubProvider = new GithubAuthProvider();
 export const XProvider = new TwitterAuthProvider();
+export const GithubProvider = new GithubAuthProvider();
 
 let _user: User | null = null;
 
