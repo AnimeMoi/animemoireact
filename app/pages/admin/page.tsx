@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { AddComic } from "../../components/admin/add-comic/AddComic";
 import { ButtonPrimary } from "../../components/button/button";
-import { getTotal } from "../../utils/comic";
+import { GetTotal } from "../../utils/manga";
 import { DeleteComic } from "../../components/admin/delete-comic/DeleteComic";
 import { DeleteChapter } from "../../components/admin/delete-chapter/DeleteChapter";
 
@@ -24,7 +24,7 @@ export default function Page() {
 	const [totalComic, setTotalComic] = useState("Loading");
 	useEffect(() => {
 		const fetchData = async () => {
-			let result = await getTotal();
+			let result = await GetTotal();
 			setTotalComic(result.toString());
 		};
 

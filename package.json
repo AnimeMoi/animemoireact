@@ -11,6 +11,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@phosphor-icons/react": "^2.0.10",
     "@storybook/cli": "^7.2.1",
     "@types/node": "20.4.0",
