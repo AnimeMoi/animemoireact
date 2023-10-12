@@ -20,12 +20,14 @@ const NewMangaUpdate: React.FC = () => {
 	const [data, setData] = useState([]); // Dữ liệu truyện
 	const [totalManga, setTotalManga] = useState(0); // Tổng số manga
 	const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
-
 	const { selectedSource } = useSourceContext(); // Sử dụng React Context
+	const itemsPerPage = 24; // Số manga trên mỗi trang
+	const totalPages = Math.ceil(totalManga / itemsPerPage); // Tổng số trang
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
+				setData([]);
 				const newData = await fetchMangaData(selectedSource, currentPage);
 				setData(newData);
 
@@ -40,9 +42,6 @@ const NewMangaUpdate: React.FC = () => {
 
 		fetchData();
 	}, [currentPage, selectedSource]);
-
-	const itemsPerPage = 24; // Số manga trên mỗi trang
-	const totalPages = Math.ceil(totalManga / itemsPerPage); // Tổng số trang
 
 	const renderMangaDiv = () => {
 		const mangaDiv: React.JSX.Element[] = [];
@@ -122,8 +121,7 @@ const NewMangaUpdate: React.FC = () => {
 			<p className="text-xl text-lightGray font-semibold">
 				Truyện mới cập nhật
 			</p>
-			{isLoading ? (
-				// Nếu isLoading là true, hiển thị component Loading
+			{data.length == 0 ? (
 				<Loading />
 			) : (
 				<div className="flex flex-wrap justify-center gap-[44px]">
