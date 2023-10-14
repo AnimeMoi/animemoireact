@@ -23,7 +23,3 @@ export default auth;
 export const GoogleProvider = new GoogleAuthProvider();
 export const GithubProvider = new GithubAuthProvider();
 export const XProvider = new TwitterAuthProvider();
-
-export const GetUser = () => {
-  return auth.currentUser;
-};

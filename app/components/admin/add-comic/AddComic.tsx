@@ -8,12 +8,13 @@ import auth from "../../auth/Firebase";
 /*
 link doc Listbox: https://headlessui.com/
 */
+import genres from "../../../public/assets/genre-types/AnimeMoi/tags.json";
 
-const genres = [
-	{ id: 1, name: "genre1" },
-	{ id: 2, name: "genre2" },
-	{ id: 3, name: "genre3" },
-];
+// const genres = [
+// 	{ id: 1, name: "genre1" },
+// 	{ id: 2, name: "genre2" },
+// 	{ id: 3, name: "genre3" },
+// ];
 
 const NSFW = [
 	{ id: 1, value: "False" },
@@ -130,16 +131,16 @@ export const AddComic = () => {
 							<Listbox.Button>Chọn thể loại</Listbox.Button>
 						)}
 						<Listbox.Button>
-							{selectedGenres.map((genres: any) => genres.name).join(", ")}
+							{selectedGenres.map((genres: any) => genres.Name).join(", ")}
 						</Listbox.Button>
-						<Listbox.Options className="absolute">
+						<Listbox.Options className="absolute overflow-scroll h-[150px]">
 							{genres.map((genre) => (
 								<Listbox.Option
 									key={genre.id}
 									value={genre}
 									className="cursor-pointer"
 								>
-									{genre.name}
+									{genre.Name}
 								</Listbox.Option>
 							))}
 						</Listbox.Options>

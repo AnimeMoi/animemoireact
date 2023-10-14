@@ -1,6 +1,6 @@
 "use client";
 import { redirect } from "next/navigation";
-import { GetUser } from "../../components/auth/Firebase";
+import auth from "../../components/auth/Firebase";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
 import { AddComic } from "../../components/admin/add-comic/AddComic";
@@ -12,7 +12,7 @@ import { DeleteChapter } from "../../components/admin/delete-chapter/DeleteChapt
 export default function Page() {
 	// Check role begin
 	const [isAdmin, setIsAdmin] = useState(true);
-	const user = GetUser();
+	const user = auth.currentUser;
 	checkRole(user, setIsAdmin);
 
 	useEffect(() => {

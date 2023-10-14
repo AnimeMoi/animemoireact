@@ -10,7 +10,7 @@ import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
 import GenreOverlay from "../genre-overlay/GenreOverlay";
 import SearchResult from "../search-result/SearchResult";
-import { GetUser } from "../auth/Firebase";
+import auth from "../auth/Firebase";
 import Link from "next/link";
 import { search } from "../../utils/search";
 import { NavBarProps } from "../../types/App";
@@ -20,7 +20,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
 
-	const isLoggedIn = GetUser();
+	const isLoggedIn = auth.currentUser;
 
 	function handleAuthStateChanged(user: any) {
 		if (user) {
