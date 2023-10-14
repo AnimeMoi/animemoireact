@@ -19,7 +19,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 		const fetchData = async () => {
 			try {
 				const response = await fetch(
-					`${Domain}AnimeMoi/Chapter?idComic=${params.searchParams.id}`
+					`${Domain}AnimeMoi/Chapter?idComic=${params.searchParams.id}&host=${host}`
 				);
 				if (!response.ok) {
 					throw new Error("Network response was not ok");
@@ -98,13 +98,15 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 				</p>
 			</div>
 			<div className="w-full max-h-[542px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
-				{chapters.map((chapter) => (
+				{chapters.map((chapter: any) => (
 					<div
 						key={chapter.id}
 						className="flex flex-row justify-between items-center"
 					>
 						<Link
-							href={`/pages/reader/${host}?id=${chapter.id}`}
+							href={`/pages/reader/${host}?id=${
+								chapter.id === 0 ? chapter.url : chapter.id
+							}`}
 							passHref
 							legacyBehavior
 						>

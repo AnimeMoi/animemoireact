@@ -54,7 +54,9 @@ const NewMangaUpdate: React.FC = () => {
 				<Link
 					className="manga w-fit h-fit flex flex-col gap-[18px] cursor-pointer"
 					key={item.id}
-					href={`/pages/details/${selectedSource}?id=${item.id}`}
+					href={`/pages/details/${selectedSource}?id=${
+						item.id === 0 ? item.url : item.id
+					}`}
 				>
 					<div className="w-[150px] h-[220px] relative overflow-hidden">
 						<Image

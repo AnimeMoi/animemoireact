@@ -32,6 +32,7 @@ const nextConfig = {
             "t.htvncdn.net",
             // lxmanga
             "lxmanga.net",
+            "storage.lxmanga.com",
             // sayhentai
             "sayhentai.fun"
         ],
