@@ -1,33 +1,39 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "../../globals.css";
 
-const ScrollIndicator: React.FC = () => {
-  const [scrollPercentage, setScrollPercentage] = useState<number>(0);
+interface ScrollIndicatorProps {
+	scrollPercentage: number;
+	setScrollPercentage: Dispatch<SetStateAction<number>>;
+}
 
-  const handleScroll = () => {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight - windowHeight;
-    const scrolled = window.scrollY;
-    const percentage = (scrolled / documentHeight) * 100;
+const ScrollIndicator: React.FC<ScrollIndicatorProps> = ({
+	scrollPercentage,
+	setScrollPercentage,
+}) => {
+	const handleScroll = () => {
+		const windowHeight = window.innerHeight;
+		const documentHeight = document.documentElement.scrollHeight - windowHeight;
+		const scrolled = window.scrollY;
+		const percentage = (scrolled / documentHeight) * 100;
 
-    setScrollPercentage(percentage);
-  };
+		setScrollPercentage(percentage);
+	};
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
 
-  return (
-    <div
-      className="w-full h-[4px] bg-[#d9f21c] rounded-full"
-      style={{ width: `${scrollPercentage}%` }}
-    ></div>
-  );
+	return (
+		<div
+			className="w-full h-[4px] bg-[#d9f21c] rounded-full"
+			style={{ width: `${scrollPercentage}%` }}
+		></div>
+	);
 };
 
 export default ScrollIndicator;

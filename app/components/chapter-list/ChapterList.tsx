@@ -104,9 +104,9 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 						className="flex flex-row justify-between items-center"
 					>
 						<Link
-							href={`/pages/reader/${host}?id=${
-								chapter.id === 0 ? chapter.url : chapter.id
-							}`}
+							href={`/pages/reader/${host}?idComic=${
+								params.searchParams.id
+							}&id=${chapter.id === 0 ? chapter.url : chapter.id}`}
 							passHref
 							legacyBehavior
 						>
