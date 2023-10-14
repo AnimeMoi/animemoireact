@@ -53,8 +53,10 @@ export default function Page() {
 				<div>You are not an admin</div>
 			) : (
 				<div className="w-screen min-h-screen flex items-center bg-richBlack flex-col gap-5">
-					<h1 className="text-white text-xl">{`Hello admin ${user?.displayName}`}</h1>
-					<h2 className="text-white">Tổng số truyện hiện tại: {totalComic}</h2>
+					<div className="text-white text-xl">{`Hello admin ${user?.displayName}`}</div>
+					<div className="text-white">
+						Tổng số truyện hiện tại: {totalComic}
+					</div>
 					<div className="flex gap-5">
 						<ButtonPrimary
 							text="Thêm truyện"
