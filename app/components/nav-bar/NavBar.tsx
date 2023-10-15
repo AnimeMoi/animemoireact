@@ -12,7 +12,7 @@ import GenreOverlay from "../genre-overlay/GenreOverlay";
 import SearchResult from "../search-result/SearchResult";
 import auth from "../auth/Firebase";
 import Link from "next/link";
-import { search } from "../../utils/search";
+import { fetchSearchResultsByQuery } from "../../utils/searchResults";
 import { NavBarProps } from "../../types/App";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
@@ -61,7 +61,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   useEffect(() => {
     if (delayedChange !== "") {
       const fetchData = async (value: string) => {
-        const data = await search(value);
+        const data = await fetchSearchResultsByQuery(value);
         if (data) {
           setSearchResults(data);
           setIsSearchResultVisible(data.length > 0);

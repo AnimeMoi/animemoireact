@@ -3,8 +3,7 @@ import {
   getAuth,
   GithubAuthProvider,
   GoogleAuthProvider,
-  TwitterAuthProvider,
-  User,
+  TwitterAuthProvider
 } from "firebase/auth";
 
 const firebaseConfig = {
