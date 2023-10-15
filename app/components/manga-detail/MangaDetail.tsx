@@ -51,12 +51,13 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 	}, [host, params]);
 
 	const checkFollow = async () => {
+		setFollow(null);
 		if (user === null) {
 			return;
 		}
 		const _follow = await GetProcess(user, params.searchParams.id);
-		if (_follow[0]) {
-			setFollow(_follow[0]);
+		if (_follow) {
+			setFollow(_follow);
 		}
 	};
 

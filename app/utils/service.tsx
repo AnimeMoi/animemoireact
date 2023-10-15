@@ -1,5 +1,6 @@
 import { User } from "firebase/auth";
 import { Domain } from "../domain";
+import { STATUS_CODES } from "http";
 
 export const Follow = async (idComic: any, token: string) => {
 	const response = await fetch(`${Domain}Service/Follow?idComic=${idComic}`, {
@@ -37,7 +38,7 @@ export const GetProcess = async (user: User, idComic: string) => {
 				},
 			}
 		);
-
+		if (response.status === 204) return null;
 		const json = await response.json();
 		return json;
 	} catch (e) {
