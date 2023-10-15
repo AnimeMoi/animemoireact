@@ -6,10 +6,11 @@ import ScrollIndicator from "../../../components/scroll-indicator/ScrollIndicato
 import MangaRead from "../../../components/manga-read/MangaRead";
 import { useEffect, useState } from "react";
 import { Domain } from "../../../domain";
-import auth from "../../../components/auth/Firebase";
+import { useGlobalContext } from "../../../context/store";
 
-async function SaveProcess(params: any) {
-	const token = await auth.currentUser?.getIdToken();
+async function SaveProcess(follow: any, user: any, params: any) {
+	if (follow === null) return;
+	const token = await user.getIdToken();
 	fetch(
 		`${Domain}Service/SaveProcess?idComic=${params.searchParams.idComic}&idChapter=${params.searchParams.id}`,
 		{
@@ -25,12 +26,14 @@ async function SaveProcess(params: any) {
 export default function Page(params: any) {
 	const [scrollPercentage, setScrollPercentage] = useState<number>(0);
 	const [_try, setTry] = useState(false);
+	const { follow, user } = useGlobalContext();
+
 	useEffect(() => {
 		if (scrollPercentage > 70 && _try === false) {
 			setTry(true);
-			SaveProcess(params);
+			SaveProcess(follow, user, params);
 		}
-	}, [scrollPercentage, _try, params]);
+	}, [scrollPercentage, _try, params, user, follow]);
 
 	return (
 		<div className="w-screen min-h-screen flex justify-center items-center bg-richBlack">

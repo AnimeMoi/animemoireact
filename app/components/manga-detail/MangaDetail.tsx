@@ -1,17 +1,20 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { Domain } from "../../domain";
+import { useGlobalContext } from "../../context/store";
 import "../../globals.css";
 import AnimeMoiGenres from "../../public/assets/genre-types/AnimeMoi/tags.json";
 import { MangaDetailProps } from "../../types/App";
 import { getStatusText } from "../../utils/getStatusText";
-import auth from "../auth/Firebase";
+import { GetManga } from "../../utils/manga";
+import { Follow, GetProcess, UnFollow } from "../../utils/service";
+import { ButtonSuccess, ButtonWarning } from "../button/button";
 import "./MangaDetail.css";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 	const [data, setData] = useState<any | null>(null);
 	const [genres, setGenres] = useState<string[]>([]);
+	const { user, follow, setFollow } = useGlobalContext();
 
 	const mapGenreIdToName = (genreId: number): string => {
 		const genre = AnimeMoiGenres.find((item) => item.id === genreId);
@@ -21,15 +24,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const response = await fetch(
-					`${Domain}AnimeMoi/Manga?idComic=${params.searchParams.id}&host=${host}`
-				);
-
-				if (!response.ok) {
-					throw new Error("Network response was not ok");
-				}
-
-				const responseData = await response.json();
+				const responseData = await GetManga(params, host);
 				setData(responseData);
 
 				const mangaGenres = responseData.genres || [];
@@ -55,28 +50,41 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 		fetchData();
 	}, [host, params]);
 
+	const checkFollow = async () => {
+		setFollow(null);
+		if (user === null) {
+			return;
+		}
+		const _follow = await GetProcess(user, params.searchParams.id);
+		if (_follow) {
+			setFollow(_follow);
+		}
+	};
+
+	useEffect(() => {
+		checkFollow();
+	}, []);
+
 	const statusText = data ? getStatusText(data.status) : "";
 
 	const handleFollowClick = async (manga: any) => {
-		var user = auth.currentUser;
 		if (user === null) {
 			alert("Bạn cần đăng nhập để theo dõi truyện.");
 			return;
 		}
-		const token = await user.getIdTokenResult();
-		const response = await fetch(
-			`${Domain}Service/Follow?idComic=${manga.id}`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${token.token}`,
-				},
-			}
-		);
+		const token = await user.getIdToken();
+		const data = await Follow(manga.id, token);
+		if (data.message === "success") {
+			setFollow({});
+		}
+	};
 
-		const data = await response.json();
-		alert(`Theo dõi thành công ${data.message}`);
+	const handleUnFollowClick = async (manga: any) => {
+		const token = await user!.getIdToken();
+		const data = await UnFollow(manga.id, token);
+		if (data.message === "success") {
+			setFollow(null);
+		}
 	};
 
 	return (
@@ -110,16 +118,17 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 									</p>
 								</div>
 							</div>
-							<div className="w-full h-fit flex">
-								<div
-									className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
-									onClick={() => handleFollowClick(data)}
-								>
-									<p className="text-[13px] text-white font-semibold">
-										Theo dõi
-									</p>
-								</div>
-							</div>
+							{follow === null ? (
+								<ButtonSuccess
+									text={"Theo dõi"}
+									func={() => handleFollowClick(data)}
+								></ButtonSuccess>
+							) : (
+								<ButtonWarning
+									text={"Huỷ theo dõi"}
+									func={() => handleUnFollowClick(data)}
+								></ButtonWarning>
+							)}
 						</div>
 					</div>
 					<div className="w-full h-fit flex flex-col gap-[15px]">

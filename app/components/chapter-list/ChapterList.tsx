@@ -7,8 +7,10 @@ import "../../globals.css";
 import { ChapterListProps, Chapters } from "../../types/App";
 import { formatDate } from "../../utils/formatDate";
 import "./ChapterList.css";
+import { useGlobalContext } from "../../context/store";
 
 const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
+	const { follow } = useGlobalContext();
 	const [chapters, setChapters] = useState<Chapters>([
 		{ id: 0, title: "", timeUpdate: "", views: 0 },
 	]);
@@ -111,7 +113,11 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 							legacyBehavior
 						>
 							<a
-								className="w-[320px] text-sm text-lightGray hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden"
+								className={`w-[320px] text-sm ${
+									follow && chapter.chapNumber <= follow.lastChapterNumber
+										? `text-darkGray`
+										: `text-lightGray`
+								} hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden`}
 								onClick={() => handleChapterClick(chapter)}
 							>
 								{chapter.title}

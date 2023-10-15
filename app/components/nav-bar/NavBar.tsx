@@ -1,40 +1,35 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../globals.css";
-import "./NavBar.css";
-import { House, MagnifyingGlass, List } from "@phosphor-icons/react";
+import { House, List, MagnifyingGlass } from "@phosphor-icons/react";
+import { User } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { NavBarProps, SearchParams } from "../../types/App";
-import auth from "../auth/Firebase";
+import React, { useEffect, useState } from "react";
+import { useGlobalContext } from "../../context/store";
+import "../../globals.css";
 import Avatar from "../../public/assets/images/avatar.jpg";
-import SearchResult from "../search-result/SearchResult";
+import { NavBarProps, SearchParams } from "../../types/App";
+import { clickToHide } from "../../utils/clickToHide";
+import { Search } from "../../utils/search";
+import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
+import auth from "../auth/Firebase";
 import GenreOverlay from "../genre-overlay/GenreOverlay";
+import SearchResult from "../search-result/SearchResult";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
-import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
-import { Search } from "../../utils/search";
-import { clickToHide } from "../../utils/clickToHide";
-import { useGlobalContext } from "../../context/store";
+import "./NavBar.css";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
-	const { setData } = useGlobalContext();
-
-	const { selectedSource } = useGlobalContext();
-	const isLoggedIn = auth.currentUser;
-
+	const { setData, user, selectedSource } = useGlobalContext();
 	const [searchInput, setSearchInput] = useState("");
 	const [searchResults, setSearchResults] = useState([]);
 	const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
 	const [delayedChange, setDelayedChange] = useState("");
 
-	function handleAuthStateChanged(user: any) {
-		if (user) {
-			setShowOverlayType(null);
-		}
+	function handleAuthStateChanged(user: User) {
+		setShowOverlayType(null);
 	}
 
 	const handleOverlayToggle =
@@ -159,7 +154,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 					<p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
 				</div>
 			</div>
-			{isLoggedIn ? (
+			{user ? (
 				<Image
 					src={Avatar}
 					alt={""}

@@ -1,5 +1,6 @@
-import "./globals.css";
+import { GlobalContextProvider } from "./context/store";
 import { quicksand } from "./font";
+import "./globals.css";
 
 export const metadata = {
 	title: "AnimeMoi",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en" className={quicksand.className}>
-			<body>{children}</body>
+			<body>
+				<GlobalContextProvider>{children}</GlobalContextProvider>
+			</body>
 		</html>
 	);
 }

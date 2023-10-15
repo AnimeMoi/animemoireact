@@ -19,6 +19,7 @@ module.exports = {
     },
     colors: {
       'lightGray': '#f4f4f4',
+      'darkGray': '#C0BBB3',
       'richBlack': '#02040a',
       'success': '#00C851',
       'warning': '#ffbb33',
