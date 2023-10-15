@@ -1,7 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../globals.css";
-import "./NewMangaUpdate.css";
 import {
 	CaretDoubleLeft,
 	CaretDoubleRight,
@@ -9,11 +6,14 @@ import {
 	CaretRight,
 } from "@phosphor-icons/react";
 import Image from "next/image";
-import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import "../../globals.css";
 import Loading from "../../loading";
 import { useSourceContext } from "../../sourceContext";
-import { fetchMangaData, GetTotal } from "../../utils/manga";
+import { GetTotal, fetchMangaData } from "../../utils/manga";
+import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
+import "./NewMangaUpdate.css";
 
 const NewMangaUpdate: React.FC = () => {
 	const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại

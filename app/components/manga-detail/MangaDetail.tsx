@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../globals.css";
-import "./MangaDetail.css";
 import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import { Domain } from "../../domain";
-import { getStatusText } from "../../utils/getStatusText";
-import { MangaDetailProps } from "../../types/App";
-import auth from "../auth/Firebase";
+import "../../globals.css";
 import AnimeMoiGenres from "../../public/assets/genre-types/AnimeMoi/tags.json";
+import { MangaDetailProps } from "../../types/App";
+import { getStatusText } from "../../utils/getStatusText";
+import auth from "../auth/Firebase";
+import "./MangaDetail.css";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 	const [data, setData] = useState<any | null>(null);

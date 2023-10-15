@@ -1,15 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../globals.css";
-import "./GenreOverlay.css";
-import NetTruyenGenres from "../../public/assets/genre-types/NetTruyen/tags.json";
 import BaoTangTruyenGenres from "../../public/assets/genre-types/BaoTangTruyen/tags.json";
+import CMangaGenres from "../../public/assets/genre-types/CManga/tags.json";
 import HentaiVnGenres from "../../public/assets/genre-types/HentaiVn/tags.json";
 import LxMangaGenres from "../../public/assets/genre-types/LxManga/tags.json";
+import NetTruyenGenres from "../../public/assets/genre-types/NetTruyen/tags.json";
 import SayHentaiGenres from "../../public/assets/genre-types/SayHentai/tags.json";
 import YurinekoGenres from "../../public/assets/genre-types/Yurineko/tags.json";
-import CMangaGenres from "../../public/assets/genre-types/CManga/tags.json";
 import { useSourceContext } from "../../sourceContext";
+import "./GenreOverlay.css";
 
 const GenreOverlay: React.FC = () => {
 	const [genres, setGenres] = useState<any>([]);

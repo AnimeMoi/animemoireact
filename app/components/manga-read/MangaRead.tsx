@@ -1,20 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../globals.css";
-import "./MangaRead.css";
 import {
-	MagnifyingGlass,
-	CaretRight,
 	CaretLeft,
+	CaretRight,
+	MagnifyingGlass,
 	SealWarning,
 } from "@phosphor-icons/react";
-import Image from "next/image";
-import { Domain, DomainGetImage } from "../../domain";
-import Loading from "../../loading";
-import ReportManga from "../report-manga/ReportManga";
 import moment from "moment";
-import { getLinkTelegramImage } from "../../utils/image";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { Domain, DomainGetImage } from "../../domain";
+import "../../globals.css";
+import Loading from "../../loading";
 import { MangaReadProps } from "../../types/App";
+import { getLinkTelegramImage } from "../../utils/image";
+import ReportManga from "../report-manga/ReportManga";
+import "./MangaRead.css";
 
 const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
 	const [data, setData] = useState<string[]>([]);
