@@ -6,18 +6,18 @@ import { motion } from "framer-motion";
 import { useSourceContext } from "../../sourceContext";
 import auth from "../auth/Firebase";
 
+const sources = [
+	{ name: "NetTruyen", label: "NetTruyen" },
+	{ name: "BaoTangTruyen", label: "BaoTangTruyen" },
+	{ name: "CManga", label: "CManga" },
+	{ name: "Yurineko", label: "Yurineko" },
+	{ name: "HentaiVn", label: "HentaiVN" },
+	{ name: "LxManga", label: "LxManga" },
+	{ name: "SayHentai", label: "SayHentai" },
+];
+
 const SourceBar: React.FC = () => {
 	const { selectedSource, onSelectSource } = useSourceContext(); // Sử dụng React Context
-
-	const sources = [
-		{ name: "NetTruyen", label: "NetTruyen" },
-		{ name: "BaoTangTruyen", label: "BaoTangTruyen" },
-		{ name: "CManga", label: "CManga" },
-		{ name: "Yurineko", label: "Yurineko" },
-		{ name: "HentaiVn", label: "HentaiVN" },
-		{ name: "LxManga", label: "LxManga" },
-		{ name: "SayHentai", label: "SayHentai" },
-	];
 
 	const isLoggedIn = auth.currentUser;
 
