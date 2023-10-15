@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import "./AccountSettingOverlay.css";
 import auth from "../auth/Firebase";
 import { ButtonPrimary } from "../button/button";
+import "./AccountSettingOverlay.css";
 
 type AccountSettingProps = {
   onEdit: () => void;

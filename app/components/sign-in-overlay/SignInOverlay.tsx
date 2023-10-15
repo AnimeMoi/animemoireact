@@ -1,18 +1,18 @@
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import Image from "next/image";
 import React, { useState } from "react";
 import "../../globals.css";
-import "./SignInOverlay.css";
-import Image from "next/image";
-import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
 import GithubLogo from "../../public/assets/images/brand-logo/github-logo.png";
+import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
 import XLogo from "../../public/assets/images/brand-logo/x-logo.png";
+import { SignInProps } from "../../types/App";
 import auth, {
-	GoogleProvider,
 	GithubProvider,
+	GoogleProvider,
 	XProvider,
 } from "../auth/Firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { FirebaseError } from "firebase/app";
-import { SignInProps } from "../../types/App";
+import "./SignInOverlay.css";
 
 const SignInOverlay: React.FC<SignInProps> = ({ onAuthStateChanged }) => {
 	const [isEmailClicking, setIsEmailClicking] = useState(false);

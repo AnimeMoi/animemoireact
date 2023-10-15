@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
 import { Listbox } from "@headlessui/react";
-import { ButtonPrimary } from "../../button/button";
+import { useState } from "react";
 import { Domain } from "../../../domain";
 import auth from "../../auth/Firebase";
+import { ButtonPrimary } from "../../button/button";
 
 /*
 link doc Listbox: https://headlessui.com/

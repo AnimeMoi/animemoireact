@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "../../globals.css";
-import "./ChapterList.css";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { Domain } from "../../domain";
-import { Chapters, ChapterListProps } from "../../types/App";
+import "../../globals.css";
+import { ChapterListProps, Chapters } from "../../types/App";
 import { formatDate } from "../../utils/formatDate";
+import "./ChapterList.css";
 
 const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
 	const [chapters, setChapters] = useState<Chapters>([
