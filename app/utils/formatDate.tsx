@@ -2,7 +2,7 @@ import moment from "moment";
 import "moment/locale/vi";
 
 export const formatDate = (timeUpdate: string) => {
-  const chapterDate = moment(timeUpdate);
+  const chapterDate = moment(timeUpdate).add("7", "hour");
   const currentYear = moment().year();
   const diffInMonths = moment().diff(chapterDate, "months");
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import "./SignInOverlay.css";
+import "./SignUpOverlay.css";
 import Image from "next/image";
 import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
 import GithubLogo from "../../public/assets/images/brand-logo/github-logo.png";

@@ -9,7 +9,7 @@ const GenreOverlay: React.FC = () => {
 
   useEffect(() => {
     setGenres(AnimeMoiGenre);
-  });
+  }, []);
 
   return (
     <div className="genre-wrapper bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-sm text-white/75 font-medium p-5">
