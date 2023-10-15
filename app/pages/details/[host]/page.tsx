@@ -14,7 +14,7 @@ import {
 } from "react";
 
 interface DetailContextContextProps {
-	follow: object | null;
+	follow: any | null;
 	setFollow: Dispatch<SetStateAction<object | null>>;
 }
 
@@ -24,7 +24,7 @@ const DetailContext = createContext<DetailContextContextProps>({
 });
 
 export default function Page(params: any) {
-	const [follow, setFollow] = useState<object | null>(null);
+	const [follow, setFollow] = useState<any | null>(null);
 
 	return (
 		<DetailContext.Provider value={{ follow, setFollow }}>
