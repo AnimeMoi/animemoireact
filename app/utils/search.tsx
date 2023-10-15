@@ -7,9 +7,10 @@ export const Search = async ({
 	genres,
 	exclude,
 	status,
+	host
 }: SearchParams) => {
 	try {
-		const response = await fetch(`${Domain}AnimeMoi/Search?host=NetTruyen`, {
+		const response = await fetch(`${Domain}AnimeMoi/Search?host=${host}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

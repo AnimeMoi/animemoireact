@@ -98,4 +98,5 @@ export type SearchParams = {
 	genres: [number | null];
 	exclude: [number | null];
 	status: number;
+	host: string;
 };

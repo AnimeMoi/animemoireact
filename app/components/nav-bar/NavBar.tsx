@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import "../../globals.css";
 import Avatar from "../../public/assets/images/avatar.jpg";
+import { useSourceContext } from "../../sourceContext";
 import { NavBarProps, SearchParams } from "../../types/App";
 import { Search } from "../../utils/search";
 import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
@@ -20,6 +21,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
 
+	const { selectedSource, onSelectSource } = useSourceContext(); // Sử dụng React Context
 	const isLoggedIn = auth.currentUser;
 
 	function handleAuthStateChanged(user: any) {
@@ -67,6 +69,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 					genres: [null],
 					exclude: [null],
 					status: 0,
+					host: selectedSource,
 				};
 				const data = await Search(searchParams);
 				if (data) {
