@@ -22,7 +22,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
-	const { setData, user, setUser, selectedSource } = useGlobalContext();
+	const { setData, user, selectedSource } = useGlobalContext();
 	const [searchInput, setSearchInput] = useState("");
 	const [searchResults, setSearchResults] = useState([]);
 	const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);

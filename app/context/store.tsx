@@ -6,7 +6,6 @@ import {
 	SetStateAction,
 	createContext,
 	useContext,
-	useEffect,
 	useState,
 } from "react";
 import auth from "../components/auth/Firebase";
