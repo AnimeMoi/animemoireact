@@ -4,23 +4,31 @@ import "../../globals.css";
 import "./NavBar.css";
 import { House, MagnifyingGlass, List } from "@phosphor-icons/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useSourceContext } from "../../sourceContext";
+import { NavBarProps, SearchParams } from "../../types/App";
+import auth from "../auth/Firebase";
 import Avatar from "../../public/assets/images/avatar.jpg";
+import SearchResult from "../search-result/SearchResult";
+import GenreOverlay from "../genre-overlay/GenreOverlay";
 import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 import AccountSettingOverlay from "../account-setting-overlay/AccountSettingOverlay";
-import GenreOverlay from "../genre-overlay/GenreOverlay";
-import SearchResult from "../search-result/SearchResult";
-import auth from "../auth/Firebase";
-import Link from "next/link";
-import { fetchSearchResultsByQuery } from "../../utils/searchResults";
-import { NavBarProps } from "../../types/App";
+import { Search } from "../../utils/search";
+import { clickToHide } from "../../utils/clickToHide";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   const [showOverlayType, setShowOverlayType] = useState<
     "genre" | "signIn" | "signUp" | "accountSetting" | null
   >(null);
 
+  const { selectedSource, onSelectSource } = useSourceContext();
   const isLoggedIn = auth.currentUser;
+
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
+  const [delayedChange, setDelayedChange] = useState("");
 
   function handleAuthStateChanged(user: any) {
     if (user) {
@@ -46,11 +54,6 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 
   const handleButtonClick = () => (): void => {};
 
-  const [searchInput, setSearchInput] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
-  const [delayedChange, setDelayedChange] = useState("");
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDelayedChange(searchInput);
@@ -61,7 +64,15 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
   useEffect(() => {
     if (delayedChange !== "") {
       const fetchData = async (value: string) => {
-        const data = await fetchSearchResultsByQuery(value);
+        const searchParams: SearchParams = {
+          query: value,
+          page: 0,
+          genres: [null],
+          exclude: [null],
+          status: 0,
+          host: selectedSource,
+        };
+        const data = await Search(searchParams);
         if (data) {
           setSearchResults(data);
           setIsSearchResultVisible(data.length > 0);
@@ -74,24 +85,25 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
     }
   }, [delayedChange]);
 
+  const clickToHideSearchResult = clickToHide(
+    "searchResult",
+    setIsSearchResultVisible
+  );
+
   useEffect(() => {
-    const clickToHideSearchResult = (e: MouseEvent) => {
-      const searchResultElement = document.getElementById("searchResult");
-
-      if (
-        searchResultElement &&
-        !searchResultElement.contains(e.target as Node)
-      ) {
-        setIsSearchResultVisible(false);
-      }
-    };
-
     document.addEventListener("click", clickToHideSearchResult);
 
     return () => {
       document.removeEventListener("click", clickToHideSearchResult);
     };
   }, []);
+
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+
+  const handleGenreSelect = (genre: number) => {
+    setSelectedGenre(genre);
+    setShowOverlayType(null);
+  };
 
   return (
     <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
@@ -164,7 +176,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
           className="fixed inset-0 flex justify-center items-start pt-[90px] bg-richBlack/75 z-[200]"
           onClick={handleOverlayClick}
         >
-          <GenreOverlay />
+          <GenreOverlay onGenreSelect={handleGenreSelect} />
         </div>
       )}
 

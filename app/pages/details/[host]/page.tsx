@@ -4,7 +4,6 @@ import NavBar from "../../../components/nav-bar/NavBar";
 import MangaDetail from "../../../components/manga-detail/MangaDetail";
 import ChapterList from "../../../components/chapter-list/ChapterList";
 import Donate from "../../../components/donate/Donate";
-import FindManga from "../../../components/find-manga/FindManga";
 
 export default async function Page(params: any) {
   return (
@@ -19,7 +18,6 @@ export default async function Page(params: any) {
             <ChapterList host={params.params.host} params={params} />
           </div>
           <Donate />
-          <FindManga />
           <div className="w-full h-[50px]"></div>
           <div className="w-full h-fit flex flex-row justify-between items-center pt-[25px] py-[50px] border-t-[1.5px] border-white/[.15]">
             <div className="flex flex-col gap-[6px]">

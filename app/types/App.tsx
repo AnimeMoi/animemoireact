@@ -68,8 +68,13 @@ export type SearchResultProps = {
   results: any[];
 };
 
-export type GenreOverlayProps = {
-  onGenreClick: (genreId: number) => void;
+export type SearchParams = {
+  query: string;
+  page: number;
+  genres: [number | null];
+  exclude: [number | null];
+  status: number;
+  host: string;
 };
 
 export type ReportMangaProps = {
