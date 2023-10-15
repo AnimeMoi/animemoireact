@@ -68,6 +68,10 @@ export type SearchResultProps = {
   results: any[];
 };
 
+export type GenreOverlayProps = {
+  onGenreClick: (genreId: number) => void;
+};
+
 export type ReportMangaProps = {
   onSend: () => void;
   onClose: () => void;
@@ -84,10 +88,10 @@ export type MangaInfoProps = {
 
 export type MangaDetailProps = {
   host: string;
-  params: any; // Truyền biến params qua props
+  params: any;
 };
 
 export type ChapterListProps = {
   host: string;
-  params: any; // Truyền biến params qua props
+  params: any;
 };
