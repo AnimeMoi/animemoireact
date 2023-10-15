@@ -10,3 +10,29 @@ export const ButtonPrimary = ({ text, func }: ButtonProps): JSX.Element => {
 		</div>
 	);
 };
+
+export const ButtonSuccess = ({ text, func }: ButtonProps): JSX.Element => {
+	return (
+		<div className="w-full h-fit flex">
+			<div
+				className="flex px-[15px] py-[10px] bg-success rounded-full cursor-pointer move-up"
+				onClick={func}
+			>
+				<p className="text-[13px] text-white font-semibold">{text}</p>
+			</div>
+		</div>
+	);
+};
+
+export const ButtonWarning = ({ text, func }: ButtonProps): JSX.Element => {
+	return (
+		<div className="w-full h-fit flex">
+			<div
+				className="flex px-[15px] py-[10px] bg-warning rounded-full cursor-pointer move-up"
+				onClick={func}
+			>
+				<p className="text-[13px] text-white font-semibold">{text}</p>
+			</div>
+		</div>
+	);
+};
