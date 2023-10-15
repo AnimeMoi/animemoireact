@@ -10,13 +10,11 @@ import { GetManga } from "../../utils/manga";
 import { Follow, GetProcess, UnFollow } from "../../utils/service";
 import { ButtonSuccess, ButtonWarning } from "../button/button";
 import "./MangaDetail.css";
-import { useDetailContext } from "../../pages/details/[host]/page";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 	const [data, setData] = useState<any | null>(null);
 	const [genres, setGenres] = useState<string[]>([]);
-	const { user } = useGlobalContext();
-	const { follow, setFollow } = useDetailContext();
+	const { user, follow, setFollow } = useGlobalContext();
 
 	const mapGenreIdToName = (genreId: number): string => {
 		const genre = AnimeMoiGenres.find((item) => item.id === genreId);
@@ -58,7 +56,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
 		}
 		const _follow = await GetProcess(user, params.searchParams.id);
 		if (_follow[0]) {
-			setFollow(_follow);
+			setFollow(_follow[0]);
 		}
 	};
 

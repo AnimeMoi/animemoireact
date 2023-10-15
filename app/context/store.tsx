@@ -17,6 +17,8 @@ interface ContextProps {
 	setSelectedSource: Dispatch<SetStateAction<string>>;
 	user: User | null;
 	setUser: Dispatch<SetStateAction<User | null>>;
+	follow: any | null;
+	setFollow: Dispatch<SetStateAction<object | null>>;
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -26,6 +28,8 @@ const GlobalContext = createContext<ContextProps>({
 	setSelectedSource: (): string => "",
 	user: null,
 	setUser: () => {},
+	follow: {},
+	setFollow: () => {},
 });
 
 export const GlobalContextProvider = ({
@@ -36,6 +40,7 @@ export const GlobalContextProvider = ({
 	const [data, setData] = useState([] as []); // Dữ liệu truyện
 	const [selectedSource, setSelectedSource] = useState("NetTruyen");
 	const [user, setUser] = useState<User | null>(null);
+	const [follow, setFollow] = useState<any | null>(null);
 
 	auth.onAuthStateChanged((user) => {
 		setUser(user);
@@ -50,6 +55,8 @@ export const GlobalContextProvider = ({
 				setSelectedSource,
 				user,
 				setUser,
+				follow,
+				setFollow,
 			}}
 		>
 			{children}
