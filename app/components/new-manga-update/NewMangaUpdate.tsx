@@ -45,7 +45,7 @@ const NewMangaUpdate: React.FC = () => {
 
 	useEffect(() => {
 		fetchData();
-	}, [currentPage, selectedSource, selectedGenre]);
+	}, [currentPage, selectedSource]);
 
 	const renderMangaDiv = () => {
 		const mangaDiv: React.JSX.Element[] = [];
@@ -127,7 +127,7 @@ const NewMangaUpdate: React.FC = () => {
 			<p className="text-xl text-lightGray font-semibold">
 				Truyện mới cập nhật
 			</p>
-			{data.length == 0 ? (
+			{data.length === 0 ? (
 				<Loading />
 			) : (
 				<div className="flex flex-wrap justify-center gap-[44px]">

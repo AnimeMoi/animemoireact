@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import "../../globals.css";
 import "./GenreOverlay.css";
 import NetTruyenGenres from "../../public/assets/genre-types/NetTruyen/tags.json";
@@ -12,10 +12,10 @@ import SayHentaiGenres from "../../public/assets/genre-types/SayHentai/tags.json
 import { useGlobalContext } from "../../context/store";
 
 type GenreOverlayProps = {
-	onGenreSelect: (genre: number) => void;
+	setSelectedGenre: Dispatch<React.SetStateAction<number | null>>;
 };
 
-const GenreOverlay: React.FC<GenreOverlayProps> = ({ onGenreSelect }) => {
+const GenreOverlay: React.FC<GenreOverlayProps> = ({ setSelectedGenre }) => {
 	const [genres, setGenres] = useState<any>([]);
 	const { selectedSource } = useGlobalContext();
 
@@ -55,7 +55,7 @@ const GenreOverlay: React.FC<GenreOverlayProps> = ({ onGenreSelect }) => {
 						key={genre.Id}
 						className="genre-name"
 						data-description={genre.Description}
-						onClick={() => onGenreSelect(genre.Id)}
+						onClick={() => setSelectedGenre(genre.Id)}
 					>
 						{genre.Name}
 					</div>

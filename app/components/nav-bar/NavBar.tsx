@@ -3,7 +3,7 @@ import { House, List, MagnifyingGlass } from "@phosphor-icons/react";
 import { User } from "firebase/auth";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useGlobalContext } from "../../context/store";
 import "../../globals.css";
 import Avatar from "../../public/assets/images/avatar.jpg";
@@ -62,7 +62,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 			const fetchData = async (value: string) => {
 				const searchParams: SearchParams = {
 					query: value,
-					page: 0,
+					page: 1,
 					genres: [],
 					exclude: [],
 					status: 0,
@@ -96,21 +96,25 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 
 	const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
-	const handleGenreSelect = async (genre: number) => {
+	const GetComicByGenre = async () => {
+		if (!selectedGenre) return;
 		setData([]);
 		const searchParams: SearchParams = {
 			query: "",
 			page: 0,
-			genres: [genre],
+			genres: [selectedGenre],
 			exclude: [],
 			status: 0,
 			host: selectedSource,
 		};
 		const data = await Search(searchParams);
 		setData(data);
-		setSelectedGenre(genre);
-		setShowOverlayType(null);
 	};
+
+	useEffect(() => {
+		GetComicByGenre();
+		setShowOverlayType(null);
+	}, [selectedSource, selectedGenre]);
 
 	return (
 		<div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
@@ -183,7 +187,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 					className="fixed inset-0 flex justify-center items-start pt-[90px] bg-richBlack/75 z-[200]"
 					onClick={handleOverlayClick}
 				>
-					<GenreOverlay onGenreSelect={handleGenreSelect} />
+					<GenreOverlay setSelectedGenre={setSelectedGenre} />
 				</div>
 			)}
 
