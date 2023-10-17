@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { User } from "firebase/auth";
@@ -94,9 +94,9 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 		return () => {
 			document.removeEventListener("click", clickToHideSearchResult);
 		};
-	}, []);
+	}, [clickToHideSearchResult]);
 
-	const GetComicByGenre = async () => {
+	const GetComicByGenre = useCallback(async () => {
 		if (!selectedGenre) return;
 		setData([]);
 		const searchParams: SearchParams = {
@@ -109,12 +109,12 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 		};
 		const data = await Search(searchParams);
 		setData(data);
-	};
+	}, [selectedGenre, selectedSource, setData]);
 
 	useEffect(() => {
 		GetComicByGenre();
 		setShowOverlayType(null);
-	}, [selectedSource, selectedGenre]);
+	}, [selectedSource, selectedGenre, GetComicByGenre]);
 
 	return (
 		<div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
