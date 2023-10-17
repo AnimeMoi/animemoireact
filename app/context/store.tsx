@@ -4,8 +4,8 @@ import {
 	SetStateAction,
 	createContext,
 	useContext,
-	useState,
 	useMemo,
+	useState,
 } from "react";
 import { User } from "firebase/auth";
 import auth from "../components/auth/Firebase";
@@ -13,8 +13,6 @@ import auth from "../components/auth/Firebase";
 type GlobalContextProps = {
 	data: object[];
 	setData: Dispatch<SetStateAction<object[]>>;
-	selectedSource: string;
-	setSelectedSource: Dispatch<SetStateAction<string>>;
 	user: User | null;
 	setUser: Dispatch<SetStateAction<User | null>>;
 	follow: any | null;
@@ -23,18 +21,15 @@ type GlobalContextProps = {
 
 const GlobalContext = createContext<GlobalContextProps>({
 	data: [] as object[],
-	setData: () => {},
-	selectedSource: "NetTruyen",
-	setSelectedSource: () => "",
-	user: null,
-	setUser: () => {},
+	setData: (input: any) => {},
+	user: {} as User | null,
+	setUser: (input: any) => {},
 	follow: null,
-	setFollow: () => {},
+	setFollow: (input: any) => {},
 });
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 	const [data, setData] = useState<object[]>([]); // Dữ liệu truyện
-	const [selectedSource, setSelectedSource] = useState("NetTruyen");
 	const [user, setUser] = useState<User | null>(null);
 	const [follow, setFollow] = useState<any | null>(null);
 
@@ -46,23 +41,12 @@ export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
 		() => ({
 			data,
 			setData,
-			selectedSource,
-			setSelectedSource,
 			user,
 			setUser,
 			follow,
 			setFollow,
 		}),
-		[
-			data,
-			setData,
-			selectedSource,
-			setSelectedSource,
-			user,
-			setUser,
-			follow,
-			setFollow,
-		]
+		[data, follow, user]
 	);
 
 	return (

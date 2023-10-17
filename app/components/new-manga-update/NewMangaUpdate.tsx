@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "../../globals.css";
@@ -14,36 +14,32 @@ import { GetMangas, GetTotal } from "../../utils/manga";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import Loading from "../../loading";
 import { useGlobalContext } from "../../context/store";
+import { useSourceContext } from "../../context/SourceContext";
 
 const NewMangaUpdate: React.FC = () => {
-	const { data, setData, selectedSource } = useGlobalContext(); // Sử dụng React Context
+	const { data, setData } = useGlobalContext(); // Sử dụng React Context
 	const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
 	const [totalManga, setTotalManga] = useState(0); // Tổng số manga
-	const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
+	const { selectedSource } = useSourceContext();
 
 	const itemsPerPage = 24; // Số manga trên mỗi trang
 	const totalPages = Math.ceil(totalManga / itemsPerPage); // Tổng số trang
 
-	const fetchData = async () => {
+	const fetchData = useCallback(async () => {
 		try {
 			setData([]);
-			setIsLoading(true);
 
 			const newData = await GetMangas(selectedSource, currentPage);
 			setData(newData);
 
 			const total = await GetTotal(selectedSource);
 			setTotalManga(total);
-
-			setIsLoading(false);
-		} catch (error) {
-			setIsLoading(false);
-		}
-	};
+		} catch (error) {}
+	}, [currentPage, selectedSource, setData]);
 
 	useEffect(() => {
 		fetchData();
-	}, [currentPage, selectedSource]);
+	}, [currentPage, fetchData, selectedSource]);
 
 	const renderMangaDiv = () => {
 		const mangaDiv: React.JSX.Element[] = [];

@@ -16,12 +16,14 @@ import { clickToHide } from "../../utils/clickToHide";
 import { Search } from "../../utils/search";
 import { useGlobalContext } from "../../context/store";
 import { NavBarProps, SearchParams } from "../../types/App";
+import { useSourceContext } from "../../context/SourceContext";
 
 const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
-	const { setData, user, selectedSource } = useGlobalContext();
+	const { setData, user } = useGlobalContext();
+	const { selectedSource } = useSourceContext();
 	const [searchInput, setSearchInput] = useState("");
 	const [searchResults, setSearchResults] = useState([]);
 	const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);

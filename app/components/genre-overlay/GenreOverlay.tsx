@@ -10,6 +10,7 @@ import HentaiVNGenres from "../../public/assets/genre-types/HentaiVN/tags.json";
 import LxMangaGenres from "../../public/assets/genre-types/LxManga/tags.json";
 import SayHentaiGenres from "../../public/assets/genre-types/SayHentai/tags.json";
 import { useGlobalContext } from "../../context/store";
+import { useSourceContext } from "../../context/SourceContext";
 
 type GenreOverlayProps = {
 	setSelectedGenre: Dispatch<React.SetStateAction<number | null>>;
@@ -17,7 +18,7 @@ type GenreOverlayProps = {
 
 const GenreOverlay: React.FC<GenreOverlayProps> = ({ setSelectedGenre }) => {
 	const [genres, setGenres] = useState<any>([]);
-	const { selectedSource } = useGlobalContext();
+	const { selectedSource } = useSourceContext();
 
 	useEffect(() => {
 		switch (selectedSource) {
