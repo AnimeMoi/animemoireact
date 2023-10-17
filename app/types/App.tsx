@@ -36,6 +36,7 @@ export type Chapters = Chapter[];
 
 export type NavBarProps = {
 	isHomePage: boolean;
+	isGenres: boolean;
 };
 
 export type ButtonProps = {

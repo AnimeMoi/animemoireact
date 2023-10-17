@@ -18,7 +18,7 @@ import { useGlobalContext } from "../../context/store";
 import { NavBarProps, SearchParams } from "../../types/App";
 import { useSourceContext } from "../../context/SourceContext";
 
-const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
+const NavBar: React.FC<NavBarProps> = ({ isHomePage, isGenres }) => {
 	const [showOverlayType, setShowOverlayType] = useState<
 		"genre" | "signIn" | "signUp" | "accountSetting" | null
 	>(null);
@@ -150,13 +150,15 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
 						</div>
 					)}
 				</div>
-				<div
-					className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
-					onClick={handleOverlayToggle("genre")}
-				>
-					<List color="#f4f4f4" weight="bold" size={18} />
-					<p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
-				</div>
+				{isGenres && (
+					<div
+						className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
+						onClick={handleOverlayToggle("genre")}
+					>
+						<List color="#f4f4f4" weight="bold" size={18} />
+						<p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
+					</div>
+				)}
 			</div>
 			{user ? (
 				<Image

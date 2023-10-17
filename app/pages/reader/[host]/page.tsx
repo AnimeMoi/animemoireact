@@ -39,7 +39,7 @@ export default function Page(params: any) {
 		<div className="w-screen min-h-screen flex justify-center items-center bg-richBlack">
 			<div className="hidden w-[1200px] h-full tablet:flex flex-col justify-start items-center gap-[50px] px-[40px]">
 				<div className="w-full h-fit flex flex-col sticky top-0 z-[100]">
-					<NavBar isHomePage={false} />
+					<NavBar isHomePage={false} isGenres={false} />
 					<ScrollIndicator
 						scrollPercentage={scrollPercentage}
 						setScrollPercentage={setScrollPercentage}
