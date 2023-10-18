@@ -2,11 +2,13 @@
 import {configureStore} from '@reduxjs/toolkit'
 import comicReducer from "./Features/comics/comicSlice";
 import sourceReducer from "./Features/source/sourceSlice";
+import followReducer from "./Features/follow/followSlice";
 
 export const store = configureStore({
     reducer: {
         comics: comicReducer,
-        source: sourceReducer
+        source: sourceReducer,
+        follow: followReducer
     },
 })
 
