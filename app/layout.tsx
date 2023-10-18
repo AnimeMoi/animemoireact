@@ -2,6 +2,7 @@ import {GlobalProvider} from "./context/store";
 import {quicksand} from "./font";
 import "./globals.css";
 import {StoreProvider} from "./GlobalRedux/provider";
+import React from "react";
 
 export const metadata = {
     title: "AnimeMoi",

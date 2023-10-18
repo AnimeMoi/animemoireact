@@ -54,12 +54,12 @@ const GenreOverlay: React.FC<GenreOverlayProps> = ({setSelectedGenre}) => {
             <div className="h-[422px] grid gap-x-[45px] gap-y-5 grid-cols-5 overflow-y-auto no-scrollbar">
                 {genres.map((genre: any) => (
                     <div
-                        key={genre.Id}
+                        key={genre["Id"]}
                         className="genre-name"
                         data-description={genre.Description}
-                        onClick={() => setSelectedGenre(genre.Id)}
+                        onClick={() => setSelectedGenre(genre["Id"])}
                     >
-                        {genre.Name}
+                        {genre["Name"]}
                     </div>
                 ))}
             </div>

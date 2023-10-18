@@ -38,7 +38,8 @@ const NewMangaUpdate: React.FC = () => {
     }, [currentPage, dispatch, selectedSource]);
 
     useEffect(() => {
-        fetchData();
+        fetchData().then(() => {
+        });
     }, [currentPage, fetchData, selectedSource]);
 
     const renderMangaDiv = () => {

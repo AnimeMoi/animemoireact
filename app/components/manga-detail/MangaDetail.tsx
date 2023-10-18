@@ -23,7 +23,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
     const dispatch = useDispatch();
     const mapGenreIdToName = (genreId: number): string => {
         const genre = AnimeMoiGenres.find((item) => item.id === genreId);
-        return genre ? genre.Name : `Thể loại không xác định: (${genreId})`;
+        return genre ? genre["Name"] : `Thể loại không xác định: (${genreId})`;
     };
 
     useEffect(() => {

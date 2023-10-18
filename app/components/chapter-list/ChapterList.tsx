@@ -114,7 +114,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                         >
                             <a
                                 className={`w-[320px] text-sm ${
-                                    follow && chapter.chapNumber <= follow.lastChapterNumber
+                                    follow && chapter["chapNumber"] <= follow["lastChapterNumber"]
                                         ? `text-darkGray`
                                         : `text-lightGray`
                                 } hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden`}
