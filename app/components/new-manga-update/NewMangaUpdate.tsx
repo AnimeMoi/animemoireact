@@ -8,7 +8,6 @@ import {CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight,} from "@phosph
 import {GetMangas, GetTotal} from "../../utils/manga";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import Loading from "../../loading";
-import {useSourceContext} from "../../context/SourceContext";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../GlobalRedux/store";
 import {setData} from "../../GlobalRedux/Features/comics/comicSlice";
@@ -16,11 +15,11 @@ import {setData} from "../../GlobalRedux/Features/comics/comicSlice";
 const NewMangaUpdate: React.FC = () => {
     // Redux
     const data = useSelector((state: RootState) => state.comics.data);
+    const selectedSource = useSelector((state: RootState) => state.source.value);
     const dispatch = useDispatch();
 
     const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
     const [totalManga, setTotalManga] = useState(0); // Tổng số manga
-    const {selectedSource} = useSourceContext();
 
     const itemsPerPage = 24; // Số manga trên mỗi trang
     const totalPages = Math.ceil(totalManga / itemsPerPage); // Tổng số trang

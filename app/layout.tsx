@@ -1,4 +1,3 @@
-import {SourceProvider} from "./context/SourceContext";
 import {GlobalProvider} from "./context/store";
 import {quicksand} from "./font";
 import "./globals.css";
@@ -19,7 +18,7 @@ export default function RootLayout({
             <html lang="en" className={quicksand.className}>
             <body>
             <GlobalProvider>
-                <SourceProvider>{children}</SourceProvider>
+                {children}
             </GlobalProvider>
             </body>
             </html>

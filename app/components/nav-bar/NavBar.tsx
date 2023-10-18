@@ -15,18 +15,18 @@ import {clickToHide} from "../../utils/clickToHide";
 import {Search} from "../../utils/search";
 import {useGlobalContext} from "../../context/store";
 import {NavBarProps, SearchParams} from "../../types/App";
-import {useSourceContext} from "../../context/SourceContext";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setData} from "../../GlobalRedux/Features/comics/comicSlice";
+import {RootState} from "../../GlobalRedux/store";
 
 const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
+    const selectedSource = useSelector((state: RootState) => state.source.value);
     const dispatch = useDispatch();
+    const {user} = useGlobalContext();
 
     const [showOverlayType, setShowOverlayType] = useState<
         "genre" | "signIn" | "signUp" | "accountSetting" | null
     >(null);
-    const {user} = useGlobalContext();
-    const {selectedSource} = useSourceContext();
     const [searchInput, setSearchInput] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
