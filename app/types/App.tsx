@@ -20,76 +20,71 @@
 //   ];
 // };
 
-export type SourceContextProps = {
-	selectedSource: string;
-	onSelectSource: (source: string) => void;
-};
-
 export type Chapter = {
-	id: number;
-	title: string;
-	timeUpdate: string;
-	views: number;
+    id: number;
+    title: string;
+    timeUpdate: string;
+    views: number;
 };
 
 export type Chapters = Chapter[];
 
 export type NavBarProps = {
-	isHomePage: boolean;
-	isGenres: boolean;
+    isHomePage: boolean;
+    isGenres: boolean;
 };
 
 export type ButtonProps = {
-	text: string;
-	func: any;
+    text: string;
+    func: any;
 };
 
 export type SignUpProps = {
-	onAuthStateChanged: (user: any) => void;
+    onAuthStateChanged: (user: any) => void;
 };
 
 export type SignInProps = {
-	onAuthStateChanged: (user: any) => void;
+    onAuthStateChanged: (user: any) => void;
 };
 
 export type MangaReadProps = {
-	host: string;
-	params: any;
+    host: string;
+    params: any;
 };
 
 export type SearchResultProps = {
-	results: any[];
+    results: any[];
 };
 
 export type SearchParams = {
-	query: string;
-	page: number;
-	genres: number[];
-	exclude: number[];
-	status: number;
-	host: string;
+    query: string;
+    page: number;
+    genres: number[];
+    exclude: number[];
+    status: number;
+    host: string;
 };
 
 export type ReportMangaProps = {
-	onSend: () => void;
-	onClose: () => void;
+    onSend: () => void;
+    onClose: () => void;
 };
 
 export type MangaInfoProps = {
-	cover: string;
-	title: string;
-	author: string;
-	status: number;
-	views: number;
-	description: string;
+    cover: string;
+    title: string;
+    author: string;
+    status: number;
+    views: number;
+    description: string;
 };
 
 export type MangaDetailProps = {
-	host: string;
-	params: any;
+    host: string;
+    params: any;
 };
 
 export type ChapterListProps = {
-	host: string;
-	params: any;
+    host: string;
+    params: any;
 };
