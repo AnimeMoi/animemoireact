@@ -19,6 +19,7 @@ const nextConfig = {
             "telegraph-image-60t.pages.dev",
             "i226.ntcdntempv26.com",
             "telegra.ph",
+            "cdn.cdnimgtgh.com",
             // Yurineko
             "storage.yurineko.net",
             // BaoTangTruyen

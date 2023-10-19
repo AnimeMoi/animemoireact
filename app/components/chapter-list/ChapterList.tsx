@@ -54,10 +54,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
         );
 
         mangas[existingMangaIndex].chapters = listChapter;
-        mangas[existingMangaIndex].currentChapterId = chapter.id;
-        mangas[existingMangaIndex].currentChapterTitle = chapter.title;
-        mangas[existingMangaIndex].currentChapterNumber = chapter.chapNumber;
-        mangas[existingMangaIndex].currentTimeUpdate = chapter.timeUpdate;
+        mangas[existingMangaIndex].current = chapter;
 
         localStorage.setItem("mangas", JSON.stringify(mangas));
     };

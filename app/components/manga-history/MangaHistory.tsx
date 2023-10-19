@@ -31,12 +31,12 @@ const MangaHistory: React.FC = () => {
             <div className="flex flex-row flex-wrap gap-[50px]">
                 {mangas.map((manga: any, index: number) => (
                     <div
-                        key={manga.id}
+                        key={manga.info.id}
                         className="w-[340px] h-fit flex flex-row gap-[16px] p-[14px] rounded-[22px] border-[1.5px] border-white/20"
                     >
                         <div className="w-[90px] h-[130px] relative overflow-hidden">
                             <Image
-                                src={manga.cover}
+                                src={manga.info.cover}
                                 alt=""
                                 fill
                                 className="object-cover rounded-[8px] outline outline-[1px] outline-white/20 outline-offset-[-1px]"
@@ -50,10 +50,13 @@ const MangaHistory: React.FC = () => {
                                         {manga.info.title}
                                     </p>
                                 </Link>
+                                <p className="w-full text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+                                    Chương mới nhất: {manga.info.lastChapterTitle}
+                                </p>
                                 <Link
-                                    href={`/pages/reader/${manga.info.host}?idComic=${manga.info.id}&id=${manga.currentChapterId}`}>
+                                    href={`/pages/reader/${manga.info.host}?idComic=${manga.info.id}&id=${manga.current.id}`}>
                                     <p className="w-full text-xs text-white/75 hover:text-[#d9f21c] font-medium whitespace-nowrap text-ellipsis overflow-hidden cursor-pointer">
-                                        Đọc tiếp: {manga.currentChapterTitle}
+                                        Đọc tiếp: {manga.current.title}
                                     </p>
                                 </Link>
                             </div>

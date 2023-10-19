@@ -83,7 +83,8 @@ const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
                 }
             };
 
-            fetchData(delayedChange);
+            fetchData(delayedChange).then(() => {
+            });
         } else {
             setIsSearchResultVisible(false);
         }

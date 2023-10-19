@@ -1,8 +1,7 @@
 "use client";
-import {CaretLeft, CaretRight, MagnifyingGlass, SealWarning,} from "@phosphor-icons/react";
-import moment from "moment";
+import {CaretLeft, CaretRight, MagnifyingGlass, SealWarning} from "@phosphor-icons/react";
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Domain, DomainGetImage} from "../../domain";
 import "../../globals.css";
 import Loading from "../../loading";
@@ -10,9 +9,13 @@ import {MangaReadProps} from "../../types/App";
 import {getLinkTelegramImage} from "../../utils/image";
 import ReportManga from "../report-manga/ReportManga";
 import "./MangaRead.css";
+import moment from "moment";
+import Link from "next/link";
 
 const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     const [data, setData] = useState<string[]>([]);
+    const [comic, setComic] = useState<any>();
+    const [formattedCurrentTimeUpdate, setFormattedCurrentTimeUpdate] = useState<string | null>(null);
     const [showOverlayType, setShowOverlayType] = useState<"reportManga" | null>(
         null
     );
@@ -29,6 +32,25 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         }
     };
 
+    const updateChapterIndex = useCallback(() => {
+        if (!comic) {
+            return;
+        }
+        const idxPrev = comic.chapters.findIndex(
+            (item: any) => item.chapNumber == comic.current.chapNumber - 1
+        );
+
+        const idxNext = comic.chapters.findIndex(
+            (item: any) => item.chapNumber == comic.current.chapNumber + 1
+        );
+
+        comic.prev = comic.chapters[idxPrev];
+        comic.next = comic.chapters[idxNext];
+
+        localStorage.setItem("mangas", JSON.stringify([comic]));
+        setComic(comic)
+    }, [comic])
+
     const handleButtonClick = () => (): void => {
     };
 
@@ -44,6 +66,9 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                 const processedDataPromises = responseData.map((url: string) => {
                     if (url.includes("ntcdntemp")) {
                         return `${DomainGetImage}AnimeMoi/GetImage?host=${params.params.host}&url=${url}`;
+                    }
+                    if (url.startsWith('//')) {
+                        return `https:${url}`;
                     }
                     if (!url.includes("http")) {
                         return getLinkTelegramImage(url);
@@ -62,31 +87,53 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         });
     }, [host, params]);
 
-    const storedMangas = localStorage.getItem("mangas");
-    const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+    useEffect(() => {
+        const storedMangas = localStorage.getItem("mangas");
+        const mangas = storedMangas ? JSON.parse(storedMangas) : [];
 
-    const existingMangaIndex = mangas.findIndex(
-        (item: any) => item.info.id == params.searchParams.idComic
-    );
+        if (Array.isArray(mangas)) {
+            const existingMangaIndex = mangas.findIndex(
+                (item: any) => item.info.id == params.searchParams.idComic
+            );
 
-    const manga = mangas[existingMangaIndex]
+            if (existingMangaIndex !== -1) {
+                setComic(mangas[existingMangaIndex]);
+                updateChapterIndex();
+            }
+        }
+    }, [params.searchParams.id, params.searchParams.idComic, updateChapterIndex]);
 
-    const formattedCurrentTimeUpdate = manga?.currentTimeUpdate
-        ? moment(manga.currentTimeUpdate).format("HH:mm DD/MM/YYYY")
-        : null;
+    useEffect(() => {
+        setFormattedCurrentTimeUpdate(comic
+            ? moment(comic.current.timeUpdate).format("HH:mm DD/MM/YYYY")
+            : null)
+    }, [comic]);
+
+    const handlePrevClick = () => {
+        setData([])
+        comic.current = comic.prev;
+        updateChapterIndex()
+    }
+
+    const handleNextClick = () => {
+        setData([])
+        comic.current = comic.next;
+        updateChapterIndex()
+    }
+
 
     return (
         <>
-            {manga && (
+            {comic && (
                 <div className="w-full h-fit flex flex-col gap-[80px]">
                     <div className="w-full h-fit flex flex-col gap-[60px]">
                         <div className="flex flex-col items-center gap-[16px]">
                             <div className="flex flex-col items-center gap-[4px]">
                                 <p className="text-[19px] text-lightGray font-semibold">
-                                    {manga.info.title}
+                                    {comic.info.title}
                                 </p>
                                 <p className="text-[19px] text-lightGray font-semibold">
-                                    {manga.currentChapterTitle}
+                                    {comic.current.title}
                                 </p>
                             </div>
                             <p className="text-[13px] text-white/75 font-medium italic">
@@ -94,12 +141,21 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                             </p>
                         </div>
                         <div className="flex flex-row justify-center items-center gap-[30px]">
-                            <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-                                <CaretLeft color="#fff" weight="bold" size={15}/>
-                                <p className="text-[13px] text-white/75 font-semibold">
-                                    Chương trước
-                                </p>
-                            </button>
+                            {comic.prev && (
+                                <Link
+                                    href={`/pages/reader/${host}?idComic=${comic.info.id}&id=${comic.prev.id}`}
+                                    onClick={handlePrevClick}
+                                >
+                                    <div
+                                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                                    >
+                                        <CaretLeft color="#fff" weight="bold" size={15}/>
+                                        <p className="text-[13px] text-white/75 font-semibold">
+                                            Chương trước
+                                        </p>
+                                    </div>
+                                </Link>
+                            )}
                             <div className="flex flex-row items-center gap-[15px]">
                                 <div
                                     className="w-[280px] h-[46px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
@@ -118,12 +174,21 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                                     <p className="text-sm text-black font-medium">Báo lỗi</p>
                                 </div>
                             </div>
-                            <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-                                <p className="text-[13px] text-white/75 font-semibold">
-                                    Chương sau
-                                </p>
-                                <CaretRight color="#fff" weight="bold" size={15}/>
-                            </button>
+                            {comic.next && (
+                                <Link
+                                    href={`/pages/reader/${host}?idComic=${comic.info.id}&id=${comic.next.id}`}
+                                    onClick={handleNextClick}
+                                >
+                                    <div
+                                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                                    >
+                                        <p className="text-[13px] text-white/75 font-semibold">
+                                            Chương sau
+                                        </p>
+                                        <CaretRight color="#fff" weight="bold" size={15}/>
+                                    </div>
+                                </Link>
+                            )}
                         </div>
                     </div>
                     {data.length == 0 ? (
