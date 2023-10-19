@@ -36,6 +36,18 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         if (!comic) {
             return;
         }
+
+        const storedMangas = localStorage.getItem("mangas");
+        const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+
+        const existingMangaIndex = mangas.findIndex(
+            (item: any) => item.info.id == params.searchParams.idComic
+        );
+
+        const idxCurrent = comic.chapters.findIndex(
+            (item: any) => item.chapNumber == comic.current.chapNumber
+        );
+
         const idxPrev = comic.chapters.findIndex(
             (item: any) => item.chapNumber == comic.current.chapNumber - 1
         );
@@ -46,10 +58,14 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
 
         comic.prev = comic.chapters[idxPrev];
         comic.next = comic.chapters[idxNext];
+        comic.current = comic.chapters[idxCurrent];
 
-        localStorage.setItem("mangas", JSON.stringify([comic]));
+        mangas[existingMangaIndex].prev = comic.prev;
+        mangas[existingMangaIndex].next = comic.next;
+        mangas[existingMangaIndex].current = comic.current;
+        localStorage.setItem("mangas", JSON.stringify(mangas));
         setComic(comic)
-    }, [comic])
+    }, [comic, params.searchParams.idComic])
 
     const handleButtonClick = () => (): void => {
     };
