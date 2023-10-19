@@ -1,25 +1,23 @@
-"use client";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import {createSlice} from "@reduxjs/toolkit";
+type FollowSlice = {
+  value: any;
+};
 
-export interface followSlice {
-    value: any | null;
-}
-
-const initialState: followSlice = {
-    value: null
-}
+const initialState: FollowSlice = {
+  value: null,
+};
 
 export const followSlice = createSlice({
-    name: "follow",
-    initialState,
-    reducers: {
-        setFollow: (state, action) => {
-            state.value = action.payload;
-        }
-    }
-})
+  name: "follow",
+  initialState,
+  reducers: {
+    setFollow: (state, action: PayloadAction<any>) => {
+      state.value = action.payload;
+    },
+  },
+});
 
-export const {setFollow} = followSlice.actions;
+export const { setFollow } = followSlice.actions;
 
 export default followSlice.reducer;

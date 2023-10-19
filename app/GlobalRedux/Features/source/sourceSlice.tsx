@@ -1,25 +1,23 @@
-"use client";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import {createSlice} from "@reduxjs/toolkit";
+type SourceState = {
+  selectedSource: string;
+};
 
-export interface comicSlice {
-    value: string;
-}
-
-const initialState: comicSlice = {
-    value: "NetTruyen"
-}
+const initialState: SourceState = {
+  selectedSource: "NetTruyen",
+};
 
 export const sourceSlice = createSlice({
-    name: "source",
-    initialState,
-    reducers: {
-        setSelectedSource: (state, action) => {
-            state.value = action.payload;
-        }
-    }
-})
+  name: "source",
+  initialState,
+  reducers: {
+    onSelectSource: (state, action: PayloadAction<string>) => {
+      state.selectedSource = action.payload;
+    },
+  },
+});
 
-export const {setSelectedSource} = sourceSlice.actions;
+export const { onSelectSource } = sourceSlice.actions;
 
 export default sourceSlice.reducer;

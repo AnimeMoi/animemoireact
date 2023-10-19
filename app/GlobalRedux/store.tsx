@@ -1,16 +1,18 @@
-"use client";
-import {configureStore} from '@reduxjs/toolkit'
-import comicReducer from "./Features/comics/comicSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import mangasReducer from "./Features/mangas/mangasSlice";
+import mangaReducer from "./Features/manga/mangaSlice";
 import sourceReducer from "./Features/source/sourceSlice";
 import followReducer from "./Features/follow/followSlice";
 
-export const store = configureStore({
-    reducer: {
-        comics: comicReducer,
-        source: sourceReducer,
-        follow: followReducer
-    },
-})
+const store = configureStore({
+  reducer: {
+    mangas: mangasReducer,
+    manga: mangaReducer,
+    source: sourceReducer,
+    follow: followReducer,
+  },
+});
 
-export type RootState = ReturnType<typeof store.getState>
-// export type AppDispatch = typeof store.dispatch
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
