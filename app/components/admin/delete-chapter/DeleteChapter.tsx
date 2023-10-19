@@ -10,15 +10,15 @@ export const DeleteChapter = () => {
 
   const handleDeleteChapter = async () => {
     setIsLoading(true);
-    const idChapterToDelte = document.getElementById(
+    const idChapterToDelete = document.getElementById(
       "idChapter"
     ) as HTMLInputElement | null;
-    console.log(`Click: handle delete ${idChapterToDelte?.value}`);
+    console.log(`Click: handle delete ${idChapterToDelete?.value}`);
 
     const token = await auth.currentUser?.getIdToken();
 
     const request = await fetch(
-      `${Domain}Admin/DeleteChapter?idChapter=${idChapterToDelte?.value}`,
+      `${Domain}Admin/DeleteChapter?idChapter=${idChapterToDelete?.value}`,
       {
         method: "DELETE",
         headers: {
@@ -49,9 +49,7 @@ export const DeleteChapter = () => {
       <div className="w-[50px] m-auto pt-5 pb-5">
         <ButtonPrimary text={"Xoá"} func={handleDeleteChapter} />
       </div>
-      <div className="text-red-500">
-        {isLoading === true ? "Loading" : error}
-      </div>
+      <div className="text-red-500">{isLoading ? "Loading" : error}</div>
     </div>
   );
 };

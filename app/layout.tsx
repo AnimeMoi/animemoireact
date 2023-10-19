@@ -1,6 +1,7 @@
-import { GlobalProvider } from "./context/store";
 import { quicksand } from "./font";
 import "./globals.css";
+import ReduxProvider from "./globalRedux/provider";
+import { ContextProvider } from "./globalContext/store";
 
 export const metadata = {
   title: "AnimeMoi",
@@ -13,10 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={quicksand.className}>
-      <body>
-        <GlobalProvider>{children}</GlobalProvider>
-      </body>
-    </html>
+    <ReduxProvider>
+      <html lang="en" className={quicksand.className}>
+        <body>
+          <ContextProvider>{children}</ContextProvider>
+        </body>
+      </html>
+    </ReduxProvider>
   );
 }

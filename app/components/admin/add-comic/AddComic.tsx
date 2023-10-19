@@ -10,12 +10,6 @@ link doc Listbox: https://headlessui.com/
 */
 import genres from "../../../public/assets/genre-types/AnimeMoi/tags.json";
 
-// const genres = [
-// 	{ id: 1, name: "genre1" },
-// 	{ id: 2, name: "genre2" },
-// 	{ id: 3, name: "genre3" },
-// ];
-
 const NSFW = [
   { id: 1, value: "False" },
   { id: 2, value: "True" },
@@ -31,21 +25,21 @@ export const AddComic = () => {
   const [result, setResult] = useState("");
 
   const handleAddComic = async () => {
-    var nsfw = selectedNSFW.value === "False" ? false : true;
+    const nsfw = selectedNSFW.value !== "False";
     const newComic = {
       host: "AnimeMoi",
       titles: [title],
       description,
       cover: "string",
       author,
-      status: 2, // 2 is continue
+      status: 2, // 2 = continue
       nsfw,
       genres: selectedGenres.map((e: any) => e.id),
     };
 
     const token = await auth.currentUser?.getIdToken();
 
-    const data = fetch(`${Domain}Admin/CreateComic`, {
+    await fetch(`${Domain}Admin/CreateComic`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

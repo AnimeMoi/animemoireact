@@ -18,8 +18,6 @@ import "./MangaRead.css";
 
 const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
   const [data, setData] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
-
   const [showOverlayType, setShowOverlayType] = useState<"reportManga" | null>(
     null
   );
@@ -63,15 +61,12 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
         const processedData = await Promise.all(processedDataPromises);
 
         setData(processedData);
-
-        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setIsLoading(false);
       }
     };
 
-    fetchData();
+    fetchData().then(() => {});
   }, [host, params]);
 
   const storedManga =
@@ -130,8 +125,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
               </button>
             </div>
           </div>
-          {isLoading ? (
-            // Nếu isLoading là true, hiển thị component Loading
+          {data.length == 0 ? (
             <Loading />
           ) : (
             <div className="w-full h-fit flex flex-col items-center">

@@ -3,11 +3,18 @@ import React from "react";
 import "../../globals.css";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import auth from "../auth/Firebase";
-import { useGlobalContext } from "../../context/store";
+import { useDispatch, useSelector } from "react-redux";
+import { onSelectSource } from "../../globalRedux/Features/source/sourceSlice";
+import { RootState } from "../../globalRedux/store";
+import { useGlobalContext } from "../../globalContext/store";
 
 const SourceBar: React.FC = () => {
-  const { selectedSource, setSelectedSource } = useGlobalContext(); // Sử dụng React Context
+  const dispatch = useDispatch();
+  const selectedSource = useSelector(
+    (state: RootState) => state.source.selectedSource
+  );
+
+  const { user } = useGlobalContext();
 
   const sources = [
     { name: "NetTruyen", label: "NetTruyen" },
@@ -19,11 +26,9 @@ const SourceBar: React.FC = () => {
     { name: "SayHentai", label: "SayHentai" },
   ];
 
-  const isLoggedIn = auth.currentUser;
-
   return (
     <div className="w-full h-fit flex justify-center">
-      {isLoggedIn ? (
+      {user ? (
         <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-medium rounded-full border-[1.5px] border-white/20">
           {sources.map((source) => (
             <div
@@ -31,7 +36,7 @@ const SourceBar: React.FC = () => {
               className={clsx("px-[15px] py-[10px] cursor-pointer relative", {
                 "text-black font-semibold": selectedSource === source.name,
               })}
-              onClick={() => setSelectedSource(source.name)} // Gọi hàm callback từ React Context
+              onClick={() => dispatch(onSelectSource(source.name))}
             >
               <div className="relative z-10">{source.label}</div>
 

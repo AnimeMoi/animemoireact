@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { User } from "firebase/auth";
 import { House, List, MagnifyingGlass } from "@phosphor-icons/react";
 import "../../globals.css";
 import "./NavBar.css";
@@ -14,217 +13,229 @@ import SignInOverlay from "../sign-in-overlay/SignInOverlay";
 import SignUpOverlay from "../sign-up-overlay/SignUpOverlay";
 import { clickToHide } from "../../utils/clickToHide";
 import { Search } from "../../utils/search";
-import { useGlobalContext } from "../../context/store";
 import { NavBarProps, SearchParams } from "../../types/App";
+import { useDispatch, useSelector } from "react-redux";
+import { setMangasData } from "../../globalRedux/Features/mangas/mangasSlice";
+import { RootState } from "../../globalRedux/store";
+import { useGlobalContext } from "../../globalContext/store";
 
-const NavBar: React.FC<NavBarProps> = ({ isHomePage }) => {
-	const [showOverlayType, setShowOverlayType] = useState<
-		"genre" | "signIn" | "signUp" | "accountSetting" | null
-	>(null);
-	const { setData, user, selectedSource } = useGlobalContext();
-	const [searchInput, setSearchInput] = useState("");
-	const [searchResults, setSearchResults] = useState([]);
-	const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
-	const [delayedChange, setDelayedChange] = useState("");
-	const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+const NavBar: React.FC<NavBarProps> = ({ isHomePage, isGenres }) => {
+  const [showOverlayType, setShowOverlayType] = useState<
+    "genre" | "signIn" | "signUp" | "accountSetting" | null
+  >(null);
 
-	function handleAuthStateChanged(user: User) {
-		setShowOverlayType(null);
-	}
+  const dispatch = useDispatch();
+  const selectedSource = useSelector(
+    (state: RootState) => state.source.selectedSource
+  );
 
-	const handleOverlayToggle =
-		(type: "genre" | "signIn" | "signUp" | "accountSetting") => () => {
-			setShowOverlayType(type);
-		};
+  const { user } = useGlobalContext();
 
-	const showGenreOverlay = showOverlayType === "genre";
-	const showSignInOverlay = showOverlayType === "signIn";
-	const showSignUpOverlay = showOverlayType === "signUp";
-	const showAccountSettingOverlay = showOverlayType === "accountSetting";
+  const [searchInput, setSearchInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
+  const [delayedChange, setDelayedChange] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
-	const handleOverlayClick = (e: React.MouseEvent) => {
-		if (e.target === e.currentTarget) {
-			setShowOverlayType(null);
-		}
-	};
+  function handleAuthStateChanged() {
+    setShowOverlayType(null);
+  }
 
-	const handleButtonClick = () => (): void => {};
+  const handleOverlayToggle =
+    (type: "genre" | "signIn" | "signUp" | "accountSetting") => () => {
+      setShowOverlayType(type);
+    };
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setDelayedChange(searchInput);
-		}, 300);
-		return () => clearTimeout(timeout);
-	}, [searchInput]);
+  const showGenreOverlay = showOverlayType === "genre";
+  const showSignInOverlay = showOverlayType === "signIn";
+  const showSignUpOverlay = showOverlayType === "signUp";
+  const showAccountSettingOverlay = showOverlayType === "accountSetting";
 
-	useEffect(() => {
-		if (delayedChange !== "") {
-			const fetchData = async (value: string) => {
-				const searchParams: SearchParams = {
-					query: value,
-					page: 1,
-					genres: [],
-					exclude: [],
-					status: 0,
-					host: selectedSource,
-				};
-				const data = await Search(searchParams);
-				if (data) {
-					setSearchResults(data);
-					setIsSearchResultVisible(data.length > 0);
-				}
-			};
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setShowOverlayType(null);
+    }
+  };
 
-			fetchData(delayedChange);
-		} else {
-			setIsSearchResultVisible(false);
-		}
-	}, [delayedChange, selectedSource]);
+  const handleButtonClick = () => (): void => {};
 
-	const clickToHideSearchResult = clickToHide(
-		"searchResult",
-		setIsSearchResultVisible
-	);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDelayedChange(searchInput);
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchInput]);
 
-	useEffect(() => {
-		document.addEventListener("click", clickToHideSearchResult);
+  useEffect(() => {
+    if (delayedChange !== "") {
+      const fetchData = async (value: string) => {
+        const searchParams: SearchParams = {
+          query: value,
+          page: 1,
+          genres: [],
+          exclude: [],
+          status: 0,
+          host: selectedSource,
+        };
+        const data = await Search(searchParams);
+        if (data) {
+          setSearchResults(data);
+          setIsSearchResultVisible(data.length > 0);
+        }
+      };
 
-		return () => {
-			document.removeEventListener("click", clickToHideSearchResult);
-		};
-	}, []);
+      fetchData(delayedChange);
+    } else {
+      setIsSearchResultVisible(false);
+    }
+  }, [delayedChange, selectedSource]);
 
-	const GetComicByGenre = async () => {
-		if (!selectedGenre) return;
-		setData([]);
-		const searchParams: SearchParams = {
-			query: "",
-			page: 0,
-			genres: [selectedGenre],
-			exclude: [],
-			status: 0,
-			host: selectedSource,
-		};
-		const data = await Search(searchParams);
-		setData(data);
-	};
+  const clickToHideSearchResult = clickToHide(
+    "searchResult",
+    setIsSearchResultVisible
+  );
 
-	useEffect(() => {
-		GetComicByGenre();
-		setShowOverlayType(null);
-	}, [selectedSource, selectedGenre]);
+  useEffect(() => {
+    document.addEventListener("click", clickToHideSearchResult);
 
-	return (
-		<div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
-			<div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
-				<Link href={`/`}>AnimeMoi</Link>
-			</div>
-			<div className="w-fit h-fit flex flex-row gap-[15px]">
-				{isHomePage ? null : (
-					<Link
-						href={`/`}
-						className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20"
-					>
-						<House color="#f4f4f4" weight="bold" size={18} />
-					</Link>
-				)}
-				<div className="relative">
-					<div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
-						<MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
-						<input
-							type="text"
-							placeholder="Tìm truyện"
-							value={searchInput}
-							onChange={(e) => setSearchInput(e.target.value)}
-							className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
-						/>
-					</div>
-					{isSearchResultVisible && (
-						<div
-							id="searchResult"
-							className="absolute top-[120%] left-0 z-[200]"
-						>
-							<SearchResult results={searchResults} />
-						</div>
-					)}
-				</div>
-				<div
-					className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
-					onClick={handleOverlayToggle("genre")}
-				>
-					<List color="#f4f4f4" weight="bold" size={18} />
-					<p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
-				</div>
-			</div>
-			{user ? (
-				<Image
-					src={Avatar}
-					alt={""}
-					className="scale-in w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px] cursor-pointer"
-					onClick={handleOverlayToggle("accountSetting")}
-				/>
-			) : (
-				<div className="w-fit h-fit flex flex-row gap-5 items-center">
-					<p
-						className="scale-in text-sm text-lightGray font-semibold cursor-pointer"
-						onClick={handleOverlayToggle("signIn")}
-					>
-						Đăng nhập
-					</p>
-					<div
-						className="scale-in w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer"
-						onClick={handleOverlayToggle("signUp")}
-					>
-						<p className="text-sm text-black font-semibold">Đăng ký</p>
-					</div>
-				</div>
-			)}
+    return () => {
+      document.removeEventListener("click", clickToHideSearchResult);
+    };
+  }, []);
 
-			{showGenreOverlay && (
-				<div
-					className="fixed inset-0 flex justify-center items-start pt-[90px] bg-richBlack/75 z-[200]"
-					onClick={handleOverlayClick}
-				>
-					<GenreOverlay setSelectedGenre={setSelectedGenre} />
-				</div>
-			)}
+  const GetComicByGenre = useCallback(async () => {
+    if (!selectedGenre) return;
+    dispatch(setMangasData([]));
+    const searchParams: SearchParams = {
+      query: "",
+      page: 0,
+      genres: [selectedGenre],
+      exclude: [],
+      status: 0,
+      host: selectedSource,
+    };
+    const data = await Search(searchParams);
+    dispatch(setMangasData(data));
+  }, [dispatch, selectedGenre, selectedSource]);
 
-			{showSignInOverlay && (
-				<div
-					className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
-					onClick={handleOverlayClick}
-				>
-					<SignInOverlay onAuthStateChanged={handleAuthStateChanged} />
-				</div>
-			)}
+  useEffect(() => {
+    GetComicByGenre().then(() => {});
+    setShowOverlayType(null);
+  }, [selectedSource, selectedGenre, GetComicByGenre]);
 
-			{showSignUpOverlay && (
-				<div
-					className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
-					onClick={handleOverlayClick}
-				>
-					<SignUpOverlay onAuthStateChanged={handleAuthStateChanged} />
-				</div>
-			)}
+  return (
+    <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
+      <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
+        <Link href={`/`}>AnimeMoi</Link>
+      </div>
+      <div className="w-fit h-fit flex flex-row gap-[15px]">
+        {isHomePage ? null : (
+          <Link
+            href={`/`}
+            className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20"
+          >
+            <House color="#f4f4f4" weight="bold" size={18} />
+          </Link>
+        )}
+        <div className="relative">
+          <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
+            <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
+            <input
+              type="text"
+              placeholder="Tìm truyện"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
+            />
+          </div>
+          {isSearchResultVisible && (
+            <div
+              id="searchResult"
+              className="absolute top-[120%] left-0 z-[200]"
+            >
+              <SearchResult results={searchResults} />
+            </div>
+          )}
+        </div>
+        {isGenres && (
+          <div
+            className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
+            onClick={handleOverlayToggle("genre")}
+          >
+            <List color="#f4f4f4" weight="bold" size={18} />
+            <p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
+          </div>
+        )}
+      </div>
+      {user ? (
+        <Image
+          src={Avatar}
+          alt={""}
+          className="scale-in w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px] cursor-pointer"
+          onClick={handleOverlayToggle("accountSetting")}
+        />
+      ) : (
+        <div className="w-fit h-fit flex flex-row gap-5 items-center">
+          <p
+            className="scale-in text-sm text-lightGray font-semibold cursor-pointer"
+            onClick={handleOverlayToggle("signIn")}
+          >
+            Đăng nhập
+          </p>
+          <div
+            className="scale-in w-fit h-fit px-[15px] py-[10px] bg-lightGray rounded-full cursor-pointer"
+            onClick={handleOverlayToggle("signUp")}
+          >
+            <p className="text-sm text-black font-semibold">Đăng ký</p>
+          </div>
+        </div>
+      )}
 
-			{/* Lớp phủ để làm nổi bật AccountSettingOverlay */}
-			{showAccountSettingOverlay && (
-				<div
-					className="fixed inset-0 bg-black/75 z-[150]"
-					onClick={handleOverlayClick}
-				/>
-			)}
+      {showGenreOverlay && (
+        <div
+          className="fixed inset-0 flex justify-center items-start pt-[90px] bg-richBlack/75 z-[200]"
+          onClick={handleOverlayClick}
+        >
+          <GenreOverlay setSelectedGenre={setSelectedGenre} />
+        </div>
+      )}
 
-			{showAccountSettingOverlay && (
-				<div className="absolute top-[90%] right-0 z-[200]">
-					<AccountSettingOverlay
-						onEdit={handleButtonClick}
-						onClose={() => setShowOverlayType(null)}
-					/>
-				</div>
-			)}
-		</div>
-	);
+      {showSignInOverlay && (
+        <div
+          className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
+          onClick={handleOverlayClick}
+        >
+          <SignInOverlay onAuthStateChanged={handleAuthStateChanged} />
+        </div>
+      )}
+
+      {showSignUpOverlay && (
+        <div
+          className="fixed inset-0 flex justify-center items-center bg-richBlack/75 z-[200]"
+          onClick={handleOverlayClick}
+        >
+          <SignUpOverlay onAuthStateChanged={handleAuthStateChanged} />
+        </div>
+      )}
+
+      {/* Lớp phủ để làm nổi bật AccountSettingOverlay */}
+      {showAccountSettingOverlay && (
+        <div
+          className="fixed inset-0 bg-black/75 z-[150]"
+          onClick={handleOverlayClick}
+        />
+      )}
+
+      {showAccountSettingOverlay && (
+        <div className="absolute top-[90%] right-0 z-[200]">
+          <AccountSettingOverlay
+            onEdit={handleButtonClick}
+            onClose={() => setShowOverlayType(null)}
+          />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default NavBar;

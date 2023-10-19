@@ -10,15 +10,15 @@ export const DeleteComic = () => {
 
   const handleDeleteComic = async () => {
     setIsLoading(true);
-    const idComicToDelte = document.getElementById(
+    const idComicToDelete = document.getElementById(
       "idComic"
     ) as HTMLInputElement | null;
-    console.log(`Click: handle delete ${idComicToDelte?.value}`);
+    console.log(`Click: handle delete ${idComicToDelete?.value}`);
 
     const token = await auth.currentUser?.getIdToken();
 
     const request = await fetch(
-      `${Domain}Admin/DeleteComic?idComic=${idComicToDelte?.value}`,
+      `${Domain}Admin/DeleteComic?idComic=${idComicToDelete?.value}`,
       {
         method: "DELETE",
         headers: {
@@ -44,9 +44,7 @@ export const DeleteComic = () => {
       <div className="w-[50px] m-auto pt-5 pb-5">
         <ButtonPrimary text={"Xoá"} func={handleDeleteComic} />
       </div>
-      <div className="text-red-500">
-        {isLoading === true ? "Loading" : error}
-      </div>
+      <div className="text-red-500">{isLoading ? "Loading" : error}</div>
     </div>
   );
 };
