@@ -1,5 +1,5 @@
 "use client";
-import {MagnifyingGlass} from "@phosphor-icons/react";
+import {MagnifyingGlass, Star} from "@phosphor-icons/react";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {Domain} from "../../domain";
@@ -103,7 +103,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                 {chapters.map((chapter: any) => (
                     <div
                         key={chapter.id}
-                        className="flex flex-row justify-between items-center"
+                        className="flex justify-between items-center"
                     >
                         <Link
                             href={`/pages/reader/${host}?idComic=${
@@ -113,7 +113,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                             legacyBehavior
                         >
                             <a
-                                className={`w-[320px] text-sm ${
+                                className={`flex items-center w-[320px] text-sm ${
                                     follow && chapter["chapNumber"] <= follow["lastChapterNumber"]
                                         ? `text-darkGray`
                                         : `text-lightGray`
@@ -121,6 +121,14 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                                 onClick={() => handleChapterClick(chapter)}
                             >
                                 {chapter.title}
+                                {follow && chapter["chapNumber"] == follow["lastChapterNumber"] && (
+                                    <Star
+                                        color="rgba(255, 255, 255, 0.75"
+                                        weight="fill"
+                                        size={14}
+                                        style={{marginLeft: 10}}
+                                    />
+                                )}
                             </a>
                         </Link>
                         <p className="text-sm text-white/75 font-medium">
