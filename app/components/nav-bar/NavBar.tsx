@@ -124,7 +124,7 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage, isGenres }) => {
   }, [selectedSource, selectedGenre, GetComicByGenre]);
 
   return (
-    <div className="w-full h-[90px] flex flex-row justify-between items-center bg-richBlack border-b-[1.5px] border-white/[.15]">
+    <div className="w-full h-[85px] flex flex-row justify-between items-center bg-richBlack border-b-[1px] border-white/[.15]">
       <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
         <Link href={`/`}>AnimeMoi</Link>
       </div>
@@ -132,20 +132,20 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage, isGenres }) => {
         {isHomePage ? null : (
           <Link
             href={`/`}
-            className="w-[48px] h-[48px] flex justify-center items-center rounded-full border-[1.5px] border-white/20"
+            className="w-[46px] h-[46px] flex justify-center items-center rounded-full border-[1.5px] border-white/20"
           >
             <House color="#f4f4f4" weight="bold" size={18} />
           </Link>
         )}
         <div className="relative">
-          <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
+          <div className="w-[280px] h-[46px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
             <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
             <input
               type="text"
               placeholder="Tìm truyện"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
+              className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
             />
           </div>
           {isSearchResultVisible && (
@@ -159,19 +159,23 @@ const NavBar: React.FC<NavBarProps> = ({ isHomePage, isGenres }) => {
         </div>
         {isGenres && (
           <div
-            className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
+            className="w-fit h-[46px] flex flex-row items-center gap-2.5 px-[14px] rounded-full border-[1.5px] border-white/20 cursor-pointer"
             onClick={handleOverlayToggle("genre")}
           >
             <List color="#f4f4f4" weight="bold" size={18} />
-            <p className="text-sm text-lightGray/75 font-medium">Thể loại</p>
+            <p className="text-[13px] text-lightGray/75 font-medium">
+              Thể loại
+            </p>
           </div>
         )}
       </div>
       {user ? (
         <Image
-          src={Avatar}
+          src={user.photoURL || Avatar}
           alt={""}
-          className="scale-in w-[45px] h-[45px] rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px] cursor-pointer"
+          width={44}
+          height={44}
+          className="scale-in rounded-full outline outline-[1.5px] outline-white/20 outline-offset-[-1.5px] cursor-pointer"
           onClick={handleOverlayToggle("accountSetting")}
         />
       ) : (

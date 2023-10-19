@@ -29,7 +29,7 @@ const SourceBar: React.FC = () => {
   return (
     <div className="w-full h-fit flex justify-center">
       {user ? (
-        <div className="w-fit h-fit flex flex-row gap-2.5 p-[5px] text-sm text-white/75 font-medium rounded-full border-[1.5px] border-white/20">
+        <div className="w-fit h-fit flex flex-row gap-[8px] p-[4px] text-[13px] text-white/75 font-medium rounded-full border-[1.5px] border-white/20">
           {sources.map((source) => (
             <div
               key={source.name}

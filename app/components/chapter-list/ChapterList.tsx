@@ -70,17 +70,19 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
   return (
     <div className="w-[500px] h-fit flex flex-col gap-[30px]">
       <div className="flex flex-row justify-between items-center">
-        <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
+        <div className="w-[280px] h-[46px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
           <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
           <input
             type="text"
             placeholder="Tìm chương"
-            className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
+            className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
           />
         </div>
         <p
-          className={`scale-in text-sm font-semibold ${
-            isLatestFirst ? "text-lightGray" : "text-white/75"
+          className={`scale-in text-[13px] ${
+            isLatestFirst
+              ? "text-lightGray font-semibold"
+              : "text-white/75 font-medium"
           }`}
           onClick={toggleOrder}
           style={{ cursor: "pointer" }}
@@ -88,8 +90,10 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           Đọc mới nhất
         </p>
         <p
-          className={`scale-in text-sm font-semibold ${
-            isLatestFirst ? "text-white/75" : "text-lightGray"
+          className={`scale-in text-[13px] ${
+            isLatestFirst
+              ? "text-white/75 font-medium"
+              : "text-lightGray font-semibold"
           }`}
           onClick={toggleOrder}
           style={{ cursor: "pointer" }}
@@ -97,7 +101,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
           Đọc từ đầu
         </p>
       </div>
-      <div className="w-full max-h-[542px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
+      <div className="w-full max-h-[537px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
         {chapters.map((chapter: any) => (
           <div
             key={chapter.id}
@@ -111,11 +115,11 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
               legacyBehavior
             >
               <a
-                className={`w-[300px] text-sm ${
+                className={`w-[300px] text-[13px] ${
                   follow && chapter["chapNumber"] <= follow["lastChapterNumber"]
-                    ? `text-white/75`
-                    : `text-lightGray`
-                } hover:text-[#d9f21c] font-semibold whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
+                    ? "text-white/75 font-medium"
+                    : "text-lightGray font-semibold"
+                } hover:text-[#d9f21c] whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
                 onClick={() => handleChapterClick(chapter)}
               >
                 {chapter.title}
@@ -130,7 +134,7 @@ const ChapterList: React.FC<ChapterListProps> = ({ host, params }) => {
                   )} */}
               </a>
             </Link>
-            <p className="text-sm text-white/75 font-medium">
+            <p className="text-[13px] text-white/75 font-medium">
               {formatDate(chapter.timeUpdate)}
             </p>
           </div>

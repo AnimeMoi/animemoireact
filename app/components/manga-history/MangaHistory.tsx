@@ -31,18 +31,18 @@ const MangaHistory: React.FC = () => {
         {mangas.map((manga: any, index: number) => (
           <div
             key={manga.id}
-            className="w-[340px] h-fit flex flex-row gap-5 p-[15px] rounded-[26px] border-[1.5px] border-white/20"
+            className="w-[340px] h-fit flex flex-row gap-[16px] p-[14px] rounded-[22px] border-[1.5px] border-white/20"
           >
-            <div className="w-[100px] h-[140px] relative overflow-hidden">
+            <div className="w-[90px] h-[130px] relative overflow-hidden">
               <Image
                 src={manga.cover}
                 alt=""
                 fill
-                className="object-cover rounded-[11px] outline outline-[1px] outline-white/20 outline-offset-[-1px]"
+                className="object-cover rounded-[8px] outline outline-[1px] outline-white/20 outline-offset-[-1px]"
                 sizes="1200px"
               />
             </div>
-            <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden py-[5px]">
+            <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden pt-[3px]">
               <div className="flex flex-col gap-[5px]">
                 <p className="w-full text-sm text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
                   {manga.title}

@@ -36,7 +36,7 @@ const Donate: React.FC = () => {
         {donateItems.map((item, index) => (
           <div
             key={index}
-            className="w-fit h-fit flex flex-col gap-[26px] cursor-pointer move-up"
+            className="w-fit h-fit flex flex-col gap-[24px] cursor-pointer move-up"
           >
             <div className="w-[100px] h-[100px] flex justify-center items-center rounded-[16px] border-[1px] border-white/20">
               <Image
@@ -47,11 +47,11 @@ const Donate: React.FC = () => {
                 sizes="1200px"
               />
             </div>
-            <div className="w-full h-fit flex flex-col gap-[5px] items-center">
+            <div className="w-full h-fit flex flex-col gap-[8px] items-center">
               <p className="text-xs text-white/75 font-semibold uppercase tracking-wider">
                 {item.itemName}
               </p>
-              <p className="text-base text-lightGray font-semibold">
+              <p className="text-base text-lightGray font-semibold tracking-wide">
                 {item.price.toLocaleString().replace(/,/g, ".")}
               </p>
             </div>

@@ -51,8 +51,8 @@ const GenreOverlay: React.FC<GenreOverlayProps> = ({ setSelectedGenre }) => {
   }, [selectedSource]);
 
   return (
-    <div className="genre-wrapper bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-sm text-white/75 font-medium p-5">
-      <div className="h-[422px] grid gap-x-[45px] gap-y-5 grid-cols-5 overflow-y-auto no-scrollbar">
+    <div className="genre-wrapper bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-[13px] text-white/75 font-medium p-5">
+      <div className="h-[414px] grid gap-x-[45px] gap-y-5 grid-cols-5 overflow-y-auto no-scrollbar">
         {genres.map((genre: any) => (
           <div
             key={genre.Id}

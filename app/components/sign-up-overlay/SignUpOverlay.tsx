@@ -76,7 +76,7 @@ const SignUpOverlay: React.FC<SignUpProps> = ({ onAuthStateChanged }) => {
   };
 
   return (
-    <div className="w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1.5px] border-white/20 overlay-show">
+    <div className="w-[335px] h-fit flex flex-col gap-[20px] p-4 bg-richBlack/[.65] backdrop-blur-[10px] rounded-[34px] border-[1px] border-white/20 overlay-show">
       <p className="text-lg text-lightGray font-semibold text-center">
         Đăng ký
       </p>

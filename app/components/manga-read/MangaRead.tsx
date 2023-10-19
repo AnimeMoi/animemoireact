@@ -82,35 +82,37 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
       {manga && (
         <div className="w-full h-fit flex flex-col gap-[80px]">
           <div className="w-full h-fit flex flex-col gap-[60px]">
-            <div className="flex flex-col items-center gap-[6px]">
-              <p className="text-xl text-lightGray font-semibold">
-                {manga.title}
-              </p>
-              <p className="text-xl text-lightGray font-semibold">
-                {manga.lastChapterTitle}
-              </p>
-              <p className="text-sm text-white/75 font-medium italic">
+            <div className="flex flex-col items-center gap-[16px]">
+              <div className="flex flex-col items-center gap-[4px]">
+                <p className="text-[19px] text-lightGray font-semibold">
+                  {manga.title}
+                </p>
+                <p className="text-[19px] text-lightGray font-semibold">
+                  {manga.lastChapterTitle}
+                </p>
+              </div>
+              <p className="text-[13px] text-white/75 font-medium italic">
                 [Cập nhật lúc: {formattedLastTimeUpdate}]
               </p>
             </div>
             <div className="flex flex-row justify-center items-center gap-[30px]">
               <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-                <CaretLeft color="#f4f4f4" weight="bold" size={16} />
-                <p className="text-sm text-white/75 font-semibold">
+                <CaretLeft color="#fff" weight="bold" size={15} />
+                <p className="text-[13px] text-white/75 font-semibold">
                   Chương trước
                 </p>
               </button>
               <div className="flex flex-row items-center gap-[15px]">
-                <div className="w-[280px] h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
+                <div className="w-[280px] h-[46px] flex flex-row items-center gap-2.5 px-[15px] rounded-full border-[1.5px] border-white/20">
                   <MagnifyingGlass color="#f4f4f4" weight="bold" size={18} />
                   <input
                     type="text"
                     placeholder="Tìm chương"
-                    className="w-full h-full bg-transparent border-none outline-none placeholder:text-sm placeholder:text-white/75 placeholder:font-medium text-sm text-white/75 font-medium"
+                    className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
                   />
                 </div>
                 <div
-                  className="w-fit h-[48px] flex flex-row items-center gap-2.5 px-[15px] rounded-full bg-warning cursor-pointer"
+                  className="w-fit h-[46px] flex flex-row items-center gap-[8px] px-[15px] rounded-full bg-warning cursor-pointer"
                   onClick={handleOverlayToggle("reportManga")}
                 >
                   <SealWarning color="#000" weight="bold" size={20} />
@@ -118,10 +120,10 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
                 </div>
               </div>
               <button className="w-fit h-fit flex flex-row items-center gap-[5px]">
-                <p className="text-sm text-white/75 font-semibold">
+                <p className="text-[13px] text-white/75 font-semibold">
                   Chương sau
                 </p>
-                <CaretRight color="#f4f4f4" weight="bold" size={16} />
+                <CaretRight color="#fff" weight="bold" size={15} />
               </button>
             </div>
           </div>

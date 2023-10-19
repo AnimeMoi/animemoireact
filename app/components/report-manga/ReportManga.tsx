@@ -18,7 +18,7 @@ const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
   };
 
   return (
-    <div className="w-[320px] h-fit flex flex-col gap-[40px] p-5 bg-richBlack/[.65] backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 overlay-show">
+    <div className="w-[320px] h-fit flex flex-col gap-[36px] p-[18px] bg-richBlack/[.65] backdrop-blur-[10px] rounded-3xl border-[1px] border-white/20 overlay-show">
       <div className="w-full h-fit flex flex-col gap-2.5">
         <p className="text-sm text-lightGray font-semibold">Báo lỗi truyện</p>
         <p className="text-xs text-white opacity-75 font-medium">
@@ -26,7 +26,7 @@ const ReportManga: React.FC<ReportMangaProps> = ({ onSend, onClose }) => {
           nhất.
         </p>
       </div>
-      <div className="w-full h-fit flex flex-col gap-5">
+      <div className="w-full h-fit flex flex-col gap-[18px]">
         <label className="w-full h-fit flex flex-row gap-2.5">
           <input type="checkbox" name="option" className="w-[16px] h-[16px]" />
           <p className="text-xs text-lightGray font-medium">

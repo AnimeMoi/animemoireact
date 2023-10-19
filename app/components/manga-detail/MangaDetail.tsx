@@ -111,18 +111,18 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
             </div>
             <div className="flex flex-col grow shrink-0 basis-0 justify-between overflow-hidden">
               <div className="flex flex-col gap-[15px]">
-                <p className="w-full text-lg text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
+                <p className="w-full text-[17px] text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
                   {mangaData.titles[0]}
                 </p>
                 <div className="flex flex-col gap-[5px]">
-                  <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+                  <p className="w-full text-[13px] text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
                     Tác giả: {mangaData.author ?? "Đang cập nhật"}
                   </p>
-                  <p className="w-full text-sm text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+                  <p className="w-full text-[13px] text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
                     Tình trạng: {statusText}
                   </p>
                   <Link href={`/`} passHref legacyBehavior>
-                    <a className="w-full text-sm text-white/75 font-medium leading-6 max-h-[72px] text-ellipsis overflow-hidden">
+                    <a className="w-full text-[13px] text-white/75 font-medium leading-6 max-h-[72px] text-ellipsis overflow-hidden">
                       Thể loại:{" "}
                       {genres.map((genre) => (
                         <div key={genre} className="inline-block">
@@ -154,8 +154,8 @@ const MangaDetail: React.FC<MangaDetailProps> = ({ host, params }) => {
             </div>
           </div>
           <div className="w-full h-fit flex flex-col gap-[15px]">
-            <p className="text-lg text-lightGray font-semibold">Nội dung</p>
-            <p className="text-sm text-lightGray font-medium leading-6 p-[15px] rounded-[22px] border-[1.5px] border-white/20">
+            <p className="text-[17px] text-lightGray font-semibold">Nội dung</p>
+            <p className="text-[13px] text-lightGray font-medium leading-[22px] p-[15px] rounded-[22px] border-[1.5px] border-white/20">
               {mangaData.description
                 ? mangaData.description
                 : "Nội dung truyện đang được cập nhật. Truyện sẽ được cập nhật nhanh và đầy đủ nhất tại AnimeMoi."}
