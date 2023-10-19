@@ -22,9 +22,11 @@
 
 export type Chapter = {
     id: number;
+    idComic: string;
     title: string;
     timeUpdate: string;
     views: number;
+    chapNumber: number;
 };
 
 export type Chapters = Chapter[];

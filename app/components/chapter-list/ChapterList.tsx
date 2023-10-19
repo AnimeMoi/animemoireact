@@ -1,5 +1,5 @@
 "use client";
-import {MagnifyingGlass} from "@phosphor-icons/react";
+import {MagnifyingGlass, Star} from "@phosphor-icons/react";
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {Domain} from "../../domain";
@@ -13,7 +13,7 @@ import {RootState} from "../../globalRedux/store";
 const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
     const follow = useSelector((state: RootState) => state.follow.value);
     const [chapters, setChapters] = useState<Chapters>([
-        {id: 0, title: "", timeUpdate: "", views: 0},
+        {id: 0, title: "", timeUpdate: "", views: 0, chapNumber: 0, idComic: ""},
     ]);
 
     const [isLatestFirst, setIsLatestFirst] = useState(true); // State để theo dõi thứ tự hiển thị chapter
@@ -45,27 +45,21 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
         setIsLatestFirst(!isLatestFirst);
     };
 
-    const handleChapterClick = (chapter: Chapters[number]) => {
+    const handleChapterClick = (chapter: Chapters[number], listChapter: Chapters) => {
         const storedMangas = localStorage.getItem("mangas");
         const mangas = storedMangas ? JSON.parse(storedMangas) : [];
 
-        const storedManga = localStorage.getItem("manga");
-        const manga = storedManga ? JSON.parse(storedManga) : {};
-
-        manga.lastChapterTitle = chapter.title;
-
         const existingMangaIndex = mangas.findIndex(
-            (item: any) => item.id === manga.id
+            (item: any) => item.info.id == params.searchParams.id
         );
 
-        if (existingMangaIndex !== -1) {
-            mangas[existingMangaIndex] = manga;
-        } else {
-            mangas.push(manga);
-        }
+        mangas[existingMangaIndex].chapters = listChapter;
+        mangas[existingMangaIndex].currentChapterId = chapter.id;
+        mangas[existingMangaIndex].currentChapterTitle = chapter.title;
+        mangas[existingMangaIndex].currentChapterNumber = chapter.chapNumber;
+        mangas[existingMangaIndex].currentTimeUpdate = chapter.timeUpdate;
 
         localStorage.setItem("mangas", JSON.stringify(mangas));
-        localStorage.setItem("manga", JSON.stringify(manga));
     };
 
     return (
@@ -128,18 +122,18 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                                             ? "text-white/75 font-medium"
                                             : "text-lightGray font-semibold"
                                     } hover:text-[#d9f21c] whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
-                                    onClick={() => handleChapterClick(chapter)}
+                                    onClick={() => handleChapterClick(chapter, chapters)}
                                 >
                                     {chapter.title}
-                                    {/* {follow &&
-                  chapter["chapNumber"] == follow["lastChapterNumber"] && (
-                    <Star
-                      color="rgba(255, 255, 255, 0.75"
-                      weight="fill"
-                      size={14}
-                      style={{ marginLeft: 10 }}
-                    />
-                  )} */}
+                                    {follow &&
+                                        chapter["chapNumber"] == follow["lastChapterNumber"] && (
+                                            <Star
+                                                color="rgba(255, 255, 255, 0.75"
+                                                weight="fill"
+                                                size={14}
+                                                style={{marginLeft: 10}}
+                                            />
+                                        )}
                                 </a>
                             </Link>
                             <p className="text-[13px] text-white/75 font-medium">
