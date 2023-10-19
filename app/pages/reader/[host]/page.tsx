@@ -54,7 +54,7 @@ export default function Page(params: any) {
             <MangaRead host={params.params.host} params={params} />
           </Suspense>
           <div className="w-full h-[50px]"></div>
-          <div className="w-full h-fit flex flex-row justify-between items-center pt-[25px] py-[50px] border-t-[1.5px] border-white/[.15]">
+          <div className="w-full h-fit flex flex-row justify-between items-center pt-[25px] py-[50px] border-t-[1px] border-white/[.15]">
             <div className="flex flex-col gap-[6px]">
               <p className="text-lg text-lightGray font-semibold uppercase tracking-wider">
                 AnimeMoi

@@ -34,7 +34,9 @@ const nextConfig = {
             "lxmanga.net",
             "storage.lxmanga.com",
             // sayhentai
-            "sayhentai.fun"
+            "sayhentai.fun",
+            // Google
+            "lh3.googleusercontent.com"
         ],
         remotePatterns: [
             {
