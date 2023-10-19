@@ -39,10 +39,6 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                     `${Domain}AnimeMoi/ChapterDetail?idChapter=${params.searchParams.id}&host=${host}`
                 );
 
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-
                 const responseData = await response.json();
 
                 const processedDataPromises = responseData.map((url: string) => {

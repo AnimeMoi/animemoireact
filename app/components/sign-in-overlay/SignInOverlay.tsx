@@ -1,7 +1,7 @@
 import {FirebaseError} from "firebase/app";
 import {signInWithEmailAndPassword, signInWithPopup} from "firebase/auth";
 import Image from "next/image";
-import React, {useState} from "react";
+import React from "react";
 import "../../globals.css";
 import GithubLogo from "../../public/assets/images/brand-logo/github-logo.png";
 import GoogleLogo from "../../public/assets/images/brand-logo/google-logo.png";
@@ -11,7 +11,6 @@ import auth, {GithubProvider, GoogleProvider, XProvider,} from "../auth/Firebase
 import "./SignInOverlay.css";
 
 const SignInOverlay: React.FC<SignInProps> = ({onAuthStateChanged}) => {
-    const [isEmailClicking, setIsEmailClicking] = useState(false);
 
     const handleEmailClick = () => {
         let email = document.getElementById("email") as HTMLInputElement | null;
@@ -29,7 +28,6 @@ const SignInOverlay: React.FC<SignInProps> = ({onAuthStateChanged}) => {
                 err.innerText = error.message;
                 console.error(error);
             });
-        setIsEmailClicking(true);
     };
 
     const handleGoogleClick = () => {
