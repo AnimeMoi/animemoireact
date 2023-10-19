@@ -1,50 +1,50 @@
 "use client";
-import { useState } from "react";
-import { Domain } from "../../../domain";
+import {useState} from "react";
+import {Domain} from "../../../domain";
 import auth from "../../auth/Firebase";
-import { ButtonPrimary } from "../../button/button";
+import {ButtonPrimary} from "../../button/button";
 
 export const DeleteComic = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState("");
 
-  const handleDeleteComic = async () => {
-    setIsLoading(true);
-    const idComicToDelete = document.getElementById(
-      "idComic"
-    ) as HTMLInputElement | null;
-    console.log(`Click: handle delete ${idComicToDelete?.value}`);
+    const handleDeleteComic = async () => {
+        setIsLoading(true);
+        const idComicToDelete = document.getElementById(
+            "idComic"
+        ) as HTMLInputElement | null;
+        console.log(`Click: handle delete ${idComicToDelete?.value}`);
 
-    const token = await auth.currentUser?.getIdToken();
+        const token = await auth.currentUser?.getIdToken();
 
-    const request = await fetch(
-      `${Domain}Admin/DeleteComic?idComic=${idComicToDelete?.value}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).then((result) => result.json());
+        const request = await fetch(
+            `${Domain}Admin/DeleteComic?idComic=${idComicToDelete?.value}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        ).then((result) => result.json());
 
-    setIsLoading(false);
-    setError(request.message);
-  };
+        setIsLoading(false);
+        setError(request.message);
+    };
 
-  return (
-    <div
-      className="text-white flex flex-col rounded-[25px] border-[1.5px] border-white/20 px-[20px] py-[15px]"
-      suppressHydrationWarning
-    >
-      <div className="flex gap-3">
-        <label htmlFor="idComic">Id comic: </label>
-        <input className="text-black" type="text" name="idComic" id="idComic" />
-      </div>
-      <div className="w-[50px] m-auto pt-5 pb-5">
-        <ButtonPrimary text={"Xoá"} func={handleDeleteComic} />
-      </div>
-      <div className="text-red-500">{isLoading ? "Loading" : error}</div>
-    </div>
-  );
+    return (
+        <div
+            className="text-white flex flex-col rounded-[25px] border-[1.5px] border-white/20 px-[20px] py-[15px]"
+            suppressHydrationWarning
+        >
+            <div className="flex gap-3">
+                <label htmlFor="idComic">Id comic: </label>
+                <input className="text-black" type="text" name="idComic" id="idComic"/>
+            </div>
+            <div className="w-[50px] m-auto pt-5 pb-5">
+                <ButtonPrimary text={"Xoá"} func={handleDeleteComic}/>
+            </div>
+            <div className="text-red-500">{isLoading ? "Loading" : error}</div>
+        </div>
+    );
 };
