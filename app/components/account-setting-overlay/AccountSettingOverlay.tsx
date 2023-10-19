@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../globals.css";
-import Image from "next/image";
 import auth from "../auth/Firebase";
 import { ButtonPrimary } from "../button/button";
 import "./AccountSettingOverlay.css";
