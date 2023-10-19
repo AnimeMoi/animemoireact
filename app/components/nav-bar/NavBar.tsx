@@ -100,7 +100,7 @@ const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
         return () => {
             document.removeEventListener("click", clickToHideSearchResult);
         };
-    }, []);
+    }, [clickToHideSearchResult]);
 
     const GetComicByGenre = useCallback(async () => {
         if (!selectedGenre) return;
