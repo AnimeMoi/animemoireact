@@ -44,3 +44,18 @@ export const GetProcess = async (user: User, idComic: string) => {
         throw e;
     }
 };
+
+export async function SaveProcess(follow: any, user: any, params: any) {
+    if (follow === null) return;
+    const token = await user.getIdToken();
+    await fetch(
+        `${Domain}Service/SaveProcess?idComic=${params.searchParams.idComic}&idChapter=${params.searchParams.id}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+}

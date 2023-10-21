@@ -15,7 +15,9 @@ import {setFollow} from "../../globalRedux/Features/follow/followSlice";
 import {RootState} from "../../globalRedux/store";
 import {useGlobalContext} from "../../globalContext/store";
 import {getMangas} from "../../utils/localStored";
+import {setSelectedGenre} from "../../globalRedux/Features/genre/genreSlice";
 import {mapGenreIdToName} from "../../utils/genre";
+import {setCurrentPage} from "../../globalRedux/Features/page/pageSlice";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
     const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
     const follow = useSelector((state: RootState) => state.follow.value);
     const {user} = useGlobalContext();
 
-    const [genres, setGenres] = useState<string[]>([]);
+    const [genres, setGenres] = useState<number[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,10 +34,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
                 dispatch(setMangaData(responseData));
 
                 const mangaGenres = responseData.genres || [];
-                const genreNames = mangaGenres.map((genreId: number) =>
-                    mapGenreIdToName(genreId)
-                );
-                setGenres(genreNames);
+                setGenres(mangaGenres);
 
                 const mangas = getMangas();
 
@@ -84,8 +83,6 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
         });
     }, [checkFollow]);
 
-    const statusText = mangaData ? getStatusText(mangaData.status) : "";
-
     const handleFollowClick = async (manga: any) => {
         if (user === null) {
             alert("Bạn cần đăng nhập để theo dõi truyện.");
@@ -106,8 +103,13 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
         }
     };
 
+    function handleClickOnGenre(genre: number) {
+        dispatch(setCurrentPage(1))
+        dispatch(setSelectedGenre([genre]))
+    }
+
     return (
-        <>
+        <div>
             {mangaData && (
                 <div className="w-[560px] h-fit flex flex-col gap-[30px]">
                     <div className="w-full h-fit flex flex-row gap-[25px]">
@@ -130,23 +132,28 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
                                         Tác giả: {mangaData.author ?? "Đang cập nhật"}
                                     </p>
                                     <p className="w-full text-[13px] text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
-                                        Tình trạng: {statusText}
+                                        Tình trạng: {getStatusText(mangaData.status)}
                                     </p>
-                                    <Link href={`/`} passHref legacyBehavior>
-                                        <a className="w-full text-[13px] text-white/75 font-medium leading-6 max-h-[72px] text-ellipsis overflow-hidden">
-                                            Thể loại:{" "}
-                                            {genres.map((genre) => (
-                                                <div key={genre} className="inline-block">
-                                                    {genre !== genres[0] && (
-                                                        <div className="inline-block mx-[5px]"> - </div>
-                                                    )}
+                                    <div
+                                        className="w-full text-[13px] text-white/75 font-medium leading-6 max-h-[72px] text-ellipsis overflow-hidden">
+                                        Thể loại:{" "}
+                                        {genres.map((genre) => (
+                                            <div key={genre} className="inline-block">
+                                                {genre !== genres[0] && (
+                                                    <div className="inline-block mx-[5px]"> - </div>
+                                                )}
+                                                <Link
+                                                    href={`/`}
+                                                    onClick={() => handleClickOnGenre(genre)}
+                                                >
                                                     <div className="inline-block hover:text-[#d9f21c]">
-                                                        {genre}
+                                                        {mapGenreIdToName(genre)}
                                                     </div>
-                                                </div>
-                                            ))}
-                                        </a>
-                                    </Link>
+                                                </Link>
+                                            </div>
+                                        ))}
+                                    </div>
+
                                 </div>
                             </div>
                             <div className="w-full h-fit flex">
@@ -174,7 +181,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

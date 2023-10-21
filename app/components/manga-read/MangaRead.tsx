@@ -11,11 +11,12 @@ import ReportManga from "../report-manga/ReportManga";
 import "./MangaRead.css";
 import moment from "moment";
 import Link from "next/link";
-import {getMangas} from "../../utils/localStored";
+import {findIndexByChapNumber, getMangas} from "../../utils/localStored";
 
 const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     const [data, setData] = useState<string[]>([]);
     const [comic, setComic] = useState<any>();
+    const [chapterFilter, setChapterFilter] = useState<any[]>([]);
     const [formattedCurrentTimeUpdate, setFormattedCurrentTimeUpdate] = useState<string | null>(null);
     const [showOverlayType, setShowOverlayType] = useState<"reportManga" | null>(
         null
@@ -34,28 +35,18 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     };
 
     const updateChapterIndex = useCallback(() => {
-        if (!comic) {
-            return;
-        }
+        if (!comic) return;
 
-        const storedMangas = localStorage.getItem("mangas");
-        const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+        const mangas = getMangas()
 
         const existingMangaIndex = mangas.findIndex(
             (item: any) => item.info.id == params.searchParams.idComic
         );
 
-        const idxCurrent = comic.chapters.findIndex(
-            (item: any) => item.chapNumber == comic.current.chapNumber
-        );
-
-        const idxPrev = comic.chapters.findIndex(
-            (item: any) => item.chapNumber == comic.current.chapNumber - 1
-        );
-
-        const idxNext = comic.chapters.findIndex(
-            (item: any) => item.chapNumber == comic.current.chapNumber + 1
-        );
+        const {chapNumber: currentChapNumber} = comic.current;
+        const idxCurrent = findIndexByChapNumber(comic.chapters, currentChapNumber);
+        const idxPrev = findIndexByChapNumber(comic.chapters, currentChapNumber - 1);
+        const idxNext = findIndexByChapNumber(comic.chapters, currentChapNumber + 1);
 
         comic.prev = comic.chapters[idxPrev];
         comic.next = comic.chapters[idxNext];
@@ -137,6 +128,12 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         updateChapterIndex()
     }
 
+    function setSearchInput(value: string) {
+        let result;
+
+
+        // setChapterFilter(result);
+    }
 
     return (
         <>
@@ -144,14 +141,16 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                 <div className="w-full h-fit flex flex-col gap-[80px]">
                     <div className="w-full h-fit flex flex-col gap-[60px]">
                         <div className="flex flex-col items-center gap-[16px]">
-                            <div className="flex flex-col items-center gap-[4px]">
-                                <p className="text-[19px] text-lightGray font-semibold">
-                                    {comic.info.title}
-                                </p>
-                                <p className="text-[19px] text-lightGray font-semibold">
-                                    {comic.current.title}
-                                </p>
-                            </div>
+                            <Link href={`/pages/details/${comic.info.host}?id=${comic.info.id}`}>
+                                <div className="flex flex-col items-center gap-[4px]">
+                                    <p className="text-[19px] text-lightGray font-semibold">
+                                        {comic.info.title}
+                                    </p>
+                                    <p className="text-[19px] text-lightGray font-semibold">
+                                        {comic.current.title}
+                                    </p>
+                                </div>
+                            </Link>
                             <p className="text-[13px] text-white/75 font-medium italic">
                                 [Cập nhật lúc: {formattedCurrentTimeUpdate}]
                             </p>
@@ -180,6 +179,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                                         type="text"
                                         placeholder="Tìm chương"
                                         className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
+                                        onChange={(e) => setSearchInput(e.target.value)}
                                     />
                                 </div>
                                 <div

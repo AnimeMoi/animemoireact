@@ -9,13 +9,15 @@ import {formatDate} from "../../utils/formatDate";
 import "./ChapterList.css";
 import {useSelector} from "react-redux";
 import {RootState} from "../../globalRedux/store";
+import {getMangas} from "../../utils/localStored";
 
 const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
     const follow = useSelector((state: RootState) => state.follow.value);
-    const [chapters, setChapters] = useState<Chapters>([
-        {id: 0, title: "", timeUpdate: "", views: 0, chapNumber: 0, idComic: ""},
-    ]);
-
+    const [chapters, setChapters] = useState<any[]>([]);
+    const [chaptersFilter, setChaptersFilter] = useState<any[]>([]);
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
     const [isLatestFirst, setIsLatestFirst] = useState(true); // State để theo dõi thứ tự hiển thị chapter
 
     useEffect(() => {
@@ -41,13 +43,11 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
     }, [host, params, isLatestFirst]);
 
     const toggleOrder = () => {
-        // Hàm để đảo ngược thứ tự hiển thị
         setIsLatestFirst(!isLatestFirst);
     };
 
     const handleChapterClick = (chapter: Chapters[number], listChapter: Chapters) => {
-        const storedMangas = localStorage.getItem("mangas");
-        const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+        const mangas = getMangas();
 
         const existingMangaIndex = mangas.findIndex(
             (item: any) => item.info.id == params.searchParams.id
@@ -59,6 +59,57 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
         localStorage.setItem("mangas", JSON.stringify(mangas));
     };
 
+    const showChapter = (chapters: any) => {
+        return (
+            chapters.map((chapter: any) => (
+                <div
+                    key={chapter.id}
+                    className="flex flex-row justify-between items-center"
+                >
+                    <Link
+                        href={`/pages/reader/${host}?idComic=${
+                            params.searchParams.id
+                        }&id=${chapter.id === 0 ? chapter.url : chapter.id}`}
+                    >
+                        <div
+                            className={`w-[300px] text-[13px] ${
+                                follow && chapter["chapNumber"] <= follow["lastChapterNumber"]
+                                    ? "text-white/75 font-medium"
+                                    : "text-lightGray font-semibold"
+                            } hover:text-[#d9f21c] whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
+                            onClick={() => handleChapterClick(chapter, chapters)}
+                        >
+                            {chapter.title}
+                            {follow &&
+                                chapter["chapNumber"] == follow["lastChapterNumber"] && (
+                                    <Star
+                                        color="rgba(255, 255, 255, 0.75"
+                                        weight="fill"
+                                        size={14}
+                                        style={{marginLeft: 10}}
+                                    />
+                                )}
+                        </div>
+                    </Link>
+                    <p className="text-[13px] text-white/75 font-medium">
+                        {formatDate(chapter.timeUpdate)}
+                    </p>
+                </div>
+            ))
+        )
+    }
+
+    useEffect(() => {
+        if (searchInput.length == 0) {
+            setIsSearchResultVisible(false)
+            return;
+        }
+        const result = chapters.filter((e) => e.title.toLowerCase().includes(searchInput.toLowerCase()))
+        result.sort((a: any, b: any) => a.chapNumber > b.chapNumber ? 1 : -1)
+        setChaptersFilter(result)
+        setIsSearchResultVisible(true)
+    }, [chapters, searchInput]);
+
     return (
         <div className="w-[500px] h-fit flex flex-col gap-[30px]">
             <div className="flex flex-row justify-between items-center">
@@ -69,6 +120,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
                         type="text"
                         placeholder="Tìm chương"
                         className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
+                        onChange={(e) => setSearchInput(e.target.value)}
                     />
                 </div>
                 <p
@@ -101,43 +153,7 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
             ) : (
                 <div
                     className="w-full max-h-[537px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white/20 overflow-y-scroll no-scrollbar">
-                    {chapters.map((chapter: any) => (
-                        <div
-                            key={chapter.id}
-                            className="flex flex-row justify-between items-center"
-                        >
-                            <Link
-                                href={`/pages/reader/${host}?idComic=${
-                                    params.searchParams.id
-                                }&id=${chapter.id === 0 ? chapter.url : chapter.id}`}
-                                passHref
-                                legacyBehavior
-                            >
-                                <a
-                                    className={`w-[300px] text-[13px] ${
-                                        follow && chapter["chapNumber"] <= follow["lastChapterNumber"]
-                                            ? "text-white/75 font-medium"
-                                            : "text-lightGray font-semibold"
-                                    } hover:text-[#d9f21c] whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
-                                    onClick={() => handleChapterClick(chapter, chapters)}
-                                >
-                                    {chapter.title}
-                                    {follow &&
-                                        chapter["chapNumber"] == follow["lastChapterNumber"] && (
-                                            <Star
-                                                color="rgba(255, 255, 255, 0.75"
-                                                weight="fill"
-                                                size={14}
-                                                style={{marginLeft: 10}}
-                                            />
-                                        )}
-                                </a>
-                            </Link>
-                            <p className="text-[13px] text-white/75 font-medium">
-                                {formatDate(chapter.timeUpdate)}
-                            </p>
-                        </div>
-                    ))}
+                    {isSearchResultVisible ? showChapter(chaptersFilter) : showChapter(chapters)}
                 </div>
             )}
         </div>
