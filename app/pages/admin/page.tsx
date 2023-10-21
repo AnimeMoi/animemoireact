@@ -63,6 +63,9 @@ export default function Page() {
                     <div className="text-white text-xl">{`Hello admin ${user?.displayName}`}</div>
                     <div className="text-white">
                         Tổng số truyện hiện tại: {totalComic}
+                        <br/>
+                        <br/>
+                        <a href="https://animemoi.budibase.app/app/animemoi">Sửa database</a>
                     </div>
                     <div className="flex gap-5">
                         <ButtonPrimary
