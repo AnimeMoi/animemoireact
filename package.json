@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@netlify/plugin-nextjs": "^4.40.3-rc.0",
     "@phosphor-icons/react": "^2.0.10",
     "@reduxjs/toolkit": "^1.9.7",
     "@storybook/cli": "^7.2.1",
