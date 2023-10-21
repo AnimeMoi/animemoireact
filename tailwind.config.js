@@ -22,6 +22,7 @@ module.exports = {
       'richBlack': '#02040a',
       'success': '#00C851',
       'warning': '#ffbb33',
+      'dark-blur': 'linear-gradient(180deg, rgba(31, 31, 31, .65) 0%, rgba(64 ,64 ,64 ,.09) 100%)',
       black: colors.black,
       white: colors.white,
       red: colors.red,

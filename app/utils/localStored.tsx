@@ -1,4 +1,4 @@
 export function getMangas() {
-    const storedMangas = localStorage.getItem("mangas");
-    return storedMangas ? JSON.parse(storedMangas) : [];
+  const storedMangas = localStorage.getItem("mangas");
+  return storedMangas ? JSON.parse(storedMangas) : [];
 }

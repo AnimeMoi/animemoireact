@@ -5,4 +5,11 @@ import mangaReducer from "./manga/mangaSlice";
 import sourceReducer from "./source/sourceSlice";
 import pageReducer from "./page/pageSlice";
 
-export {mangasReducer, sourceReducer, genresReducer, mangaReducer, followReducer, pageReducer};
+export {
+  mangasReducer,
+  sourceReducer,
+  genresReducer,
+  mangaReducer,
+  followReducer,
+  pageReducer,
+};
