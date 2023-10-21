@@ -49,7 +49,7 @@ export default function Page(params: any) {
             setScrollPercentage={setScrollPercentage}
           />
         </div>
-        <div className="w-full min-h-[calc(100vh-90px-50px)] flex flex-col gap-[50px]">
+        <div className="w-full min-h-[calc(100vh-85px-50px)] flex flex-col gap-[50px]">
           <Suspense fallback={<Loading />}>
             <MangaRead host={params.params.host} params={params} />
           </Suspense>

@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import mangasReducer from "./Features/mangas/mangasSlice";
-import mangaReducer from "./Features/manga/mangaSlice";
-import sourceReducer from "./Features/source/sourceSlice";
-import followReducer from "./Features/follow/followSlice";
+import {
+  followReducer,
+  genresReducer,
+  mangaReducer,
+  mangasReducer,
+  pageReducer,
+  sourceReducer,
+} from "./Features/index";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +14,8 @@ const store = configureStore({
     manga: mangaReducer,
     source: sourceReducer,
     follow: followReducer,
+    genres: genresReducer,
+    page: pageReducer,
   },
 });
 

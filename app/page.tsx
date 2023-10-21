@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import MangaHistory from "./components/manga-history/MangaHistory";
 import NavBar from "./components/nav-bar/NavBar";
 import NewMangaUpdate from "./components/new-manga-update/NewMangaUpdate";
