@@ -4,13 +4,13 @@ import Image from "next/image";
 import React, {useEffect, useState} from "react";
 import "../../globals.css";
 import Link from "next/link";
+import {getMangas} from "../../utils/localStored";
 
 const MangaHistory: React.FC = () => {
     const [mangas, setMangas] = useState<any[]>([]);
 
     useEffect(() => {
-        const storedMangas = localStorage.getItem("mangas");
-        const parsedMangas = storedMangas ? JSON.parse(storedMangas) : [];
+        const parsedMangas = getMangas();
         setMangas(parsedMangas);
     }, []);
 

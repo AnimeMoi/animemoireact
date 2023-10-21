@@ -11,6 +11,7 @@ import ReportManga from "../report-manga/ReportManga";
 import "./MangaRead.css";
 import moment from "moment";
 import Link from "next/link";
+import {getMangas} from "../../utils/localStored";
 
 const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     const [data, setData] = useState<string[]>([]);
@@ -104,8 +105,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     }, [host, params]);
 
     useEffect(() => {
-        const storedMangas = localStorage.getItem("mangas");
-        const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+        const mangas = getMangas();
 
         if (Array.isArray(mangas)) {
             const existingMangaIndex = mangas.findIndex(
