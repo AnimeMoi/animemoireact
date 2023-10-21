@@ -39,8 +39,7 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onClose }) => {
           {auth.currentUser?.email}
         </p>
       </div>
-      <div className="w-full h-fit flex flex-row justify-end gap-2.5">
-        <ButtonPrimary text="Sửa" func={handleEditClick}></ButtonPrimary>
+      <div className="flex justify-end">
         <div
           className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer"
           onClick={logout}
