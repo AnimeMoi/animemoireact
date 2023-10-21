@@ -12,11 +12,15 @@ import "./MangaRead.css";
 import moment from "moment";
 import Link from "next/link";
 import {findIndexByChapNumber, getMangas} from "../../utils/localStored";
+import {formatDate} from "../../utils/formatDate";
 
 const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
     const [data, setData] = useState<string[]>([]);
     const [comic, setComic] = useState<any>();
-    const [chapterFilter, setChapterFilter] = useState<any[]>([]);
+    const [chapters, setChapters] = useState<any[]>([]);
+    const [chaptersFilter, setChaptersFilter] = useState<any[]>([]);
+    const [searchInput, setSearchInput] = useState("");
+    const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
     const [formattedCurrentTimeUpdate, setFormattedCurrentTimeUpdate] = useState<string | null>(null);
     const [showOverlayType, setShowOverlayType] = useState<"reportManga" | null>(
         null
@@ -43,7 +47,15 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
             (item: any) => item.info.id == params.searchParams.idComic
         );
 
-        const {chapNumber: currentChapNumber} = comic.current;
+        if (comic.current.id != params.searchParams.id) {
+            const existingChapterIndex = comic.chapters.findIndex(
+                (item: any) => item.id == params.searchParams.id
+            );
+            comic.current = comic.chapters[existingChapterIndex];
+            mangas[existingMangaIndex].current = comic.current;
+        }
+
+        let {chapNumber: currentChapNumber} = comic.current;
         const idxCurrent = findIndexByChapNumber(comic.chapters, currentChapNumber);
         const idxPrev = findIndexByChapNumber(comic.chapters, currentChapNumber - 1);
         const idxNext = findIndexByChapNumber(comic.chapters, currentChapNumber + 1);
@@ -57,7 +69,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         mangas[existingMangaIndex].current = comic.current;
         localStorage.setItem("mangas", JSON.stringify(mangas));
         setComic(comic)
-    }, [comic, params.searchParams.idComic])
+    }, [comic, params.searchParams.id, params.searchParams.idComic])
 
     const handleButtonClick = () => (): void => {
     };
@@ -105,6 +117,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
 
             if (existingMangaIndex !== -1) {
                 setComic(mangas[existingMangaIndex]);
+                setChapters(mangas[existingMangaIndex].chapters);
                 updateChapterIndex();
             }
         }
@@ -128,11 +141,22 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
         updateChapterIndex()
     }
 
-    function setSearchInput(value: string) {
-        let result;
+    useEffect(() => {
+        if (searchInput.length == 0) {
+            setIsSearchResultVisible(false)
+            return;
+        }
+        const result = chapters.filter((e) => e.title.toLowerCase().includes(searchInput.toLowerCase()))
+        result.sort((a: any, b: any) => a.chapNumber > b.chapNumber ? 1 : -1)
+        setChaptersFilter(result)
+        setIsSearchResultVisible(true)
+    }, [chapters, searchInput]);
 
-
-        // setChapterFilter(result);
+    const handleChapterClick = (target: any) => {
+        setData([])
+        setSearchInput('')
+        comic.current = target;
+        updateChapterIndex()
     }
 
     return (
@@ -180,6 +204,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                                         placeholder="Tìm chương"
                                         className="w-full h-full bg-transparent border-none outline-none placeholder:text-[13px] placeholder:text-white/75 placeholder:font-medium text-[13px] text-white/75 font-medium"
                                         onChange={(e) => setSearchInput(e.target.value)}
+                                        value={searchInput}
                                     />
                                 </div>
                                 <div
@@ -207,6 +232,28 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
                             )}
                         </div>
                     </div>
+                    {isSearchResultVisible && (
+                        <div
+                            className={`w-full max-h-[537px] flex flex-col flex-grow gap-[20px] p-[20px] rounded-[22px] border-[1.5px] border-white text-white`}>
+                            {chaptersFilter.map((chapter: any) => (
+                                <div
+                                    key={chapter.id}
+                                    className="flex flex-row justify-between items-center"
+                                >
+                                    <Link
+                                        href={`/pages/reader/${host}?idComic=${comic.info.id}&id=${chapter.id}`}
+                                        className={`w-[300px] text-[13px] hover:text-[#d9f21c] whitespace-nowrap text-ellipsis overflow-hidden flex items-center`}
+                                        onClick={() => handleChapterClick(chapter)}
+                                    >
+                                        {chapter.title}
+                                    </Link>
+                                    <p className="text-[13px] text-white/75 font-medium">
+                                        {formatDate(chapter.timeUpdate)}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                     {data.length == 0 ? (
                         <Loading/>
                     ) : (

@@ -16,7 +16,6 @@ const ChapterList: React.FC<ChapterListProps> = ({host, params}) => {
     const [chapters, setChapters] = useState<any[]>([]);
     const [chaptersFilter, setChaptersFilter] = useState<any[]>([]);
     const [searchInput, setSearchInput] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
     const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
     const [isLatestFirst, setIsLatestFirst] = useState(true); // State để theo dõi thứ tự hiển thị chapter
 
