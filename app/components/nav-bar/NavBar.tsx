@@ -1,5 +1,5 @@
 "use client";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {House, List, MagnifyingGlass} from "@phosphor-icons/react";
@@ -15,11 +15,13 @@ import {clickToHide} from "../../utils/clickToHide";
 import {Search} from "../../utils/search";
 import {NavBarProps, SearchParams} from "../../types/App";
 import {useDispatch, useSelector} from "react-redux";
-import {setMangasData} from "../../globalRedux/Features/mangas/mangasSlice";
 import {RootState} from "../../globalRedux/store";
 import {useGlobalContext} from "../../globalContext/store";
+import {setSelectedGenre} from "../../globalRedux/Features/genre/genreSlice";
+import {setCurrentPage} from "../../globalRedux/Features/page/pageSlice";
 
-const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
+const NavBar = ({isHomePage, isGenres}: NavBarProps) => {
+    const selectedGenre = useSelector((state: RootState) => state.genres.selectedGenres);
     const [showOverlayType, setShowOverlayType] = useState<
         "genre" | "signIn" | "signUp" | "accountSetting" | null
     >(null);
@@ -33,7 +35,6 @@ const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
     const [searchResults, setSearchResults] = useState([]);
     const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
     const [delayedChange, setDelayedChange] = useState("");
-    const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
 
     function handleAuthStateChanged() {
         setShowOverlayType(null);
@@ -103,32 +104,20 @@ const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
         };
     }, [clickToHideSearchResult]);
 
-    const GetComicByGenre = useCallback(async () => {
-        if (!selectedGenre) return;
-        dispatch(setMangasData([]));
-        const searchParams: SearchParams = {
-            query: "",
-            page: 0,
-            genres: [selectedGenre],
-            exclude: [],
-            status: 0,
-            host: selectedSource,
-        };
-        const data = await Search(searchParams);
-        dispatch(setMangasData(data));
-    }, [dispatch, selectedGenre, selectedSource]);
-
     useEffect(() => {
-        GetComicByGenre().then(() => {
-        });
         setShowOverlayType(null);
-    }, [selectedSource, selectedGenre, GetComicByGenre]);
+    }, [selectedSource, selectedGenre]);
+
+    const handleReset = () => {
+        dispatch(setCurrentPage(1));
+        dispatch(setSelectedGenre(null))
+    }
 
     return (
         <div
             className="w-full h-[85px] flex flex-row justify-between items-center bg-richBlack border-b-[1px] border-white/[.15]">
             <div className="text-2xl text-lightGray font-semibold uppercase tracking-wider">
-                <Link href={`/`}>AnimeMoi</Link>
+                <Link href={`/`} onClick={handleReset}>AnimeMoi</Link>
             </div>
             <div className="w-fit h-fit flex flex-row gap-[15px]">
                 {isHomePage ? null : (
@@ -203,7 +192,7 @@ const NavBar: React.FC<NavBarProps> = ({isHomePage, isGenres}) => {
                     className="fixed inset-0 flex justify-center items-start pt-[90px] bg-richBlack/75 z-[200]"
                     onClick={handleOverlayClick}
                 >
-                    <GenreOverlay setSelectedGenre={setSelectedGenre}/>
+                    <GenreOverlay/>
                 </div>
             )}
 

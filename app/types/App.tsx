@@ -20,6 +20,8 @@
 //   ];
 // };
 
+import React from "react";
+
 export type Chapter = {
     id: number;
     idComic: string;
@@ -90,3 +92,8 @@ export type ChapterListProps = {
     host: string;
     params: any;
 };
+
+export type CurrentPageProps = {
+    currentPage: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}

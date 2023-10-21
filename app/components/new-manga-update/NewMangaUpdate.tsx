@@ -4,19 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import "../../globals.css";
 import "./NewMangaUpdate.css";
-import {CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight,} from "@phosphor-icons/react";
+import {CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight} from "@phosphor-icons/react";
 import {GetMangas, GetTotal} from "../../utils/manga";
 import MangaInfoOverlay from "../manga-info-overlay/MangaInfoOverlay";
 import Loading from "../../loading";
 import {useDispatch, useSelector} from "react-redux";
 import {setMangasData} from "../../globalRedux/Features/mangas/mangasSlice";
 import {RootState} from "../../globalRedux/store";
+import {SearchParams} from "../../types/App";
+import {Search} from "../../utils/search";
+import {setCurrentPage} from "../../globalRedux/Features/page/pageSlice";
+import {mapGenreIdToName} from "../../utils/genre";
 
-const NewMangaUpdate: React.FC = () => {
+const NewMangaUpdate = () => {
     const dispatch = useDispatch();
     const mangasData = useSelector((state: RootState) => state.mangas.data);
     const selectedSource = useSelector((state: RootState) => state.source.selectedSource);
-    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const selectedGenre = useSelector((state: RootState) => state.genres.selectedGenres);
+    const currentPage = useSelector((state: RootState) => state.page.value);
     const [totalManga, setTotalManga] = useState(0); // Tổng số manga
 
     const itemsPerPage = 24; // Số manga trên mỗi trang
@@ -25,20 +30,34 @@ const NewMangaUpdate: React.FC = () => {
     const fetchData = useCallback(async () => {
         try {
             dispatch(setMangasData([]));
+            if (!selectedGenre) {
+                const newData = await GetMangas(selectedSource, currentPage);
+                dispatch(setMangasData(newData));
 
-            const newData = await GetMangas(selectedSource, currentPage);
-            dispatch(setMangasData(newData));
+                const total = await GetTotal(selectedSource);
+                setTotalManga(total);
+            } else {
+                const searchParams: SearchParams = {
+                    query: "",
+                    page: currentPage,
+                    genres: selectedGenre,
+                    exclude: [],
+                    status: 0,
+                    host: selectedSource,
+                };
+                const data = await Search(searchParams);
+                dispatch(setMangasData(data));
+            }
 
-            const total = await GetTotal(selectedSource);
-            setTotalManga(total);
         } catch (error) {
         }
-    }, [dispatch, selectedSource, currentPage]);
+    }, [dispatch, selectedGenre, selectedSource, currentPage]);
 
     useEffect(() => {
         fetchData().then(() => {
         });
     }, [fetchData, selectedSource, currentPage]);
+
 
     const renderMangaDiv = () => {
         const mangaDiv: React.JSX.Element[] = [];
@@ -96,30 +115,36 @@ const NewMangaUpdate: React.FC = () => {
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
+            dispatch(setCurrentPage(currentPage - 1));
         }
     };
 
     const handleNextPage = () => {
-        setCurrentPage(currentPage + 1);
+        dispatch(setCurrentPage(currentPage + 1));
     };
 
     const handleFirstPage = () => {
-        setCurrentPage(1);
+        dispatch(setCurrentPage(1));
     };
 
     const handleLastPage = () => {
-        setCurrentPage(totalPages);
+        if (totalPages) {
+            dispatch(setCurrentPage(totalPages));
+        }
     };
-
-    const shouldShowPagination =
-        selectedSource === "NetTruyen" || selectedSource === "Yurineko";
 
     return (
         <div className="w-full h-fit flex flex-col gap-[30px]">
-            <p className="text-xl text-lightGray font-semibold">
-                Truyện mới cập nhật
-            </p>
+            {selectedGenre ? (
+                    <p className="text-xl text-lightGray font-semibold">
+                        Tìm kiếm theo {mapGenreIdToName(selectedGenre[0])}
+                    </p>
+                )
+                : (
+                    <p className="text-xl text-lightGray font-semibold">
+                        Truyện mới cập nhật
+                    </p>
+                )}
             {mangasData.length == 0 ? (
                 <Loading/>
             ) : (
@@ -127,50 +152,54 @@ const NewMangaUpdate: React.FC = () => {
                     {renderMangaDiv()}
                 </div>
             )}
-            {shouldShowPagination && (
-                <div className="flex justify-center mt-[30px]">
-                    <div
-                        className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
-                        <button
-                            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-                            onClick={handleFirstPage}
-                            disabled={currentPage === 1}
-                        >
-                            <CaretDoubleLeft color="#f4f4f4" weight="bold" size={15}/>
-                            <p className="text-[13px] text-white/75 font-semibold">
-                                Trang đầu
-                            </p>
-                        </button>
-                        <button
-                            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-                            onClick={handlePrevPage}
-                            disabled={currentPage === 1}
-                        >
-                            <CaretLeft color="#f4f4f4" weight="bold" size={15}/>
-                        </button>
+            <div className="flex justify-center mt-[30px]">
+                <div
+                    className="w-fit h-[48px] flex flex-row items-center gap-[20px] px-[15px] rounded-full border-[1.5px] border-white/20">
+                    <button
+                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                        onClick={handleFirstPage}
+                        disabled={currentPage === 1}
+                    >
+                        <CaretDoubleLeft color="#f4f4f4" weight="bold" size={15}/>
+                        <p className="text-[13px] text-white/75 font-semibold">
+                            Trang đầu
+                        </p>
+                    </button>
+                    <button
+                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                    >
+                        <CaretLeft color="#f4f4f4" weight="bold" size={15}/>
+                    </button>
+                    {totalPages && !selectedGenre ? (
                         <p className="text-[13px] text-lightGray font-semibold mx-2.5">
                             {currentPage} trên {totalPages}
                         </p>
-                        <button
-                            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-                            onClick={handleNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            <CaretRight color="#f4f4f4" weight="bold" size={15}/>
-                        </button>
-                        <button
-                            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-                            onClick={handleLastPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            <p className="text-[13px] text-white/75 font-semibold">
-                                Trang cuối
-                            </p>
-                            <CaretDoubleRight color="#f4f4f4" weight="bold" size={15}/>
-                        </button>
-                    </div>
+                    ) : (
+                        <p className="text-[13px] text-lightGray font-semibold mx-2.5">
+                            {currentPage}
+                        </p>
+                    )}
+                    <button
+                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        <CaretRight color="#f4f4f4" weight="bold" size={15}/>
+                    </button>
+                    <button
+                        className="w-fit h-fit flex flex-row items-center gap-[5px]"
+                        onClick={handleLastPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        <p className="text-[13px] text-white/75 font-semibold">
+                            Trang cuối
+                        </p>
+                        <CaretDoubleRight color="#f4f4f4" weight="bold" size={15}/>
+                    </button>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

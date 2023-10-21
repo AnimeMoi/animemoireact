@@ -8,26 +8,22 @@ import {getStatusText} from "../../utils/getStatusText";
 import {GetManga} from "../../utils/manga";
 import {Follow, GetProcess, UnFollow} from "../../utils/service";
 import {MangaDetailProps} from "../../types/App";
-import AnimeMoiGenres from "../../public/assets/genre-types/AnimeMoi/tags.json";
 import Link from "next/link";
 import {useDispatch, useSelector} from "react-redux";
 import {setMangaData} from "../../globalRedux/Features/manga/mangaSlice";
 import {setFollow} from "../../globalRedux/Features/follow/followSlice";
 import {RootState} from "../../globalRedux/store";
 import {useGlobalContext} from "../../globalContext/store";
+import {getMangas} from "../../utils/localStored";
+import {mapGenreIdToName} from "../../utils/genre";
 
 const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
     const dispatch = useDispatch();
     const mangaData = useSelector((state: RootState) => state.manga.data);
     const follow = useSelector((state: RootState) => state.follow.value);
-    const [genres, setGenres] = useState<string[]>([]);
-
     const {user} = useGlobalContext();
 
-    const mapGenreIdToName = (genreId: number): string => {
-        const genre = AnimeMoiGenres.find((item) => item.id === genreId);
-        return genre ? genre["Name"] : `Thể loại không xác định: (${genreId})`;
-    };
+    const [genres, setGenres] = useState<string[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,8 +37,7 @@ const MangaDetail: React.FC<MangaDetailProps> = ({host, params}) => {
                 );
                 setGenres(genreNames);
 
-                const storedMangas = localStorage.getItem("mangas");
-                const mangas = storedMangas ? JSON.parse(storedMangas) : [];
+                const mangas = getMangas();
 
                 const manga = {
                     id: responseData.id,

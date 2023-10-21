@@ -1,5 +1,5 @@
 "use client";
-import React, {Dispatch, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "../../globals.css";
 import "./GenreOverlay.css";
 import NetTruyenGenres from "../../public/assets/genre-types/NetTruyen/tags.json";
@@ -9,16 +9,15 @@ import YurinekoGenres from "../../public/assets/genre-types/Yurineko/tags.json";
 import HentaiVNGenres from "../../public/assets/genre-types/HentaiVN/tags.json";
 import LxMangaGenres from "../../public/assets/genre-types/LxManga/tags.json";
 import SayHentaiGenres from "../../public/assets/genre-types/SayHentai/tags.json";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../globalRedux/store";
+import {setSelectedGenre} from "../../globalRedux/Features/genre/genreSlice";
+import Link from "next/link";
 
-type GenreOverlayProps = {
-    setSelectedGenre: Dispatch<React.SetStateAction<number | null>>;
-};
-
-const GenreOverlay: React.FC<GenreOverlayProps> = ({setSelectedGenre}) => {
+const GenreOverlay: React.FC = () => {
     const [genres, setGenres] = useState<any>([]);
     const selectedSource = useSelector((state: RootState) => state.source.selectedSource);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         switch (selectedSource) {
@@ -53,14 +52,15 @@ const GenreOverlay: React.FC<GenreOverlayProps> = ({setSelectedGenre}) => {
             className="genre-wrapper bg-richBlack/60 backdrop-blur-[10px] rounded-3xl border-[1.5px] border-white/20 text-[13px] text-white/75 font-medium p-5">
             <div className="h-[414px] grid gap-x-[45px] gap-y-5 grid-cols-5 overflow-y-auto no-scrollbar">
                 {genres.map((genre: any) => (
-                    <div
+                    <Link
+                        href={'/'}
                         key={genre["Id"]}
                         className="genre-name"
                         data-description={genre.Description}
-                        onClick={() => setSelectedGenre(genre["Id"])}
+                        onClick={() => dispatch(setSelectedGenre([genre["Id"]]))}
                     >
                         {genre["Name"]}
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
