@@ -53,12 +53,14 @@ const MangaHistory: React.FC = () => {
                                 <p className="w-full text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
                                     Chương mới nhất: {manga.info.lastChapterTitle}
                                 </p>
-                                <Link
-                                    href={`/pages/reader/${manga.info.host}?idComic=${manga.info.id}&id=${manga.current.id}`}>
-                                    <p className="w-full text-xs text-white/75 hover:text-[#d9f21c] font-medium whitespace-nowrap text-ellipsis overflow-hidden cursor-pointer">
-                                        Đọc tiếp: {manga.current.title}
-                                    </p>
-                                </Link>
+                                {manga.current && (
+                                    <Link
+                                        href={`/pages/reader/${manga.info.host}?idComic=${manga.info.id}&id=${manga.current.id}`}>
+                                        <p className="w-full text-xs text-white/75 hover:text-[#d9f21c] font-medium whitespace-nowrap text-ellipsis overflow-hidden cursor-pointer">
+                                            Đọc tiếp: {manga.current.title}
+                                        </p>
+                                    </Link>
+                                )}
                             </div>
                             <div className="w-full h-fit flex justify-end">
                                 <div

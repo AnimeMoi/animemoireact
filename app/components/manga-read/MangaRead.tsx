@@ -2,7 +2,7 @@
 import {CaretLeft, CaretRight, MagnifyingGlass, SealWarning} from "@phosphor-icons/react";
 import Image from "next/image";
 import React, {useCallback, useEffect, useState} from "react";
-import {Domain, DomainGetImage} from "../../domain";
+import {Domain} from "../../domain";
 import "../../globals.css";
 import Loading from "../../loading";
 import {MangaReadProps} from "../../types/App";
@@ -82,7 +82,7 @@ const MangaRead: React.FC<MangaReadProps> = ({host, params}) => {
 
                 const processedDataPromises = responseData.map((url: string) => {
                     if (url.includes("ntcdntemp")) {
-                        return `${DomainGetImage}AnimeMoi/GetImage?host=${params.params.host}&url=${url}`;
+                        return `${Domain}AnimeMoi/GetImage?host=${params.params.host}&url=${url}`;
                     }
                     if (url.startsWith('//')) {
                         return `https:${url}`;
