@@ -6,6 +6,7 @@ import {Config} from "../../types/App";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../globalRedux/store";
 import {setNSFW} from "../../globalRedux/Features/config/configSlice";
+import {Switch} from "@headlessui/react";
 
 
 const AccountSetting = ({onClose}: { onClose: () => void }) => {
@@ -35,15 +36,24 @@ const AccountSetting = ({onClose}: { onClose: () => void }) => {
                     {auth.currentUser?.email}
                 </p>
             </div>
-            <div className="flex justify-end">
-                <div
-                    className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer"
-                    onClick={() => {
-                        dispatch(setNSFW(!config.nsfw));
-                    }}
+            <div className={`flex gap-[5px] items-center`}>
+                <p className="text-white text-sm font-semibold">NSFW: </p>
+                <Switch
+                    checked={config.nsfw}
+                    onChange={() => dispatch(setNSFW(!config.nsfw))}
+                    className={`${
+                        config.nsfw ? 'bg-[green]' : 'bg-[gray]'
+                    } relative inline-flex h-6 w-11 items-center rounded-full`}
                 >
-                    <p className="text-xs text-black font-semibold">NSFW</p>
-                </div>
+                    <span className="sr-only text-white">Enable NSFW</span>
+                    <span
+                        className={`${
+                            config.nsfw ? 'translate-x-6' : 'translate-x-1'
+                        } inline-block h-4 w-4 transform rounded-full transition bg-white`}
+                    />
+                </Switch>
+            </div>
+            <div className="flex justify-end">
                 <div
                     className="scale-up flex px-[14px] py-[10px] rounded-full bg-lightGray cursor-pointer"
                     onClick={logout}
