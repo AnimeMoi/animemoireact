@@ -15,12 +15,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
+        <html lang="en" className={quicksand.className}>
+        <body>
         <ReduxProvider>
-            <html lang="en" className={quicksand.className}>
-            <body>
-            <ContextProvider>{children}</ContextProvider>
-            </body>
-            </html>
+            <ContextProvider>
+                {children}
+            </ContextProvider>
         </ReduxProvider>
+        </body>
+        </html>
     );
 }
