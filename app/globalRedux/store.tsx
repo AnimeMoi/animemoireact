@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {
+  configReducer,
   followReducer,
   genresReducer,
   mangaReducer,
@@ -16,6 +17,7 @@ const store = configureStore({
     follow: followReducer,
     genres: genresReducer,
     page: pageReducer,
+    config: configReducer,
   },
 });
 

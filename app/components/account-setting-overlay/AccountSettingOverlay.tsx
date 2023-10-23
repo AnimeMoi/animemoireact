@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../globals.css";
 import auth from "../auth/Firebase";
-import { ButtonPrimary } from "../button/button";
 import "./AccountSettingOverlay.css";
+import { Config } from "../../types/App";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../globalRedux/store";
+import { setNSFW } from "../../globalRedux/Features/config/configSlice";
+import { Switch } from "@headlessui/react";
 
-type AccountSettingProps = {
-  onEdit: () => void;
-  onClose: () => void; // Thêm onClose prop để ẩn overlay
-};
-
-const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onClose }) => {
-  const [isEditClicking, setIsEditClicking] = useState(false);
-
-  const handleEditClick = () => {
-    onEdit();
-    setIsEditClicking(true);
-  };
+const AccountSetting = ({ onClose }: { onClose: () => void }) => {
+  const config: Config = useSelector((state: RootState) => state.config);
+  const dispatch = useDispatch();
 
   function logout() {
     auth
@@ -38,6 +33,23 @@ const AccountSetting: React.FC<AccountSettingProps> = ({ onEdit, onClose }) => {
         <p className="text-xs text-white opacity-75 font-medium">
           {auth.currentUser?.email}
         </p>
+      </div>
+      <div className={`flex gap-[5px] items-center`}>
+        <p className="text-white text-sm font-semibold">NSFW: </p>
+        <Switch
+          checked={config.nsfw}
+          onChange={() => dispatch(setNSFW(!config.nsfw))}
+          className={`${
+            config.nsfw ? "bg-[green]" : "bg-[gray]"
+          } relative inline-flex h-6 w-11 items-center rounded-full`}
+        >
+          <span className="sr-only text-white">Enable NSFW</span>
+          <span
+            className={`${
+              config.nsfw ? "translate-x-6" : "translate-x-1"
+            } inline-block h-4 w-4 transform rounded-full transition bg-white`}
+          />
+        </Switch>
       </div>
       <div className="flex justify-end">
         <div

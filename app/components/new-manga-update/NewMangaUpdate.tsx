@@ -78,6 +78,7 @@ const NewMangaUpdate: React.FC = () => {
           href={`/pages/details/${selectedSource}?id=${
             item.id === 0 ? item.url : item.id
           }`}
+          rel={`preload`}
         >
           <div className="w-[124px] h-[184px] relative overflow-hidden">
             <Image
@@ -85,7 +86,9 @@ const NewMangaUpdate: React.FC = () => {
               alt={item.titles[0]}
               fill
               className="object-cover rounded-[18px] outline outline-1.5 outline-white/20 outline-offset-[-1.5px]"
-              sizes="1200px"
+              sizes="400px"
+              loading={`lazy`}
+              quality={100}
             />
           </div>
           <div className="w-[124px] h-fit flex flex-col items-center overflow-hidden gap-[5px] px-[3px]">
@@ -93,9 +96,7 @@ const NewMangaUpdate: React.FC = () => {
               {item.titles[0]}
             </p>
             <p className="text-xs text-white/75 font-medium">
-              {selectedSource === "NetTruyen"
-                ? `Chapter ${chapterNumber}`
-                : "Chapter N/A"}
+              Chapter {chapterNumber ?? "N/A"}
             </p>
           </div>
           <div className="manga-info-overlay">
@@ -149,7 +150,7 @@ const NewMangaUpdate: React.FC = () => {
           Truyện mới cập nhật
         </p>
       )}
-      {mangasData.length == 0 ? (
+      {mangasData.length === 0 ? (
         <Loading />
       ) : (
         <div className="flex flex-wrap justify-center gap-[42px]">
@@ -158,14 +159,18 @@ const NewMangaUpdate: React.FC = () => {
       )}
       <div className="flex justify-center mt-[30px]">
         <div className="w-fit h-[48px] flex flex-row items-center gap-[15px] px-[15px] rounded-full border-[1.5px] border-white/20">
-          <button
-            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-            onClick={handleFirstPage}
-            disabled={currentPage === 1}
-          >
-            <CaretDoubleLeft color="#f4f4f4" weight="bold" size={15} />
-            <p className="text-[13px] text-white/75 font-semibold">Trang đầu</p>
-          </button>
+          {!selectedGenre && (
+            <button
+              className="w-fit h-fit flex flex-row items-center gap-[5px]"
+              onClick={handleFirstPage}
+              disabled={currentPage === 1}
+            >
+              <CaretDoubleLeft color="#f4f4f4" weight="bold" size={15} />
+              <p className="text-[13px] text-white/75 font-semibold">
+                Trang đầu
+              </p>
+            </button>
+          )}
           <button
             className="w-fit h-fit flex flex-row items-center gap-[5px]"
             onClick={handlePrevPage}
@@ -173,9 +178,15 @@ const NewMangaUpdate: React.FC = () => {
           >
             <CaretLeft color="#f4f4f4" weight="bold" size={15} />
           </button>
-          <p className="text-[13px] text-lightGray font-semibold mx-2.5">
-            {currentPage} trên {totalPages}
-          </p>
+          {totalPages && !selectedGenre ? (
+            <p className="text-[13px] text-lightGray font-semibold mx-2.5">
+              {currentPage} trên {totalPages}
+            </p>
+          ) : (
+            <p className="text-[13px] text-lightGray font-semibold mx-2.5">
+              {currentPage}
+            </p>
+          )}
           <button
             className="w-fit h-fit flex flex-row items-center gap-[5px]"
             onClick={handleNextPage}
@@ -183,16 +194,18 @@ const NewMangaUpdate: React.FC = () => {
           >
             <CaretRight color="#f4f4f4" weight="bold" size={15} />
           </button>
-          <button
-            className="w-fit h-fit flex flex-row items-center gap-[5px]"
-            onClick={handleLastPage}
-            disabled={currentPage === totalPages}
-          >
-            <p className="text-[13px] text-white/75 font-semibold">
-              Trang cuối
-            </p>
-            <CaretDoubleRight color="#f4f4f4" weight="bold" size={15} />
-          </button>
+          {!selectedGenre && (
+            <button
+              className="w-fit h-fit flex flex-row items-center gap-[5px]"
+              onClick={handleLastPage}
+              disabled={currentPage === totalPages}
+            >
+              <p className="text-[13px] text-white/75 font-semibold">
+                Trang cuối
+              </p>
+              <CaretDoubleRight color="#f4f4f4" weight="bold" size={15} />
+            </button>
+          )}
         </div>
       </div>
     </div>

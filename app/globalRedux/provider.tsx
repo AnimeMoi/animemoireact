@@ -2,10 +2,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import store from "./store";
-
-export type GlobalProviderProps = {
-  children: React.ReactNode;
-};
+import { GlobalProviderProps } from "../types/App";
 
 const ReduxProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   return <Provider store={store}>{children}</Provider>;

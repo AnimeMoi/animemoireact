@@ -1,23 +1,14 @@
 "use client";
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
-  useState,
+  useEffect,
   useMemo,
+  useState,
 } from "react";
 import auth from "../components/auth/Firebase";
 import { User } from "firebase/auth";
-
-export type GlobalProviderProps = {
-  children: React.ReactNode;
-};
-
-export type GlobalContextProps = {
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
-};
+import { GlobalContextProps, GlobalProviderProps } from "../types/App";
 
 export const GlobalContext = createContext<GlobalContextProps | undefined>(
   undefined
@@ -28,9 +19,11 @@ export const ContextProvider: React.FC<GlobalProviderProps> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  auth.onAuthStateChanged((authUser) => {
-    setUser(authUser);
-  });
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+      setUser(authUser);
+    });
+  }, []);
 
   const contextValue = useMemo(() => ({ user, setUser }), [user]);
 

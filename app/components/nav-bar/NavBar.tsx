@@ -60,8 +60,6 @@ const NavBar = ({ isHomePage, isGenres }: NavBarProps) => {
     }
   };
 
-  const handleButtonClick = () => (): void => {};
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDelayedChange(searchInput);
@@ -226,10 +224,7 @@ const NavBar = ({ isHomePage, isGenres }: NavBarProps) => {
 
       {showAccountSettingOverlay && (
         <div className="absolute top-[90%] right-0 z-[200]">
-          <AccountSettingOverlay
-            onEdit={handleButtonClick}
-            onClose={() => setShowOverlayType(null)}
-          />
+          <AccountSettingOverlay onClose={() => setShowOverlayType(null)} />
         </div>
       )}
     </div>

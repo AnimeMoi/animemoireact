@@ -1,3 +1,6 @@
+import React, { Dispatch, SetStateAction } from "react";
+import { User } from "firebase/auth";
+
 export type Chapter = {
   id: number;
   idComic: string;
@@ -69,7 +72,15 @@ export type ChapterListProps = {
   params: any;
 };
 
-export type CurrentPageProps = {
-  currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+export type GlobalProviderProps = {
+  children: React.ReactNode;
+};
+
+export type GlobalContextProps = {
+  user: User | null;
+  setUser: Dispatch<SetStateAction<User | null>>;
+};
+
+export type Config = {
+  nsfw: boolean;
 };
