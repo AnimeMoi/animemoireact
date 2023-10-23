@@ -95,8 +95,7 @@ export default function Page() {
                 AnimeMoi Dashboard
               </p>
               <p className="text-sm text-white/75 font-semibold">
-                {/* Xin chào, {user!.displayName} */}
-                Xin chào, tdquang
+                Xin chào, {user!.displayName}
               </p>
             </div>
             <div className="w-full h-fit flex flex-col gap-[25px] mb-2.5">
