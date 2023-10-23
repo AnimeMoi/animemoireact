@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { redirect } from "next/navigation";
+import moment from "moment";
 import Image from "next/image";
 import "./page.css";
 import Thumbnail from "../../public/assets/images/thumbnail.png";
@@ -39,10 +40,9 @@ export default function Page() {
   // Check role begin
   const [isAdmin, setIsAdmin] = useState(true);
   const [date, setDate] = useState<number>(Date.now());
-  const [dataChartDataComicUpdateByMonth, setDataChartDataComicUpdateByMonth] =
-    useState({
-      datasets: [],
-    });
+  const [monthlyChartData, setMonthlyChartData] = useState({
+    datasets: [],
+  });
   const { user } = useGlobalContext();
   checkRole(user, setIsAdmin);
 
@@ -51,8 +51,7 @@ export default function Page() {
   }, [isAdmin]);
   // Check role end
 
-  // Get total comic
-  const [totalComic, setTotalComic] = useState("Loading");
+  const [totalComic, setTotalComic] = useState("N/A");
   useEffect(() => {
     const fetchData = async () => {
       let result = await GetTotal();
@@ -61,10 +60,8 @@ export default function Page() {
 
     fetchData().then(() => {});
   }, []);
-  // End get total comic
 
-  // Start ChartDataComicUpdateByMonth
-  const getDataChartDataComicUpdateByMonth = useCallback(async () => {
+  const getMonthlyChartData = useCallback(async () => {
     const _date = new Date(date);
     await fetch(
       `${Domain}Admin/ChartDataComicUpdateByMonth?month=${
@@ -72,14 +69,14 @@ export default function Page() {
       }/1/${_date.getFullYear()}`
     )
       .then((response) => response.json())
-      .then((data) => setDataChartDataComicUpdateByMonth(data));
+      .then((data) => setMonthlyChartData(data));
   }, [date]);
 
   useEffect(() => {
-    getDataChartDataComicUpdateByMonth().then(() => {
+    getMonthlyChartData().then(() => {
       console.log("Get data success");
     });
-  }, [getDataChartDataComicUpdateByMonth]);
+  }, [getMonthlyChartData]);
 
   return (
     <div className="w-screen min-h-screen flex justify-center bg-richBlack">
@@ -98,10 +95,11 @@ export default function Page() {
                 AnimeMoi Dashboard
               </p>
               <p className="text-sm text-white/75 font-semibold">
-                Xin chào, {user!.displayName}
+                {/* Xin chào, {user!.displayName} */}
+                Xin chào, tdquang
               </p>
             </div>
-            <div className="w-full h-fit flex flex-col gap-5">
+            <div className="w-full h-fit flex flex-col gap-[25px] mb-2.5">
               <div className="w-full h-fit flex flex-row justify-between items-center">
                 <p className="text-sm text-white/75 font-semibold uppercase tracking-wide">
                   Tổng quan
@@ -114,7 +112,7 @@ export default function Page() {
                 </a>
               </div>
               <div className="w-full h-fit flex flex-row gap-[28px]">
-                <div className="w-[266px] h-[88px] flex flex-row items-center gap-[20px] px-[16px] rounded-[16px] bg-[#0f0f0f] border-[1px] border-white/[.07] cursor-pointer move-up">
+                <div className="w-[260px] h-[90px] flex flex-row items-center gap-[20px] px-[16px] rounded-[16px] bg-[#0f0f0f] border-[1px] border-white/[.07] cursor-pointer move-up">
                   <div className="w-[44px] h-[44px] flex justify-center items-center rounded-full bg-lightGray">
                     <BookOpen color="#000" weight="bold" size={20} />
                   </div>
@@ -127,7 +125,7 @@ export default function Page() {
                     </p>
                   </div>
                 </div>
-                <div className="w-[266px] h-[88px] flex flex-row items-center gap-[20px] px-[16px] rounded-[16px] bg-[#0f0f0f] border-[1px] border-white/[.07] cursor-pointer move-up">
+                <div className="w-[260px] h-[90px] flex flex-row items-center gap-[20px] px-[16px] rounded-[16px] bg-[#0f0f0f] border-[1px] border-white/[.07] cursor-pointer move-up">
                   <div className="w-[44px] h-[44px] flex justify-center items-center rounded-full bg-lightGray">
                     <Sparkle color="#000" weight="bold" size={20} />
                   </div>
@@ -139,14 +137,25 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div>
+            </div>
+            <div className="w-full h-fit flex flex-col gap-[25px] mb-2.5">
+              <div className="w-full h-fit flex flex-row justify-between items-center">
                 <p className="text-sm text-white/75 font-semibold uppercase tracking-wide">
                   Số truyện cập nhật trong tháng {new Date(date).getMonth() + 1}
                 </p>
-                <Line data={dataChartDataComicUpdateByMonth} options={{}} />
+                <p className="text-sm text-lightGray font-semibold">
+                  {moment().format("DD/MM/YYYY")}
+                </p>
+              </div>
+              <div className="w-full h-fit p-5 rounded-[16px] bg-[#0f0f0f] border-[1px] border-white/[.07] cursor-pointer move-up">
+                <Line
+                  data={monthlyChartData}
+                  options={{}}
+                  className="w-full h-[320px]"
+                />
               </div>
             </div>
-            <div className="w-full h-fit flex flex-col gap-5">
+            <div className="w-full h-fit flex flex-col gap-[25px] mb-2.5">
               <p className="text-sm text-white/75 font-semibold uppercase tracking-wide">
                 Chỉnh sửa
               </p>
