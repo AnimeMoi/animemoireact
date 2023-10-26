@@ -37,6 +37,7 @@ const nextConfig = {
             "storage.lxmanga.com",
             // sayhentai
             "sayhentai.fun",
+            "cdn.sayhentai.info",
             // Google
             "lh3.googleusercontent.com"
         ],
