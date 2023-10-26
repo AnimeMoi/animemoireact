@@ -31,6 +31,7 @@ const nextConfig = {
             "old.cmangaaz.com",
             // hentaivn
             "t.htvncdn.net",
+            "evvdsfgefdszihfdx.hentaivn.tv",
             // lxmanga
             "lxmanga.net",
             "storage.lxmanga.com",
