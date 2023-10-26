@@ -81,8 +81,8 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
     mangas[existingMangaIndex].next = comic.next;
     mangas[existingMangaIndex].current = comic.current;
     localStorage.setItem("mangas", JSON.stringify(mangas));
-    setComic({ ...comic });
-  }, [comic, params.searchParams.id, params.searchParams.idComic]);
+    setComic(comic);
+  }, [comic, params.searchParams]);
 
   const handleButtonClick = () => (): void => {};
 
@@ -278,6 +278,7 @@ const MangaRead: React.FC<MangaReadProps> = ({ host, params }) => {
                   alt={""}
                   width={"700"}
                   height={"1000"}
+                  quality={"100"}
                 />
               ))}
             </div>
