@@ -65,8 +65,7 @@ const NewMangaUpdate: React.FC = () => {
         const mangaDiv: React.JSX.Element[] = [];
         mangasData.forEach((item: any) => {
             // Sử dụng Optional Chain Expression để lấy số chapter từ lastChapterTitle
-            const chapterNumber =
-                item.lastChapterTitle?.match(/(\d+(\.\d+)?)/)?.[0] || "N/A";
+            const chapterNumber = item.lastChapterTitle;
 
             mangaDiv.push(
                 <Link
@@ -92,8 +91,8 @@ const NewMangaUpdate: React.FC = () => {
                         <p className="w-full text-sm text-lightGray font-semibold text-center whitespace-nowrap text-ellipsis overflow-hidden">
                             {item.titles[0]}
                         </p>
-                        <p className="text-xs text-white/75 font-medium">
-                            Chapter {chapterNumber ?? "N/A"}
+                        <p className="text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+                            {chapterNumber ?? "N/A"}
                         </p>
                     </div>
                     <div className="manga-info-overlay">
