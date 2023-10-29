@@ -12,6 +12,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+auth.languageCode = 'vn';
 
 export default auth;
 export const GoogleProvider = new GoogleAuthProvider();
