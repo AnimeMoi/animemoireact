@@ -22,13 +22,13 @@ const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
           />
         </div>
         <div className="h-fit flex flex-col grow shrink-0 basis-0 gap-[5px] pt-[3px] overflow-hidden">
-          <p className="w-full text-sm text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
+          <p className="w-full text-[13px] text-lightGray font-semibold whitespace-nowrap text-ellipsis overflow-hidden">
             {title}
           </p>
-          <p className="w-full text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+          <p className="w-full text-[11px] text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
             Tác giả: {author}
           </p>
-          <p className="w-full text-xs text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
+          <p className="w-full text-[11px] text-white/75 font-medium whitespace-nowrap text-ellipsis overflow-hidden">
             Tình trạng: {statusText}
           </p>
           {/*<p className="w-full text-xs text-white opacity-75 font-medium whitespace-normal text-ellipsis overflow-hidden">*/}
@@ -37,8 +37,8 @@ const MangaInfoOverlay: React.FC<MangaInfoProps> = (props) => {
         </div>
       </div>
       <div className="w-full h-fit flex flex-col gap-[5px]">
-        <p className="text-sm text-lightGray font-semibold">Nội dung</p>
-        <p className="w-full text-xs text-white/75 font-medium leading-5 max-h-[160px] text-ellipsis overflow-hidden">
+        <p className="text-[13px] text-lightGray font-semibold">Nội dung</p>
+        <p className="w-full text-[11px] text-white/75 font-medium leading-5 max-h-[160px] text-ellipsis overflow-hidden">
           {description}
         </p>
       </div>
